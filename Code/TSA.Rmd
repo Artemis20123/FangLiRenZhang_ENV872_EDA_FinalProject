@@ -52,9 +52,45 @@ ts_beijing_train <- msts(beijing_train$meanpm, seasonal.periods =c(7,365.25),
                            start=c(2000,1,1))
 ```
 
-##auto arima
-```{r}
-Beijing_arima <- auto.arima(ts_beijing_train,seasonal = TRUE)
+##STL+ETS
+have negative value
+```{r STL+ETS 1}
+ETS_Beijing <-  stlf(ts_beijing_train,h=365)
+autoplot(ETS_Beijing) + ylab("Beijing")
+autoplot(ts_beijing_train) +
+  autolayer(ETS_Beijing, series="STL + ETS",PI=FALSE) +
+  ylab("Beijing")
+
 ```
 
+```{r STL+ETS log}
+ts_beijing_log_train <- log(ts_beijing_train)
+ETS_Beijing_log <- stlf(ts_beijing_log_train, h=365)
+ETS_Beijing_logexp <- exp(ETS_Beijing_log$mean)
+autoplot(ts_beijing_train) +
+  autolayer(ETS_Beijing_logexp, series="STL + ETS",PI=FALSE) +
+  ylab("Beijing")
+
+```
+
+##ARIMA + FOURIER terms
+```{r}
+ARIMA_Four_Beijing <- auto.arima(ts_beijing_train, 
+                             seasonal=FALSE, 
+                             lambda=0,
+                             xreg=fourier(ts_beijing_train, 
+                                          K=c(2,12)))
+
+AF_for_Beijing <- forecast(ARIMA_Four_Beijing,
+                           xreg=fourier(ts_beijing_train,
+                                        K=c(2,12),
+                                        h=365),
+                           h=365
+                           ) 
+autoplot(ts_beijing_train) +
+  autolayer(AF_for_Beijing, series="ARIMA_FOURIER",PI=FALSE) +
+  ylab("PM2.5")
+
+
+```
 
