@@ -1,0 +1,60 @@
+---
+title: "TSA"
+author: "Yuxiang Ren"
+output: pdf_document
+always_allow_html: true
+editor_options: 
+  chunk_output_type: console
+  markdown: 
+    wrap: sentence
+---
+#packges    
+```{r packages}
+library(readxl)
+#library(xlsx) #this package doesn't work on Macs very well
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(forecast)  
+library(Kendall)
+library(tseries)
+library(outliers)
+
+library(tidyverse)
+library(smooth)
+library(zoo)
+library(kableExtra)
+library(dplyr)
+
+```
+
+#data
+```{r}
+raw <- read.csv("./Data/Processed/PM2.5_daily_city_2000_2021.csv")
+
+raw_wider <- raw %>% pivot_wider(names_from = city_id, values_from = meanpm)
+
+```
+#Beijing
+##data
+```{r}
+Beijing_raw <- raw_wider[,c("year","month","day","1100")]
+
+Beijing_clean <- Brijing_raw %>%
+  mutate(date = ymd(paste(year, month, day, sep = "-"))) %>%
+  select(-year, -month, -day) %>%
+  rename(meanpm = `1100`)
+
+beijing_train <- Beijing_clean %>% filter(date < as.Date("2021-01-01"))
+beijing_test <- Beijing_clean %>% filter(date >= as.Date("2021-01-01"))
+
+ts_beijing_train <- msts(beijing_train$meanpm, seasonal.periods =c(7,365.25),
+                           start=c(2000,1,1))
+```
+
+##auto arima
+```{r}
+Beijing_arima <- auto.arima(ts_beijing_train,seasonal = TRUE)
+```
+
+
