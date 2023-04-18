@@ -83,6 +83,9 @@ plot(SSES_Beijing)
 checkresiduals(SSES_Beijing)
 
 ```
+
+
+
 ##accuacy  
 ```{r}
 MEAN_scores <- accuracy(AM_Beijing$mean,Beijing_test$monthlyPM)
@@ -113,8 +116,17 @@ forecast_Beijing <- for_Beijing_result$forecast
 ```
 ###SNAIVE same two years
 ```{r}
-for_Beijing_result2 <- snaive(ts_Beijing_all, h=24, holdout=FALSE)
+for_Beijing_result2 <- snaive(ts_Beijing_all, h=48, holdout=FALSE)
 plot(for_Beijing_result2)
 for_Beijing_result2$mean
+```
+###SARIMA
+can forecast several years 
+```{r}
+for_Beijing_result3_fit <- auto.arima(ts_Beijing_all)
+for_Beijing_result3 <- forecast(for_Beijing_result3_fit,h=24)
+plot(for_Beijing_result3)
+for_Beijing_result3$mean
+
 ```
 
