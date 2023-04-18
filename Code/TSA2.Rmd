@@ -1,0 +1,120 @@
+---
+title: "TSA"
+author: "Yuxiang Ren"
+output: pdf_document
+always_allow_html: true
+editor_options: 
+  chunk_output_type: console
+  markdown: 
+    wrap: sentence
+---
+#packges    
+```{r packages}
+library(readxl)
+#library(xlsx) #this package doesn't work on Macs very well
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(forecast)  
+library(Kendall)
+library(tseries)
+library(outliers)
+
+library(tidyverse)
+library(smooth)
+library(zoo)
+library(kableExtra)
+library(dplyr)
+library(smooth)
+
+```
+#data
+```{r}
+raw <- read.csv("./Data/Processed/PM2.5_daily_city_2000_2021.csv")
+Table_raw <- raw[c(1:20),]
+kable(Table_raw,caption = "Raw data")
+
+raw_wider <- raw %>% pivot_wider(names_from = city_id, values_from = meanpm) %>% 
+  mutate(date = as.Date(paste(year, month, day, sep = "-"))) %>%
+  select(date, everything()) 
+
+```
+#Beijing 1100
+##data
+```{r}
+Beijing <- raw_wider[,c('date', 'year', 'month', 'day', '1100')] %>% rename(pm2.5 = '1100') %>% group_by(year, month) %>% summarize(monthlyPM = mean(pm2.5)) %>% mutate(date = as.Date(paste(year, month, 01, sep = "-")))
+
+#question, mean PM or accumulated PM
+
+Beijing_train <- Beijing %>% filter(date < as.Date("2021-01-01"))
+Beijing_test <- Beijing %>% filter(date >= as.Date("2021-01-01"))
+
+ts_Beijing_train <- ts(Beijing_train$monthlyPM,
+                           start=c(2000,1), frequency = 12)
+ts_Beijing_all <- ts(Beijing$monthlyPM,
+                           start=c(2000,1), frequency = 12)
+```
+##Model 1: Arithmetic mean
+```{r}
+AM_Beijing <- meanf(y = ts_Beijing_train, h = 12)  
+checkresiduals(AM_Beijing)
+plot(AM_Beijing)
+```
+## Model 2: Seasonal naive
+```{r}
+SNAIVE_Beijing <- snaive(ts_Beijing_train, h=12, holdout=FALSE)
+checkresiduals(SNAIVE_Beijing)
+plot(SNAIVE_Beijing)
+```
+## Model 3: SARIMA
+```{r}
+SARIMA_Beijing_fit <- auto.arima(ts_Beijing_train)
+checkresiduals(SARIMA_Beijing_fit)
+
+#Generating forecasts
+#remember auto.arima does not call the forecast() internally so we need one more step
+SARIMA_Beijing <- forecast(SARIMA_Beijing_fit,h=12)
+plot(SARIMA_Beijing)
+```
+## Model 4: Fitting State Space Models to the original (seasonal) series
+```{r}
+SSES_Beijing <- es(ts_Beijing_train,model="ZZZ",h=12,holdout=FALSE)
+plot(SSES_Beijing)
+checkresiduals(SSES_Beijing)
+
+```
+##accuacy  
+```{r}
+MEAN_scores <- accuracy(AM_Beijing$mean,Beijing_test$monthlyPM)
+SNAIVE_scores <- accuracy(SNAIVE_Beijing$mean,Beijing_test$monthlyPM)
+SARIMA_scores <- accuracy(SARIMA_Beijing$mean,Beijing_test$monthlyPM)
+SSES_scores <- accuracy(SSES_Beijing$forecast,Beijing_test$monthlyPM)
+
+Beijing_scores <- as.data.frame(rbind(MEAN_scores, SNAIVE_scores, SARIMA_scores,SSES_scores))
+row.names(Beijing_scores) <- c("MEAN", "SNAIVE","SARIMA","SSES")
+
+kbl(Beijing_scores, 
+      caption = "Forecast Accuracy for Seasonal Data",
+      digits = array(4,ncol(Beijing_scores))) %>%
+  kable_styling(full_width = FALSE, position = "center") %>%
+  #highlight model with lowest RMSE
+  kable_styling(latex_options="striped", stripe_index = which.min(Beijing_scores[,"RMSE"]))
+
+best_model_index <- which.min(Beijing_scores[,"RMSE"])
+cat("The best model by RMSE is:", row.names(Beijing_scores[best_model_index,])) 
+
+```
+##Final result-2023
+###SSES model, two year result are same
+```{r}
+for_Beijing_result <- es(ts_Beijing_all,model="ZZZ",h=24,holdout=FALSE)
+plot(SSES_Beijing)
+forecast_Beijing <- for_Beijing_result$forecast
+```
+###SNAIVE same two years
+```{r}
+for_Beijing_result2 <- snaive(ts_Beijing_all, h=24, holdout=FALSE)
+plot(for_Beijing_result2)
+for_Beijing_result2$mean
+```
+
