@@ -130,7 +130,7 @@ best_model_index <- which.min(Beijing_scores[,"RMSE"])
 cat("The best model by RMSE is:", row.names(Beijing_scores[best_model_index,])) 
 
 ```
-##Final result-2023
+##test result-2023
 ###SSES model, two year result are same
 ```{r}
 for_Beijing_result <- es(ts_Beijing_all,model="ZZZ",h=24,holdout=FALSE)
@@ -150,6 +150,130 @@ for_Beijing_result3_fit <- auto.arima(ts_Beijing_all)
 for_Beijing_result3 <- forecast(for_Beijing_result3_fit,h=24)
 plot(for_Beijing_result3)
 for_Beijing_result3$mean
+
+```
+##final
+use SSES+SARIMA
+###beijing 1100
+```{r}
+#data
+Beijing <- raw_wider[,c('date', 'year', 'month', 'day', '1100')] %>% rename(pm2.5 = '1100') %>% group_by(year, month) %>% summarize(monthlyPM = mean(pm2.5)) %>% mutate(date = as.Date(paste(year, month, 01, sep = "-")))
+#ts.
+ts_Beijing <- ts(Beijing$monthlyPM,start=c(2000,1), frequency = 12)
+#SSES
+SSES_Beijing <- es(ts_Beijing,model="ZZZ",h=60,holdout=FALSE)
+#SARIMA
+SARIMA <- auto.arima(ts_Beijing, seasonal = TRUE)
+SARIMA_Beijing <- forecast(SARIMA,h=60)
+#result
+R_Beijing <- (SSES_Beijing$forecast+SARIMA_Beijing$mean)/2
+
+```
+
+###Shanghai 3100
+```{r}
+#data
+Shanghai <- raw_wider[,c('date', 'year', 'month', 'day', '3100')] %>% rename(pm2.5 = '3100') %>% group_by(year, month) %>% summarize(monthlyPM = mean(pm2.5)) %>% mutate(date = as.Date(paste(year, month, 01, sep = "-")))
+#ts.
+ts_Shanghai <- ts(Shanghai$monthlyPM,start=c(2000,1), frequency = 12)
+#SSES
+SSES_Shanghai <- es(ts_Shanghai,model="ZZZ",h=60,holdout=FALSE)
+#SARIMA
+SARIMA <- auto.arima(ts_Shanghai, seasonal = TRUE)
+SARIMA_Shanghai <- forecast(SARIMA,h=60)
+#result
+R_Shanghai <- (SSES_Shanghai$forecast+SARIMA_Shanghai$mean)/2
+
+```
+
+###Guangzhou 4401
+```{r}
+#data
+Guangzhou <- raw_wider[,c('date', 'year', 'month', 'day', '4401')] %>% rename(pm2.5 = '4401') %>% group_by(year, month) %>% summarize(monthlyPM = mean(pm2.5)) %>% mutate(date = as.Date(paste(year, month, 01, sep = "-")))
+#ts.
+ts_Guangzhou <- ts(Guangzhou$monthlyPM,start=c(2000,1), frequency = 12)
+#SSES
+SSES_Guangzhou <- es(ts_Guangzhou,model="ZZZ",h=60,holdout=FALSE)
+#SARIMA
+SARIMA <- auto.arima(ts_Guangzhou, seasonal = TRUE)
+SARIMA_Guangzhou <- forecast(SARIMA,h=60)
+#result
+R_Guangzhou <- (SSES_Guangzhou$forecast+SARIMA_Guangzhou$mean)/2
+
+```
+
+###Shenzhen 4403
+```{r}
+#data
+Shenzhen <- raw_wider[,c('date', 'year', 'month', 'day', '4403')] %>% rename(pm2.5 = '4403') %>% group_by(year, month) %>% summarize(monthlyPM = mean(pm2.5)) %>% mutate(date = as.Date(paste(year, month, 01, sep = "-")))
+#ts.
+ts_Shenzhen <- ts(Shenzhen$monthlyPM,start=c(2000,1), frequency = 12)
+#SSES
+SSES_Shenzhen <- es(ts_Shenzhen,model="ZZZ",h=60,holdout=FALSE)
+#SARIMA
+SARIMA <- auto.arima(ts_Shenzhen, seasonal = TRUE)
+SARIMA_Shenzhen <- forecast(SARIMA,h=60)
+#result
+R_Shenzhen <- (SSES_Shenzhen$forecast+SARIMA_Shenzhen$mean)/2
+
+```
+
+###Tianjin 1200
+```{r}
+#data
+Tianjin <- raw_wider[,c('date', 'year', 'month', 'day', '1200')] %>% rename(pm2.5 = '1200') %>% group_by(year, month) %>% summarize(monthlyPM = mean(pm2.5)) %>% mutate(date = as.Date(paste(year, month, 01, sep = "-")))
+#ts.
+ts_Tianjin <- ts(Tianjin$monthlyPM,start=c(2000,1), frequency = 12)
+#SSES
+SSES_Tianjin <- es(ts_Tianjin,model="ZZZ",h=60,holdout=FALSE)
+#SARIMA
+SARIMA <- auto.arima(ts_Tianjin, seasonal = TRUE)
+SARIMA_Tianjin <- forecast(SARIMA,h=60)
+#result
+R_Tianjin <- (SSES_Tianjin$forecast+SARIMA_Tianjin$mean)/2
+
+```
+
+###Chongqing 1100
+```{r}
+#data
+Chongqing <- raw_wider[,c('date', 'year', 'month', 'day', '5000')] %>% rename(pm2.5 = '5000') %>% group_by(year, month) %>% summarize(monthlyPM = mean(pm2.5)) %>% mutate(date = as.Date(paste(year, month, 01, sep = "-")))
+#ts.
+ts_Chongqing <- ts(Chongqing$monthlyPM,start=c(2000,1), frequency = 12)
+#SSES
+SSES_Chongqing <- es(ts_Chongqing,model="ZZZ",h=60,holdout=FALSE)
+#SARIMA
+SARIMA <- auto.arima(ts_Chongqing, seasonal = TRUE)
+SARIMA_Chongqing <- forecast(SARIMA,h=60)
+#result
+R_Chongqing <- (SSES_Chongqing$forecast+SARIMA_Chongqing$mean)/2
+
+```
+
+###Chengdu 5101
+```{r}
+#data
+Chengdu <- raw_wider[,c('date', 'year', 'month', 'day', '5101')] %>% rename(pm2.5 = '5101') %>% group_by(year, month) %>% summarize(monthlyPM = mean(pm2.5)) %>% mutate(date = as.Date(paste(year, month, 01, sep = "-")))
+#ts.
+ts_Chengdu <- ts(Beijing$monthlyPM,start=c(2000,1), frequency = 12)
+#SSES
+SSES_Chengdu <- es(ts_Beijing,model="ZZZ",h=60,holdout=FALSE)
+#SARIMA
+SARIMA <- auto.arima(ts_Chengdu, seasonal = TRUE)
+SARIMA_Chengdu <- forecast(SARIMA,h=60)
+#result
+R_Chengdu <- (SSES_Chengdu$forecast+SARIMA_Chengdu$mean)/2
+
+```
+
+###all
+```{r}
+all_forcast <- data.frame(R_Beijing, R_Shanghai, R_Guangzhou, R_Shenzhen, R_Tianjin, R_Chongqing)
+date_sequence <- seq(from = as.Date("2022-01-01"), by = "month", length.out = 60)
+all_forcast$Date <- date_sequence
+all_forcast <- all_forcast[,c(7,1:6)]
+write.csv(all_forcast, row.names = FALSE, 
+          file = "./Data/Processed/all_forcast.csv")
 
 ```
 
