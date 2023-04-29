@@ -1,0 +1,18 @@
+---
+title: 'Forecasting the phytoplankton growth in Mendota Lake'
+author: "Group 7: Yuxiang Ren, Kassie Huang, Yu Huan"
+date: "Spring 2023 - ENVIRON790 TSA - https://github.com/yuxiang87/YuxiangKassieYu_ENV790_TSA_FinalProject.git"
+output:
+  pdf_document:
+    toc: yes
+    includes:
+      in_header: header.tex
+  html_document:
+    toc: yes
+    df_print: paged
+csl: "apa-6th-edition.csl"
+bibliography: reference.bib
+link-citations: yes
+editor_options:
+  chunk_output_type: console
+---
