@@ -1,0 +1,144 @@
+---
+output: 
+  pdf_document:
+    keep_tex: yes
+    fig_caption: yes
+    number_sections: yes
+geometry: margin=2.54cm
+title: "Insert title of project here"
+subtitle: "Web address for GitHub repository"
+author: "Name"
+fontsize: 12pt
+mainfont: Times New Roman
+
+---
+
+\newpage
+\tableofcontents 
+\newpage
+\listoftables 
+\newpage
+\listoffigures 
+\newpage
+
+```{r setup, include=FALSE}
+# Set your working directory
+
+# Load your packages
+
+# Set your ggplot theme
+
+# Load your datasets
+
+```
+
+
+# Rationale and Research Questions
+
+
+
+\newpage
+
+# Dataset Information
+
+
+
+\newpage
+
+# Exploratory Analysis 
+
+To explore the data, we created a monthly PM2.5 plot for each city. 
+```{r TSA Visualization, echo=FALSE, message=FALSE, warning=FALSE}
+# Clean PM2.5 data
+pm2.5daily <- read.csv("./Data/Processed/PM2.5_daily_city_2000_2021.csv")
+cities <- pm2.5daily %>%
+  filter(city_id %in% c("1100","4401","4403","5101","3100","1200","5000")) %>%
+  group_by(city_id, year, month) %>%
+  summarise(mean = mean(meanpm))
+cities$date <- as.Date(paste(cities$year, cities$month, "01", sep = "-"), format = "%Y-%m-%d")
+
+# Visualization of cities
+beijing <- cities %>%
+  filter(city_id == "1100") %>%
+  ggplot(aes(x = date, y = mean)) +
+  geom_line() +
+  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Beijing")
+
+guangzhou <- cities %>%
+  filter(city_id == "4401") %>%
+  ggplot(aes(x = date, y = mean)) +
+  geom_line() +
+  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Guangzhou")
+
+shenzhen <- cities %>%
+  filter(city_id == "4403") %>%
+  ggplot(aes(x = date, y = mean)) +
+  geom_line() +
+  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Shenzhen")
+
+chengdu <- cities %>%
+  filter(city_id == "5101") %>%
+  ggplot(aes(x = date, y = mean)) +
+  geom_line() +
+  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Chengdu")
+
+shanghai <- cities %>%
+  filter(city_id == "3100") %>%
+  ggplot(aes(x = date, y = mean)) +
+  geom_line() +
+  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Shanghai")
+
+tianjin <- cities %>%
+  filter(city_id == "1200") %>%
+  ggplot(aes(x = date, y = mean)) +
+  geom_line() +
+  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Tianjin")
+
+chongqing <- cities %>%
+  filter(city_id == "5000") %>%
+  ggplot(aes(x = date, y = mean)) +
+  geom_line() +
+  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Chongqing")
+
+ggarrange(beijing, chengdu, chongqing, guangzhou, shanghai, shenzhen, tianjin,
+          ncol = 3, nrow = 3)
+```
+
+
+
+\newpage
+
+# Analysis
+
+
+
+## Question 1: <insert specific question here and add additional subsections for additional questions below, if needed>
+
+## Question 2: 
+
+
+
+
+\newpage
+
+# Summary and Conclusions
+
+
+\newpage
+
+# References
+<add references here if relevant, otherwise delete this section> 
