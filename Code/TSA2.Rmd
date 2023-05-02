@@ -322,7 +322,7 @@ plot1 <- ggplot(seasonal_data, aes(x = month, y = seasonal, group = city)) +
 plot2 <- ggplot(seasonal_data, aes(x = month, y = seasonal, group = city, colour = city)) +
   geom_line() +
   scale_x_discrete(limits = month.abb) +
-  labs(title = "Seasonality in PM2.5 in 7 Chinese Cities", x = "Month", y = "Seasonal Component PM2.5") +
+  labs(title = "Seasonality in PM2.5 in 7 Chinese Cities", x = "Month", y = "PM2.5 Seasonal Component") +
   theme_minimal() +
   theme(legend.position = "bottom") +
   guides(colour = guide_legend(title = "City"))
@@ -340,7 +340,7 @@ trend_data <- data.frame(
 
 ggplot(trend_data, aes(x = date, y = trend, group = city, colour = city)) +
   geom_line() +
-  labs(title = "Trends in PM2.5 in 7 Chinese Cities", x = "Date", y = "Trend Component") +
+  labs(title = "Trends in PM2.5 in 7 Chinese Cities", x = "Date", y = "PM2.5 Trend Component") +
   theme_minimal() +
   theme(legend.position = "bottom") +
   guides(colour = guide_legend(title = "City"))
