@@ -25,6 +25,15 @@ mainfont: Times New Roman
 # Set your working directory
 
 # Load your packages
+library(DT)
+library(shiny)
+library(shinydashboard)
+library(leaflet)
+library(shiny)
+library(leaflet)
+library(tidyverse)
+library(lubridate)
+library(ggpubr)
 
 # Set your ggplot theme
 
@@ -47,7 +56,7 @@ mainfont: Times New Roman
 
 # Exploratory Analysis 
 
-To explore the data, we created a monthly PM2.5 plot for each city. 
+To explore the data, we wanted to create a visualization of the monthly PM2.5 for the cities from 2000 to 2021. The data was first filtered to include only the seven cities of interest. Then we grouped the data by city, year, and month and summarized the mean PM2.5 value for each month. A monthly PM2.5 line plot was created for each city using ggplot2. 
 ```{r TSA Visualization, echo=FALSE, message=FALSE, warning=FALSE}
 # Clean PM2.5 data
 pm2.5daily <- read.csv("./Data/Processed/PM2.5_daily_city_2000_2021.csv")
@@ -117,7 +126,7 @@ chongqing <- cities %>%
 ggarrange(beijing, chengdu, chongqing, guangzhou, shanghai, shenzhen, tianjin,
           ncol = 3, nrow = 3)
 ```
-
+The plot showed that Beijing and Tianjin had the highest PM2.5 values among the seven cities, and Shenzhen had the lowest values. Most of the cities seemed to have a slow increase in PM2.5 from 2000 to 2006, then stayed relatively constant from 2006 until 2014. In 2014, most cities had a spike in PM2.5. From 2014, PM2.5 in all cities showed a decreasing trend. To better understand the changes in PM2.5, we conducted time-series analysis and predicted the monthly PM2.5 for the seven cities from 2022 to 2026.
 
 
 \newpage
@@ -130,7 +139,9 @@ ggarrange(beijing, chengdu, chongqing, guangzhou, shanghai, shenzhen, tianjin,
 
 ## Question 2: 
 
+To better visualize the data, we created a dashboard using Shiny. The dashboard consisted of three side panels:"PM2.5 National Distribution", "Time Series Visualization by City", "PM2.5 Prediction by City" and three corresponding tab panels: "Map", "TSA", and "Prediction".
 
+The "PM2.5 National Distribution" allows users to drag the map in the "Map" tab and explore the PM2.5 distribution pattern in the country. The "Time Series Visualization by City" panel has a dropdown box that allows users to select the monthly PM2.5 visualization of each city. The results are displayed in the "TSA" tab. Finally, the "PM2.5 Prediction by City" panel has a dropdown box and slider. Users can select the city and the time range to view the monthly PM2.5 prediction in the "Prediction" tab. 
 
 
 \newpage
