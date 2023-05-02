@@ -4,6 +4,10 @@
 
 -   the code is provided by the dataset creators
 
+-   since the .nc files are too large (GB level), they are not included in the folder
+
+    -   URL: <https://zenodo.org/record/6398971#.ZFFSa3ZBy3B>
+
 -   we actually finish this step in Pycharm and use the conda interpreter to build the environment
 
 ```{r}
@@ -113,9 +117,9 @@ for (i in seq_along(raster_files)) {
 }
 ```
 
-### 3. Format modification 
+### 3. Format modification
 
--   aggregate daily_split .csv files to a comprehensive dataset
+-   aggregate all the daily_split .csv files to a comprehensive dataset
 
 ```{r}
 setwd("D:/PM2.5/chinadaily/zonal")
@@ -141,5 +145,44 @@ for (folder in folders) {
 }
 
 merged_df <- do.call(rbind, file_list)
-write.csv(merged_df, "daily_summary_2000_2021.csv", row.names = FALSE)
+write.csv(merged_df, "PM2.5_daily_city_2000_2021.csv", row.names = FALSE)
+```
+
+### 4. Data wrangling
+
+-   Aggregate to the monthly level
+
+```{r}
+library(readxl)
+library(dplyr)
+
+file1 <- read.csv("Data/Processed/PM2.5_daily_city_2000_2021.csv")
+
+# exclude cities without PM2.5 records
+df <- subset(file1, !city_id %in% c('469037','469038','469039'))
+## equals to na.omit(file1)
+
+# aggregate at month level
+df_mon <- df %>%
+  group_by(city_id, year, month) %>%
+  summarise(meanPM = mean(meanpm))
+```
+
+-   Match the Chinese and English city names
+
+```{r}
+file2 <- read_excel("Data/Processed/2000map-city-modified.xlsx")
+
+# match the PM distribution records with the city names
+name <- file2[, c("city_id", "地级单位名称", "cityname")]
+df_final <- merge(df_mon, name, by = "city_id")
+```
+
+-   Final adjustments
+
+```{r}
+# reorder the columns
+df_final1 <- df_final[, c("year","month","city_id", "地级单位名称", "cityname", "meanPM")]
+
+write.csv(df_final1, "Data/Processed/PM2.5_monthly_city_2000_2021.csv", row.names = FALSE)
 ```
