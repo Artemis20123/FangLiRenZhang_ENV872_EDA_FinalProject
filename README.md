@@ -69,10 +69,11 @@ Dashboard: dashboard-final.R(combined final dashboard)
            dashboard-TSA & Prediction.R(code to display prediction)
 data wrangling: transform raw data.
 TSA2: time series analysis part.
+
 ----Data folder-----
-Raw----
+--Raw----
 2000china_city_map: china cities boundary shape file.
-Processed----
+--Processed----
 2000china_city_modified.xlsx: processed cities data.
 all_forecast.csv: forecast results.
 PM2.5_daily_city_2000_2021.csv: daily cities pm2.5 concentration data.
@@ -80,6 +81,7 @@ PM2.5_monthly_city_2000_2021.csv: calculated monthly pm2.5 concentration data.
 seasonal_data.csv: calculated seasonal data for analysis.
 trend_data.csv: calculated trends in megacities.
 Beijing_scores.csv: example TSA model score in Beijing.
+
 ----Example folder-----
 06_Part1_GLMs_LinearRegression: referenced regression tutorial.
 apa-6th-edition.csl: reference format.
@@ -87,6 +89,7 @@ Project_Instructions.Rmd from class resporitory.
 Project_Rubric.pdf from class resporitory.
 README_Student.md: referenced README file.
 README_Template.md:referenced README format file.
+
 ----Output folder-----
 Dashboard Panel 1.png: screenshot of map part in dashboard.
 Dashboard Panel 2.png: screenshot of historicla trend part in dashboard.
