@@ -98,16 +98,16 @@ Dashboard Panel 3.png: screenshot of predicted trend part in dashboard.
 
 1.  Final forecast result: "./Data/Processed/all_forcast.csv"
 
-| Column Name | Description               | Class     |
-|-------------|---------------------------|-----------|
-| Date        | Date                      | character |
-| R_Beijing   | Beijing forecast result.  | numeric   |
-| R_Shanghai  | Shanghai forecast result  | numeric   |
-| R_Guangzhou | Guangzhou forecast result | numeric   |
-| R_Shenzhen  | Shenzhen forecast result  | numeric   |
-| R_Tianjin   | Tianjin forecast result   | numeric   |
-| R_Chongqing | Chongqing forecast result | numeric   |
-| R_Chengdu   | Chengdu forecast result   | numeric   |
+| Column Name | Description               | Class     |Unit         |
+|-------------|---------------------------|-----------|-------------|
+| Date        | Date                      | character |             |
+| R_Beijing   | Beijing forecast result   | numeric   |$\mu$g/m$^3$ |
+| R_Shanghai  | Shanghai forecast result  | numeric   |$\mu$g/m$^3$ |
+| R_Guangzhou | Guangzhou forecast result | numeric   |$\mu$g/m$^3$ |
+| R_Shenzhen  | Shenzhen forecast result  | numeric   |$\mu$g/m$^3$ |
+| R_Tianjin   | Tianjin forecast result   | numeric   |$\mu$g/m$^3$ |
+| R_Chongqing | Chongqing forecast result | numeric   |$\mu$g/m$^3$ |
+| R_Chengdu   | Chengdu forecast result   | numeric   |$\mu$g/m$^3$ |
 
 2.  Accuracy table for 6 models: "./Data/Processed/Beijing_scores.csv"
 
@@ -135,7 +135,7 @@ Dashboard Panel 3.png: screenshot of predicted trend part in dashboard.
 |-------------|------------------------|-----------|
 | city        | City name              | character |
 | month       | month                  | character |
-| trend       | PM2.5 trend. component | numeric   |
+| trend       | PM2.5 trend  component | numeric   |
 
 ## Scripts and code
 
