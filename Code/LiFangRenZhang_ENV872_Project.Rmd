@@ -6,8 +6,13 @@ output:
     number_sections: yes
 geometry: margin=2.54cm
 title: "Insert title of project here"
+<<<<<<< HEAD:Example/LiFangRenZhang_ENV872_Project.Rmd
+subtitle: "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject"
+author: "Yixin Fang, Jiahuan Li, Yuxiang Ren, Jinglin Zhang"
+=======
 subtitle: "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject.git"
 author: "Jiahuan Li, Jinglin Zhang, Yixin Fang, Yuxiang Ren"
+>>>>>>> da0b6fe642b3e05c9e642f7eeaf4ef51eebd6b78:Code/LiFangRenZhang_ENV872_Project.Rmd
 fontsize: 12pt
 mainfont: Times New Roman
 editor_options: 
@@ -17,6 +22,7 @@ bibliography: reference.bib
 link-citations: yes
 ---
 
+```{=tex}
 \newpage
 \tableofcontents 
 \newpage
@@ -24,7 +30,7 @@ link-citations: yes
 \newpage
 \listoffigures 
 \newpage
-
+```
 ```{r setup, include=FALSE}
 # Set your working directory
 
@@ -46,22 +52,32 @@ library(utils)
 
 ```
 
-
 # Rationale and Research Questions
-
-
 
 \newpage
 
 # Dataset Information
 
+## Data sources
 
+This project relies on two primary datasets. The first dataset, China $PM_{2.5}$ pollution data, is available via the Zenodo data repository$^{[1]}$. This dataset provides information on the daily concentration of particulate matter ($PM_{2.5}$) in the atmosphere over China, as measured by satellite sensors. The dataset contains daily average $PM_{2.5}$ concentration values for a period from 2000 to 2021, covering the entirety of China's land area. The data is presented in the form of raster images, with a spatial resolution of 0.01 degrees. This high-resolution dataset allows for accurate identification of high pollution cities and regions, and is an important resource for understanding the severity and extent of air pollution in China.
+
+The second dataset utilized in this project is a shapefile of Chinese cities boundaries, provided by the statistical bureau of the Chinese government. The shapefile includes Chinese city names, unique identifiers, and geometry information for the city polygons. This dataset enables the mapping of $PM_{2.5}$ concentrations across different Chinese cities and supports the time series analysis. Together, these datasets form the foundation of our dashboard and other relevant analysis, providing important insights into the spatial and temporal distribution of $PM_{2.5}$ pollution in China.
+
+## [Wrangling process](https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Code/data%20wrangling.Rmd)
+
+The project involves two main data wrangling processes. The first process involves converting raw NetCDF files to GeoTIFF files using Python code provided by the dataset creators. The conversion code utilizes the GDAL package, a translator library for raster and vector geospatial data formats, to read the SDS data from the NetCDF files, define missing values, read longitude and latitude information, define the output file, and write a GeoTIFF file. The NetCDF files are not included in the repository and can be downloaded from the Zenodo repository.
+
+In the second data wrangling process, zonal statistics are calculated in R to aggregate the information of raster pixels within the city boundary and generate the output as a CSV table. The shapefile with polygon IDs is loaded, and a list of all raster files in the folder is obtained. A loop function is used to extract zonal statistics for each raster file, and two data frames are created to store the sum and mean values of \$PM\_{2.5}\$ concentrations. The zonal function from the terra package is used to extract the statistics, and the resulting CSV file contains the daily \$PM\_{2.5}\$ information for all the cities.
+
+Finally, all the CSV files containing separate daily \$PM\_{2.5}\$ information are aggregated into one large CSV file. Then, the daily records are summarized to the monthly level to facilitate dashboard visualization and time series analysis.
 
 \newpage
 
-# Exploratory Analysis 
+# Exploratory Analysis
 
-To explore the data, we wanted to create a visualization of the monthly PM2.5 for the cities from 2000 to 2021. The data was first filtered to include only the seven cities of interest. Then we grouped the data by city, year, and month and summarized the mean PM2.5 value for each month. A monthly PM2.5 line plot was created for each city using ggplot2. 
+To explore the data, we wanted to create a visualization of the monthly PM2.5 for the cities from 2000 to 2021. The data was first filtered to include only the seven cities of interest. Then we grouped the data by city, year, and month and summarized the mean PM2.5 value for each month. A monthly PM2.5 line plot was created for each city using ggplot2.
+
 ```{r TSA Visualization, echo=FALSE, message=FALSE, warning=FALSE}
 # Clean PM2.5 data
 pm2.5daily <- read.csv("./Data/Processed/PM2.5_daily_city_2000_2021.csv")
@@ -131,17 +147,17 @@ chongqing <- cities %>%
 ggarrange(beijing, chengdu, chongqing, guangzhou, shanghai, shenzhen, tianjin,
           ncol = 3, nrow = 3)
 ```
-The plot showed that Beijing and Tianjin had the highest PM2.5 values among the seven cities, and Shenzhen had the lowest values. Most of the cities seemed to have a slow increase in PM2.5 from 2000 to 2006, then stayed relatively constant from 2006 until 2014. In 2014, most cities had a spike in PM2.5. From 2014, PM2.5 in all cities showed a decreasing trend. To better understand the changes in PM2.5, we conducted time-series analysis and predicted the monthly PM2.5 for the seven cities from 2022 to 2026.
 
+The plot showed that Beijing and Tianjin had the highest PM2.5 values among the seven cities, and Shenzhen had the lowest values. Most of the cities seemed to have a slow increase in PM2.5 from 2000 to 2006, then stayed relatively constant from 2006 until 2014. In 2014, most cities had a spike in PM2.5. From 2014, PM2.5 in all cities showed a decreasing trend. To better understand the changes in PM2.5, we conducted time-series analysis and predicted the monthly PM2.5 for the seven cities from 2022 to 2026.
 
 \newpage
 
 # Analysis
 
-
-
 ## Part1: Time Series Analysis
-### Seven cities monthly PM2.5 (2000~2021)
+
+### Seven cities monthly PM2.5 (2000\~2021)
+
 Using the STL function, we decomposed the PM2.5 time series data of the target cities into seasonal and trend components and performed a comparative analysis. The PM2.5 values in these cities are generally lower during the summer months (June, July, August, and September) and higher during the winter months (November, December, January, and February) (Figure 2). There are several possible factors contributing to this seasonality: First, In the summer, temperatures are higher, leading to more active air convection, which facilitates the dispersion and dissipation of pollutants in the air. Secondly, there tends to be more rainfall in the summer, which can wash PM2.5 particles from the atmosphere to the ground, reducing their measured values [@rain]. Thirdly, in the winter, heating demand increases, and in some areas, coal combustion remains the primary method of providing heat [@heating]. This leads to increased emissions of coal-related pollutants, causing a rise in PM2.5 levels.
 
 ```{r seasonal figure, echo=FALSE, message=FALSE, warning=FALSE}
@@ -175,14 +191,14 @@ ggplot(trend_data, aes(x = date, y = trend, group = city, colour = city)) +
   guides(colour = guide_legend(title = "City"))
 ```
 
-### Seven cities monthly PM2.5 forecast (2022~2026)
+### Seven cities monthly PM2.5 forecast (2022\~2026)
 
 In order to obtain better forecasting results, we conducted a predictive accuracy test on multiple time series models based on Beijing's data from 2000 to 2020 (using actual 2021 data as a benchmark for comparison). These models include:
 
-1.	Arithmetic Mean Model (Mean): This model assumes that future observations will equal current observations, i.e., the predicted future value equals the current value, making the model a constant average value model.
-2.	Seasonal Naive Model (SNAIVE): It assumes that future observations will equal the most recent observations from the same season. The model focuses solely on historical data within the same season.
-3.	Seasonal Autoregressive Integrated Moving Average Model (SARIMA): SARIMA is a widely-used seasonal time series model that builds upon the ARIMA model by incorporating seasonal variations in the time series data.
-4.	Seasonal Simple Exponential Smoothing (SSES) Model: This is a time series forecasting method based on weighted averages.
+1.  Arithmetic Mean Model (Mean): This model assumes that future observations will equal current observations, i.e., the predicted future value equals the current value, making the model a constant average value model.
+2.  Seasonal Naive Model (SNAIVE): It assumes that future observations will equal the most recent observations from the same season. The model focuses solely on historical data within the same season.
+3.  Seasonal Autoregressive Integrated Moving Average Model (SARIMA): SARIMA is a widely-used seasonal time series model that builds upon the ARIMA model by incorporating seasonal variations in the time series data.
+4.  Seasonal Simple Exponential Smoothing (SSES) Model: This is a time series forecasting method based on weighted averages.
 
 In these four models tested, the SSES model had the smallest Root Mean Square Error (RMSE) and the best forecasting capability (Table 1). However, considering that the forecasting target is for the next five years, both SSES and SNAIVE models predict the same values for the first, second, third, fourth, and fifth years when forecasting multiple years. As a result, we combined the results of SSES and SNAIVE with the SARIMA model, creating two new models:
 
@@ -203,6 +219,7 @@ kbl(Beijing_scores0,
 6.  SSES_SARIMA. The average of SSES and SARIMA.
 
 Although the accuracy results show that the RMSE of SSES_SARIMA is the second smallest, its predictive accuracy is still slightly lower than that of SSES (Table 2). However, considering the forecasting objective and the comparison with other models, we ultimately chose to use the SSES_SARIMA model for predicting PM2.5 levels in the target cities.
+
 ```{r accuacy_table2, echo=FALSE, message=FALSE, warning=FALSE}
 #more information in "Code/TSA2" "Beijing1100-accuracy" section, chunk 10.
 
@@ -218,20 +235,18 @@ kbl(Beijing_scores,
 
 ```
 
-
-## Question 2: 
+## Question 2:
 
 To better visualize the data, we created a dashboard using Shiny. The dashboard consisted of three side panels:"PM2.5 National Distribution", "Time Series Visualization by City", "PM2.5 Prediction by City" and three corresponding tab panels: "Map", "TSA", and "Prediction".
 
-The "PM2.5 National Distribution" allows users to drag the map in the "Map" tab and explore the PM2.5 distribution pattern in the country. The "Time Series Visualization by City" panel has a dropdown box that allows users to select the monthly PM2.5 visualization of each city. The results are displayed in the "TSA" tab. Finally, the "PM2.5 Prediction by City" panel has a dropdown box and slider. Users can select the city and the time range to view the monthly PM2.5 prediction in the "Prediction" tab. 
-
+The "PM2.5 National Distribution" allows users to drag the map in the "Map" tab and explore the PM2.5 distribution pattern in the country. The "Time Series Visualization by City" panel has a dropdown box that allows users to select the monthly PM2.5 visualization of each city. The results are displayed in the "TSA" tab. Finally, the "PM2.5 Prediction by City" panel has a dropdown box and slider. Users can select the city and the time range to view the monthly PM2.5 prediction in the "Prediction" tab.
 
 \newpage
 
 # Summary and Conclusions
 
-
 \newpage
 
 # References
-<add references here if relevant, otherwise delete this section> 
+
+[1] Wei, J., Li, Z., Lyapustin, A., Sun, L., Peng, Y., Xue, W., Su, T., and Cribb, M. Reconstructing 1-km-resolution high-quality PM~2.5~ data records from 2000 to 2018 in China: spatiotemporal variations and policy implications. *Remote Sensing of Environment*, 2021, 252, 112136. <https://doi.org/10.1016/j.rse.2020.112136>
