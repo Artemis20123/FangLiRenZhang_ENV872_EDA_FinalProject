@@ -108,6 +108,7 @@ ui <- dashboardPage(
   dashboardHeader(
     title = "PM2.5 Distribution in China",
     titleWidth = 300,
+    # display the author names
     dropdownMenu(type = "messages", badgeStatus = NULL,
                  headerText = "Authors",
                  messageItem("Yixin Fang",
@@ -128,6 +129,7 @@ ui <- dashboardPage(
                  )
     )
   ),
+  # display the inputs for 3 panels in different sections
   dashboardSidebar(
      width = 300,
      wellPanel(
@@ -163,6 +165,7 @@ ui <- dashboardPage(
        style = "background-color: #800000;"
      )
   ),
+  # display 3 panels and the dashboard explanation
   dashboardBody(
     fluidRow(
       box(
