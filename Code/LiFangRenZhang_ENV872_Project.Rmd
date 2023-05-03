@@ -5,7 +5,7 @@ output:
     fig_caption: yes
     number_sections: yes
 geometry: margin=2.54cm
-title: "Insert title of project here"
+title: "A Time Series Analysis and Visualization of PM2.5 Distribution in China"
 subtitle: "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject"
 author: "Yixin Fang, Jiahuan Li, Yuxiang Ren, Jinglin Zhang"
 fontsize: 12pt
