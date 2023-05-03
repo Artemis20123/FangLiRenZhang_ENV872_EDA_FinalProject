@@ -1,14 +1,14 @@
-# Data preprocessing
+# Data wrangling
 
-### 1. Transform raw data (.nc files) to tiff files
+### 1. Transform raw data (NetCDF files) to tiff files
 
--   the code is provided by the dataset creators
+-   code in this part is provided by the creators of the original datasets
 
--   since the .nc files are too large (GB level), they are not included in the folder
+-   since the NetCDF files are too large (GB level), they are not included in the repository
 
     -   URL: <https://zenodo.org/record/6398971#.ZFFSa3ZBy3B>
-
--   we actually finish this step in Pycharm and use the conda interpreter to build the environment
+    -   we actually finish this step in Pycharm and use the conda interpreter to build the environment and import the `gdal` package.
+        -   thus, we have not checked whether the code can be executed in R session with the help of `reticulate` package.
 
 ```{r}
 # make the python command able to function in R environment
@@ -74,7 +74,13 @@ for file in path:
     f.close()
 ```
 
-### 2. Zonal statistics in R: tiff to csv
+### 2. Zonal statistics in R: raster to csv
+
+-   the sum and mean values of raster pixels within the boundaries of each Chinese city are calculated and stored in a csv file.
+
+    -   only the mean values of $PM_{2.5}$ concentrations are used in the following steps of the analysis
+
+-   In this step, each output csv file contains daily $PM_{2.5}$ information for all the cities.
 
 ```{r}
 library(terra)
@@ -119,7 +125,8 @@ for (i in seq_along(raster_files)) {
 
 ### 3. Format modification
 
--   aggregate all the daily_split .csv files to a comprehensive dataset
+-   aggregate all the daily_split .csv files to one comprehensive dataset
+    -   also add fields `year`, `month`, and `day` indicating the time information acquired from the original file name
 
 ```{r}
 setwd("D:/PM2.5/chinadaily/zonal")
@@ -150,7 +157,7 @@ write.csv(merged_df, "PM2.5_daily_city_2000_2021.csv", row.names = FALSE)
 
 ### 4. Data wrangling
 
--   Aggregate to the monthly level
+-   Aggregate the daily level data to monthly level to facilitate subsequent analysis
 
 ```{r}
 library(readxl)
@@ -168,7 +175,7 @@ df_mon <- df %>%
   summarise(meanPM = mean(meanpm))
 ```
 
--   Match the Chinese and English city names
+-   Add Chinese and English city names to the dataset according to the same field `city_id`
 
 ```{r}
 file2 <- read_excel("Data/Processed/2000map-city-modified.xlsx")
@@ -178,7 +185,7 @@ name <- file2[, c("city_id", "地级单位名称", "cityname")]
 df_final <- merge(df_mon, name, by = "city_id")
 ```
 
--   Final adjustments
+-   Finally, adjust the order of columns and export the dataset.
 
 ```{r}
 # reorder the columns
