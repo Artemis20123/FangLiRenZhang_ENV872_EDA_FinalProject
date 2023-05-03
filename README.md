@@ -12,12 +12,8 @@ editor_options:
 and any relevant analysis goals. What, why, where, when, how?\>
 
 ## Investigators
-
-<<<<<<< HEAD
-\<name(s), affiliation(s), contact information, roles (if applicable)\>
-=======
 Jiahuan Li, Jinglin Zhang, Yixin Fang, Yuxiang Ren
->>>>>>> da0b6fe642b3e05c9e642f7eeaf4ef51eebd6b78
+
 
 ## Keywords
 
