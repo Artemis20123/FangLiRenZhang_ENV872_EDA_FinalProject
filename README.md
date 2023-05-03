@@ -6,11 +6,6 @@ A Time Series Analysis and Visualization of PM2.5 Distribution in China
 
 ## Summary
 
-<<<<<<< HEAD
-\<describe the purpose of this repository, the information it contains,
-and any relevant analysis goals. What, why, where, when, how?\>
-
-=======
 Welcome to the repository for the China PM2.5 pollution data analysis project. This repository contains code, data, and metadata related to the project.
 
 This project visualized the monthly average concentration of PM2.5 in Chinese cities from 2000 to 2021 and analyzed the historical trends and predicted the concentration changes for the next 5 years in megacities. we created a dashboard to provide the monthly average pm2.5 concentration for each city in China from 2000 to 2021, and applied time series analysis on seven megacities in China to reveal their historical trends of pm2.5 and predicted the possible future monthly concentration in next 5 years.
@@ -25,7 +20,6 @@ The data used in this project is derived from the ChinaHighPM2.5 dataset, which 
 
 If you are interested in reproducing or building upon this analysis, please refer to the instructions in the README.md file for guidance on how to use this repository.
 
->>>>>>> 9495f5cbc0e9280d5b10949ea3d1cb4d3daeea4b
 ## Investigators
 
 For additional support, please contact investigators:
@@ -59,7 +53,6 @@ All the raw and processed data are stored in the Data folder. More detailed meta
 
 ## Folder structure, file formats, and naming conventions
 
-<<<<<<< HEAD
 The repository contains the following main folders:
 
 -   **Data**: contains all the data used and generated in the project, including raw data, processed data, and metadata files
@@ -83,49 +76,19 @@ The file formats used in the project are:
 -   **Others**: the repository contains various other files in addition to the ones mentioned above. These include markdown (.md) files, image (.png) files, and citation style language (.csl) files
 
 The naming convention for the files in the repository follows a descriptive and consistent approach. For example, the raw data files are named using a combination of the variable name and the year, while the processed data files are named using a combination of the variable name, city name, and date range. All file names include underscores between words to improve readability.
-=======
-----Code folder-----
-LiFangRenZhang_ENV872_Project: final report.
-Reference: apa-6th-edition.csl(format)
-           reference.bib(reference)
-Dashboard: dashboard-final.R(combined final dashboard)
-           dashboard-map-search control.R(code for display time series)
-           dashboard-the choropleth map.R(code for display distribution)
-           dashboard-TSA & Prediction.R(code to display prediction)
-data wrangling: transform raw data.
-TSA2: time series analysis part.
 
-----Data folder-----
---Raw----
-2000china_city_map: china cities boundary shape file.
---Processed----
-2000china_city_modified.xlsx: processed cities data.
-all_forecast.csv: forecast results.
-PM2.5_daily_city_2000_2021.csv: daily cities pm2.5 concentration data.
-PM2.5_monthly_city_2000_2021.csv: calculated monthly pm2.5 concentration data.
-seasonal_data.csv: calculated seasonal data for analysis.
-trend_data.csv: calculated trends in megacities.
-Beijing_scores.csv: example TSA model score in Beijing.
+----Code folder----- LiFangRenZhang_ENV872_Project: final report. Reference: apa-6th-edition.csl(format) reference.bib(reference) Dashboard: dashboard-final.R(combined final dashboard) dashboard-map-search control.R(code for display time series) dashboard-the choropleth map.R(code for display distribution) dashboard-TSA & Prediction.R(code to display prediction) data wrangling: transform raw data. TSA2: time series analysis part.
 
-----Example folder-----
-06_Part1_GLMs_LinearRegression: referenced regression tutorial.
-apa-6th-edition.csl: reference format.
-Project_Instructions.Rmd from class resporitory.
-Project_Rubric.pdf from class resporitory.
-README_Student.md: referenced README file.
-README_Template.md:referenced README format file.
+----Data folder----- --Raw---- 2000china_city_map: china cities boundary shape file. --Processed---- 2000china_city_modified.xlsx: processed cities data. all_forecast.csv: forecast results. PM2.5_daily_city_2000_2021.csv: daily cities pm2.5 concentration data. PM2.5_monthly_city_2000_2021.csv: calculated monthly pm2.5 concentration data. seasonal_data.csv: calculated seasonal data for analysis. trend_data.csv: calculated trends in megacities. Beijing_scores.csv: example TSA model score in Beijing.
 
-----Output folder-----
-Dashboard Panel 1.png: screenshot of map part in dashboard.
-Dashboard Panel 2.png: screenshot of historicla trend part in dashboard.
-Dashboard Panel 3.png: screenshot of predicted trend part in dashboard.
->>>>>>> 2ce85a267a82a4e55ed4868810d1b432005e4cc9
+----Example folder----- 06_Part1_GLMs_LinearRegression: referenced regression tutorial. apa-6th-edition.csl: reference format. Project_Instructions.Rmd from class resporitory. Project_Rubric.pdf from class resporitory. README_Student.md: referenced README file. README_Template.md:referenced README format file.
+
+----Output folder----- Dashboard Panel 1.png: screenshot of map part in dashboard. Dashboard Panel 2.png: screenshot of historicla trend part in dashboard. Dashboard Panel 3.png: screenshot of predicted trend part in dashboard.
 
 ## Metadata
 
 1.  City boundaries: "./Data/Raw/2000china_city_map/map/city_dingel_2000.shp"
 
-<<<<<<< HEAD
 |  Variables   |      Class       |     Units      |          Ranges          |
 |:------------:|:----------------:|:--------------:|:------------------------:|
 |   OBJECTID   |     numeric      |      N/A       |         [1,365]          |
@@ -156,28 +119,21 @@ Dashboard Panel 3.png: screenshot of predicted trend part in dashboard.
 |    meanPM    |  numeric  | $µ$g/m$^3$ | [6.437489, 200.2201] |
 
 4.  Final forecast result: "./Data/Processed/all_forcast.csv"
-=======
-1.  Final forecast result: "./Data/Processed/all_forcast.csv"
->>>>>>> 2ce85a267a82a4e55ed4868810d1b432005e4cc9
 
-| Column Name | Description               | Class     |Unit         |
-|-------------|---------------------------|-----------|-------------|
-| Date        | Date                      | character |             |
-| R_Beijing   | Beijing forecast result   | numeric   |$\mu$g/m$^3$ |
-| R_Shanghai  | Shanghai forecast result  | numeric   |$\mu$g/m$^3$ |
-| R_Guangzhou | Guangzhou forecast result | numeric   |$\mu$g/m$^3$ |
-| R_Shenzhen  | Shenzhen forecast result  | numeric   |$\mu$g/m$^3$ |
-| R_Tianjin   | Tianjin forecast result   | numeric   |$\mu$g/m$^3$ |
-| R_Chongqing | Chongqing forecast result | numeric   |$\mu$g/m$^3$ |
-| R_Chengdu   | Chengdu forecast result   | numeric   |$\mu$g/m$^3$ |
+| Column Name | Description               | Class     | Unit         |
+|-------------|---------------------------|-----------|--------------|
+| Date        | Date                      | character |              |
+| R_Beijing   | Beijing forecast result   | numeric   | $\mu$g/m$^3$ |
+| R_Shanghai  | Shanghai forecast result  | numeric   | $\mu$g/m$^3$ |
+| R_Guangzhou | Guangzhou forecast result | numeric   | $\mu$g/m$^3$ |
+| R_Shenzhen  | Shenzhen forecast result  | numeric   | $\mu$g/m$^3$ |
+| R_Tianjin   | Tianjin forecast result   | numeric   | $\mu$g/m$^3$ |
+| R_Chongqing | Chongqing forecast result | numeric   | $\mu$g/m$^3$ |
+| R_Chengdu   | Chengdu forecast result   | numeric   | $\mu$g/m$^3$ |
 
-<<<<<<< HEAD
 5.  Accuracy table for 6 models: "./Data/Processed/Beijing_scores.csv"
 
     Accuracy table for 4 models: "./Data/Processed/Beijing_scores0.csv"
-=======
-2.  Accuracy table for 6 models: "./Data/Processed/Beijing_scores.csv"
->>>>>>> 2ce85a267a82a4e55ed4868810d1b432005e4cc9
 
 | Column Name | Description                    | Class   |
 |-------------|--------------------------------|---------|
@@ -187,13 +143,7 @@ Dashboard Panel 3.png: screenshot of predicted trend part in dashboard.
 | MPE         | Mean Percentage Error          | numeric |
 | MAPE        | Mean Absolute Percentage Error | numeric |
 
-<<<<<<< HEAD
 6.  Seasonal component of 7 cities by STL: "./Data/Processed/seasonal_data.csv"
-=======
-3.  Accuracy table for 4 models: "./Data/Processed/Beijing_scores0.csv"
-
-4.  Seasonal component of 7 cities by STL: "./Data/Processed/seasonal_data.csv"
->>>>>>> 2ce85a267a82a4e55ed4868810d1b432005e4cc9
 
 | Column Name | Description              | Class     |
 |-------------|--------------------------|-----------|
@@ -201,17 +151,13 @@ Dashboard Panel 3.png: screenshot of predicted trend part in dashboard.
 | month       | month                    | character |
 | seasonal    | PM2.5 seasonal component | numeric   |
 
-<<<<<<< HEAD
 7.  Trend component of 7 cities by STL: "./Data/Processed/trend_data.csv"
-=======
-5.  Trend component of 7 cities by STL: "./Data/Processed/trend_data.csv"
->>>>>>> 2ce85a267a82a4e55ed4868810d1b432005e4cc9
 
-| Column Name | Description            | Class     |
-|-------------|------------------------|-----------|
-| city        | City name              | character |
-| month       | month                  | character |
-| trend       | PM2.5 trend  component | numeric   |
+| Column Name | Description           | Class     |
+|-------------|-----------------------|-----------|
+| city        | City name             | character |
+| month       | month                 | character |
+| trend       | PM2.5 trend component | numeric   |
 
 ## Scripts and code
 
