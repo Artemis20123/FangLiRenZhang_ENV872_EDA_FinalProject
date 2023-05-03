@@ -239,6 +239,7 @@ kbl(Beijing_scores,
 
 ```
 
+The final forecast results of Chinese megacities are shown in Figure 4.  
 ```{r forecast figure,  fig.cap=" PM2.5 forecast in Chinese megacities",echo=FALSE, message=FALSE, warning=FALSE}
 #more information in "Code/TSA2" "Beijing1100-accuracy" section, chunk 10.
 
