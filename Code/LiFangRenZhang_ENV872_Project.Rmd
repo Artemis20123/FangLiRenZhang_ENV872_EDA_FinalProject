@@ -69,7 +69,6 @@ The $PM_{2.5}$ pollution data used in the project is derived from the ChinaHigh$
 |     year     |  numeric  |     T      |     [2000,2021]      |
 |    month     |  numeric  |     T      |        [1,12]        |
 |   city_id    |  numeric  |    N/A     |    1100 \~ 659001    |
-| 地级单位名称 | character |    N/A     |         N/A          |
 |   cityname   | character |    N/A     |         N/A          |
 |    meanPM    |  numeric  | $µ$g/m$^3$ | [6.437489, 200.2201] |
 
