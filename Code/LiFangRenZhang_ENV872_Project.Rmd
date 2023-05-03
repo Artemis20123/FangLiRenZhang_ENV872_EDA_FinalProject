@@ -169,7 +169,7 @@ seasonal_data <- read.csv("./Data/Processed/seasonal_data.csv")
 ggplot(seasonal_data, aes(x = month, y = seasonal, group = city, colour = city)) +
   geom_line() +
   scale_x_discrete(limits = month.abb) +
-  labs(title = "Figure 2. Seasonality in PM2.5 in 7 Chinese Cities", x = "Month", y = "PM2.5 Seasonal Component") +
+  labs(title = "Seasonality in PM2.5 in 7 Chinese Cities", x = "Month", y = "PM2.5 Seasonal Component") +
   theme_minimal() +
   theme(legend.position = "bottom",
         plot.title = element_text(hjust = 0.5)) +
@@ -185,7 +185,7 @@ trend_data <- read.csv("./Data/Processed/trend_data.csv")
 trend_data$date <- ymd(trend_data$date)
 ggplot(trend_data, aes(x = date, y = trend, group = city, colour = city)) +
   geom_line() +
-  labs(title = "Figure 3. Trends in PM2.5 in 7 Chinese Cities", x = "Year", y = "PM2.5 Trend Component") +
+  labs(title = "Trends in PM2.5 in 7 Chinese Cities", x = "Year", y = "PM2.5 Trend Component") +
   scale_x_date(breaks = "1 year", date_labels = "%Y") +
   theme_minimal() +
   theme(legend.position = "bottom",
