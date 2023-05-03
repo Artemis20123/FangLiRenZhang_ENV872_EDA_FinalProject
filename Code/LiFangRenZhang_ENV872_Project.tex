@@ -326,27 +326,28 @@ cities from 2022 to 2026.
 \subsection{Part1: Time Series
 Analysis}\label{part1-time-series-analysis}}
 
-\hypertarget{how-has-the-pm2.5-concentration-in-the-seven-cities-changed}{%
-\subsubsection{How has the PM2.5 concentration in the seven cities
-changed?}\label{how-has-the-pm2.5-concentration-in-the-seven-cities-changed}}
+\hypertarget{how-has-the-pm_2.5-concentration-in-the-seven-cities-changed}{%
+\subsubsection{\texorpdfstring{How has the \(PM_{2.5}\) concentration in
+the seven cities
+changed?}{How has the PM\_\{2.5\} concentration in the seven cities changed?}}\label{how-has-the-pm_2.5-concentration-in-the-seven-cities-changed}}
 
-Using the STL function, we decomposed the PM2.5 time series data of the
-target cities into seasonal and trend components and performed a
-comparative analysis. The PM2.5 values in these cities are generally
-lower during the summer months (June, July, August, and September) and
-higher during the winter months (November, December, January, and
-February) (Figure 2). There are several possible factors contributing to
-this seasonality: First, In the summer, temperatures are higher, leading
-to more active air convection, which facilitates the dispersion and
-dissipation of pollutants in the air. Secondly, there tends to be more
-rainfall in the summer, which can wash PM2.5 particles from the
-atmosphere to the ground, reducing their measured values
-(\protect\hyperlink{ref-rain}{Pu, Zhao, Zhang, \& Ma, 2011}). Thirdly,
-in the winter, heating demand increases, and in some areas, coal
-combustion remains the primary method of providing heat
+Using the STL function, we decomposed the \(PM_{2.5}\) time series data
+of the target cities into seasonal and trend components and performed a
+comparative analysis. The \(PM_{2.5}\) values in these cities are
+generally lower during the summer months (June, July, August, and
+September) and higher during the winter months (November, December,
+January, and February) (Figure 2). There are several possible factors
+contributing to this seasonality: First, In the summer, temperatures are
+higher, leading to more active air convection, which facilitates the
+dispersion and dissipation of pollutants in the air. Secondly, there
+tends to be more rainfall in the summer, which can wash \(PM_{2.5}\)
+particles from the atmosphere to the ground, reducing their measured
+values (\protect\hyperlink{ref-rain}{Pu, Zhao, Zhang, \& Ma, 2011}).
+Thirdly, in the winter, heating demand increases, and in some areas,
+coal combustion remains the primary method of providing heat
 (\protect\hyperlink{ref-heating}{Liang et al., 2015}). This leads to
-increased emissions of coal-related pollutants, causing a rise in PM2.5
-levels.
+increased emissions of coal-related pollutants, causing a rise in
+\(PM_{2.5}\) levels.
 
 \begin{figure}
 \centering
@@ -356,15 +357,15 @@ levels.
 
 The trend results for the target cities are consistent with those
 observed in the exploratory analysis (Figure 3). Notably, around 2014
-marked a turning point when PM2.5 levels in major cities began to
+marked a turning point when \(PM_{2.5}\) levels in major cities began to
 decrease gradually. This shift is likely attributed to the Chinese
 government's implementation of the Air Pollution Prevention and Control
 Action Plan (\protect\hyperlink{ref-plan}{Cai et al., 2017}). It
-required that, by 2017, the annual average PM2.5 concentration in cities
-at or above the prefectural level should be reduced by more than 10\%.
-In key regions such as Beijing-Tianjin-Hebei, the Yangtze River Delta,
-and the Pearl River Delta, the plan aimed for reductions of 25\%, 20\%,
-and 15\%, respectively.
+required that, by 2017, the annual average \(PM_{2.5}\) concentration in
+cities at or above the prefectural level should be reduced by more than
+10\%. In key regions such as Beijing-Tianjin-Hebei, the Yangtze River
+Delta, and the Pearl River Delta, the plan aimed for reductions of 25\%,
+20\%, and 15\%, respectively.
 
 \begin{figure}
 \centering
@@ -372,10 +373,10 @@ and 15\%, respectively.
 \caption{Trends in PM2.5 in Chinese megacities}
 \end{figure}
 
-\hypertarget{what-might-be-the-monthly-average-pm2.5-concentrations-in-these-seven-cities-for-the-next-three-years}{%
-\subsubsection{What might be the monthly average PM2.5 concentrations in
-these seven cities for the next three
-years?}\label{what-might-be-the-monthly-average-pm2.5-concentrations-in-these-seven-cities-for-the-next-three-years}}
+\hypertarget{what-might-be-the-monthly-average-pm_2.5-concentrations-in-these-seven-cities-for-the-next-three-years}{%
+\subsubsection{\texorpdfstring{What might be the monthly average
+\(PM_{2.5}\) concentrations in these seven cities for the next three
+years?}{What might be the monthly average PM\_\{2.5\} concentrations in these seven cities for the next three years?}}\label{what-might-be-the-monthly-average-pm_2.5-concentrations-in-these-seven-cities-for-the-next-three-years}}
 
 In order to obtain better forecasting results, we conducted a predictive
 accuracy test on multiple time series models based on Beijing's data
@@ -445,7 +446,8 @@ Although the accuracy results show that the RMSE of SSES\_SARIMA is the
 second smallest, its predictive accuracy is still slightly lower than
 that of SSES (Table 2). However, considering the forecasting objective
 and the comparison with other models, we ultimately chose to use the
-SSES\_SARIMA model for predicting PM2.5 levels in the target cities.
+SSES\_SARIMA model for predicting \(PM_{2.5}\) levels in the target
+cities.
 
 \begin{table}
 
