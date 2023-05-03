@@ -6,13 +6,8 @@ output:
     number_sections: yes
 geometry: margin=2.54cm
 title: "Insert title of project here"
-<<<<<<< HEAD:Example/LiFangRenZhang_ENV872_Project.Rmd
 subtitle: "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject"
 author: "Yixin Fang, Jiahuan Li, Yuxiang Ren, Jinglin Zhang"
-=======
-subtitle: "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject.git"
-author: "Jiahuan Li, Jinglin Zhang, Yixin Fang, Yuxiang Ren"
->>>>>>> da0b6fe642b3e05c9e642f7eeaf4ef51eebd6b78:Code/LiFangRenZhang_ENV872_Project.Rmd
 fontsize: 12pt
 mainfont: Times New Roman
 editor_options: 
