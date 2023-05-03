@@ -77,6 +77,9 @@ The file formats used in the project are:
 
 The naming convention for the files in the repository follows a descriptive and consistent approach. For example, the raw data files are named using a combination of the variable name and the year, while the processed data files are named using a combination of the variable name, city name, and date range. All file names include underscores between words to improve readability.
 
+```{=html}
+<!--
+
 ----Code folder----- LiFangRenZhang_ENV872_Project: final report. Reference: apa-6th-edition.csl(format) reference.bib(reference) Dashboard: dashboard-final.R(combined final dashboard) dashboard-map-search control.R(code for display time series) dashboard-the choropleth map.R(code for display distribution) dashboard-TSA & Prediction.R(code to display prediction) data wrangling: transform raw data. TSA2: time series analysis part.
 
 ----Data folder----- --Raw---- 2000china_city_map: china cities boundary shape file. --Processed---- 2000china_city_modified.xlsx: processed cities data. all_forecast.csv: forecast results. PM2.5_daily_city_2000_2021.csv: daily cities pm2.5 concentration data. PM2.5_monthly_city_2000_2021.csv: calculated monthly pm2.5 concentration data. seasonal_data.csv: calculated seasonal data for analysis. trend_data.csv: calculated trends in megacities. Beijing_scores.csv: example TSA model score in Beijing.
@@ -85,6 +88,8 @@ The naming convention for the files in the repository follows a descriptive and 
 
 ----Output folder----- Dashboard Panel 1.png: screenshot of map part in dashboard. Dashboard Panel 2.png: screenshot of historicla trend part in dashboard. Dashboard Panel 3.png: screenshot of predicted trend part in dashboard.
 
+-->
+```
 ## Metadata
 
 1.  City boundaries: "./Data/Raw/2000china_city_map/map/city_dingel_2000.shp"
@@ -99,24 +104,24 @@ The naming convention for the files in the repository follows a descriptive and 
 
 2.  Daily level PM2.5 concentration data: "./Data/Processed/PM2.5_daily_city_2000_2021.csv"
 
-| Variables |  Class  |   Units    |        Ranges        |
-|:---------:|:-------:|:----------:|:--------------------:|
-|   year    | numeric |     T      |     [2000,2021]      |
-|   month   | numeric |     T      |        [1,12]        |
-|    day    | numeric |     T      |        [1,31]        |
-|  city_id  | numeric |    N/A     |    1100 \~ 659001    |
-|  meanpm   | numeric | $µ$g/m$^3$ | [3.364316, 585.4695] |
+| Variables |  Class  |    Units     |        Ranges        |
+|:---------:|:-------:|:------------:|:--------------------:|
+|   year    | numeric |      T       |     [2000,2021]      |
+|   month   | numeric |      T       |        [1,12]        |
+|    day    | numeric |      T       |        [1,31]        |
+|  city_id  | numeric |     N/A      |    1100 \~ 659001    |
+|  meanpm   | numeric | $\mu$g/m$^3$ | [3.364316, 585.4695] |
 
 3.  Monthly level PM2.5 concentration data: "./Data/Processed/PM2.5_monthly_city_2000_2021.csv"
 
-|  Variables   |   Class   |   Units    |        Ranges        |
-|:------------:|:---------:|:----------:|:--------------------:|
-|     year     |  numeric  |     T      |     [2000,2021]      |
-|    month     |  numeric  |     T      |        [1,12]        |
-|   city_id    |  numeric  |    N/A     |    1100 \~ 659001    |
-| 地级单位名称 | character |    N/A     |         N/A          |
-|   cityname   | character |    N/A     |         N/A          |
-|    meanPM    |  numeric  | $µ$g/m$^3$ | [6.437489, 200.2201] |
+|  Variables   |   Class   |    Units     |        Ranges        |
+|:------------:|:---------:|:------------:|:--------------------:|
+|     year     |  numeric  |      T       |     [2000,2021]      |
+|    month     |  numeric  |      T       |        [1,12]        |
+|   city_id    |  numeric  |     N/A      |    1100 \~ 659001    |
+| 地级单位名称 | character |     N/A      |         N/A          |
+|   cityname   | character |     N/A      |         N/A          |
+|    meanPM    |  numeric  | $\mu$g/m$^3$ | [6.437489, 200.2201] |
 
 4.  Final forecast result: "./Data/Processed/all_forcast.csv"
 
@@ -161,16 +166,38 @@ The naming convention for the files in the repository follows a descriptive and 
 
 ## Scripts and code
 
+-   **data wrangling.Rmd**: summarize all the data preparation steps
+
 -   **dashbord-the choropleth map.R**: implements the functionality of the first panel of the dashboard (with extra dropdown menu examples)
 
--   **dashbord-TSA & Prediction.R:**
+-   **dashbord-TSA & Prediction.R**: implements the functionality of the second and third panels of the dashboard
+
+-   **dashbord-final.R**: contains the script to generate the project's dashboard
+
+-   **TSA2.Rmd**: time series analysis including these steps:
+
+    1.  By utilizing daily PM2.5 data for seven cities, we generated time series for each city.
+
+    2.  Using the STL function, we decomposed the seasonal and trend components for each city.
+
+    3.  We employed multiple time series models (Mean, SNAIVE, SARIMA, SSES, SNAIVE+SARIMA, SSES+SARIMA) to forecast PM2.5 levels in the seven cities for the years 2022-2026.
+
+-   **LiFangRenZhang_ENV872_Project.Rmd**: contains the content of the report
 
 ## Quality assurance/quality control
 
-\<describe any relevant QA/QC procedures taken with your data. Some ideas can be found here:\> <https://www.dataone.org/best-practices/develop-quality-assurance-and-quality-control-plan> <https://www.dataone.org/best-practices/ensure-basic-quality-control> <https://www.dataone.org/best-practices/communicate-data-quality> <https://www.dataone.org/best-practices/identify-outliers> <https://www.dataone.org/best-practices/identify-values-are-estimated>
+-   **Data validation**: we have checked for missing values or outliers in the PM2.5 concentration and city boundary data and ensured they are complete and accurate after modification.
+
+-   **Data cleaning**: we have cleaned the PM2.5 concentration data by removing regions (islands) missing PM2.5 values.
+
+-   **Quality control checks**: we have compared satellite PM2.5 concentration data to other data sources (the meteorological station data) and ensured the accuracy and consistency of the raw data.
 
 ## Future development
 
-animation
+-   **Animations** ([https://leafletjs.com/examples/choropleth/](https://leafletjs.com/examples/choropleth/){style="font-size: 11pt;"})
 
-search control
+    For future development of our map, we have explored the possibility of incorporating animations to enhance the user experience. Specifically, we were interested in adding the functionality to zoom in to cities when clicking on them or visually highlighting them when hovered over with a mouse. However, we encountered difficulties in implementing these features and were unable to validate them.
+
+-   **Search control**
+
+    In addition, we also considered incorporating a search function into our map, allowing users to input city names and receive a highlighted region with popups. However, we faced even greater challenges in implementing this feature and were unable to do so. These potential additions could improve the functionality and user-friendliness of our map, and we will continue to explore ways to incorporate them in future development.
