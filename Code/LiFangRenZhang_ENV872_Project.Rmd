@@ -240,7 +240,8 @@ kbl(Beijing_scores,
 
 ```
 
-The final forecast results of Chinese megacities are shown in Figure 4.  
+The final forecast results of Chinese megacities are shown in Figure 4.
+
 ```{r forecast figure,  fig.cap=" PM2.5 forecast in Chinese megacities",echo=FALSE, message=FALSE, warning=FALSE}
 #more information in "Code/TSA2" "final"section, chunk 14~21.
 
@@ -263,6 +264,7 @@ ggplot(all_forcast_long, aes(x = Date, y = PM2.5, group = city, colour = city)) 
 ```
 
 \newpage
+
 ## Dashboard:
 
 To better visualize and allow users to interact with the data, we created a dashboard using Shiny. The dashboard consisted of three side panels:"PM2.5 National Distribution", "Time Series Visualization by City", "PM2.5 Prediction by City" and three corresponding tab panels: "Map", "TSA", and "Prediction".
