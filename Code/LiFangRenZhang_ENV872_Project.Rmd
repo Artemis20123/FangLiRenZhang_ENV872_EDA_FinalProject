@@ -55,7 +55,7 @@ With a booming economy and rapid urbanization, China has been suffering from sev
 China currently has seven megacities with a population of over 10 million. These cities have frequent economic activities and high population densities, understanding the changes in PM2.5 concentrations in these areas and predicting their trends can provide important references for China's air pollution prevention and control. This project utilizes the data from Wei et al. to visualize the monthly average PM2.5 concentrations in these areas from 2000 to 2021, allowing people to have a more intuitive understanding of the changes in local air pollution, and predicting the changes in these areas for the next three years. Our research question is:
 
 1. How has the PM2.5 concentration in the seven cities changed?
-2. What might be the monthly average PM2.5 concentrations in these seven cities for the next three years?
+2. What might be the monthly average PM2.5 concentrations in these seven cities for the next 5 years?
 
 \newpage
 
@@ -248,6 +248,8 @@ The "PM2.5 National Distribution" allows users to drag the map in the "Map" tab 
 \newpage
 
 # Summary and Conclusions
+
+We visualized the annual average concentration of PM2.5 in Chinese cities from 2000 to 2021 and analyzed the historical trends and predicted the concentration changes for the next 5 years in megacities. Our results show that the PM2.5 concentration increased from 2000 to 2013, with higher concentrations in the eastern regions compared to the western and southern regions. Since 2014, PM2.5 concentration in China has been decreasing. The concentration during autumn and winter was higher than that during spring and summer. Combining the SRIMA and SSES models resulted in the most accurate prediction. Our findings suggest that the PM2.5 concentration will continue to decrease in the next five years.
 
 \newpage
 
