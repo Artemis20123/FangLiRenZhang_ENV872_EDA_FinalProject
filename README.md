@@ -60,7 +60,13 @@ All the raw and processed data are stored in the Data folder, including shapefil
 ## Folder structure, file formats, and naming conventions
 
 \<describe the folders contained in the repository, including what type of files they contain\>
-
+----Code folder-----
+Reference: apa-6th-edition.csl(format)
+           reference.bib(reference)
+Dashboard: dashboard-final.R(combined final dashboard)
+           dashboard-map-search control.R(code for display time series)
+           dashboard-the choropleth map.R(code for display distribution)
+           dashboard-TSA & Prediction.R(code to display prediction)
 <describe the formats of files for the various purposes contained in the repository>
 
 <describe your file naming conventions>
