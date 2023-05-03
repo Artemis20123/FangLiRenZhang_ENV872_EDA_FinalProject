@@ -36,6 +36,16 @@
 \makeatother
 \usepackage{xcolor}
 \usepackage[margin=2.54cm]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -215,30 +225,70 @@ temporal distribution of \(PM_{2.5}\) pollution in China.
 \subsection{\texorpdfstring{\href{https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Code/data\%20wrangling.Rmd}{Wrangling
 process}}{Wrangling process}}\label{wrangling-process}}
 
-The project involves two main data wrangling processes. The first
-process involves converting raw NetCDF files to GeoTIFF files using
-Python code provided by the dataset creators. The conversion code
-utilizes the GDAL package, a translator library for raster and vector
-geospatial data formats, to read the SDS data from the NetCDF files,
-define missing values, read longitude and latitude information, define
-the output file, and write a GeoTIFF file. The NetCDF files are not
-included in the repository and can be downloaded from the Zenodo
-repository.
+The project involves two main wrangling processes. The first is to
+convert raw NetCDF files to GeoTIFF files using Python code provided by
+the original dataset creators. The original NetCDF files are not
+included in our repository and can be downloaded from the open-access
+Zenodo repository. The conversion code uses the \texttt{GDAL} package, a
+powerful translator library for working with raster and vector
+geospatial data formats. It reads the SDS data from the NetCDF files and
+handles missing values, extracts longitude and latitude information, and
+finally writes the output as GeoTIFF files. The use of \texttt{GDAL} in
+this project ensures that the NetCDF files are accurately transformed
+into GeoTIFF format, and that the resulting raster data can be easily
+integrated with other geospatial datasets for further analysis and
+visualization.
 
-In the second data wrangling process, zonal statistics are calculated in
-R to aggregate the information of raster pixels within the city boundary
-and generate the output as a CSV table. The shapefile with polygon IDs
-is loaded, and a list of all raster files in the folder is obtained. A
-loop function is used to extract zonal statistics for each raster file,
-and two data frames are created to store the sum and mean values of
-\$PM\_\{2.5\}\$ concentrations. The zonal function from the terra
-package is used to extract the statistics, and the resulting CSV file
-contains the daily \$PM\_\{2.5\}\$ information for all the cities.
+In the second data wrangling process, zonal statistics are computed to
+aggregate the information of raster pixels within the city boundary
+defined in the shapefile. The \texttt{terra} package's zonal function is
+utilized to extract the statistics. The mean and sum \(PM_{2.5}\) values
+of cities are generated as the outputs written in a CSV table. To
+extract zonal statistics for each raster file, a loop function is used
+to process each file in sequence. Two data frames are created to store
+the sum and mean values separately. These data frames are then merged
+together into a single data frame with two value columns. But only the
+mean \(PM_{2.5}\) value is used in the following analysis.
 
-Finally, all the CSV files containing separate daily \$PM\_\{2.5\}\$
-information are aggregated into one large CSV file. Then, the daily
-records are summarized to the monthly level to facilitate dashboard
+Finally, all the CSV files containing separate daily \(PM_{2.5}\)
+information are merged into one large CSV file. The daily records are
+then summarized at the monthly level to facilitate dashboard
 visualization and time series analysis.
+
+\hypertarget{data-structure}{%
+\subsection{\texorpdfstring{\href{https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Data/Raw/Metadata.Rmd}{Data
+structure}}{Data structure}}\label{data-structure}}
+
+The \(PM_{2.5}\) pollution data used in the project is derived from the
+ChinaHigh\(PM_{2.5}\) dataset, which provides a seamless 1 km
+ground-level resolution of \(PM_{2.5}\) distribution in the context of
+China. Since the original data (NetCDF files) are stored as images,
+tables of the derived zonal statistics are shown below:
+
+\begin{longtable}[]{@{}cccc@{}}
+\caption{Monthly average \(PM_{2.5}\) concentrations of Chinese
+cities}\tabularnewline
+\toprule()
+Variables & Class & Units & Ranges \\
+\midrule()
+\endfirsthead
+\toprule()
+Variables & Class & Units & Ranges \\
+\midrule()
+\endhead
+year & numeric & T & {[}2000,2021{]} \\
+month & numeric & T & {[}1,12{]} \\
+city\_id & numeric & N/A & 1100 \textasciitilde{} 659001 \\
+cityname & character & N/A & N/A \\
+meanPM & numeric & \(µ\)g/m\(^3\) & {[}6.437489, 200.2201{]} \\
+\bottomrule()
+\end{longtable}
+
+Additional metadata information can be found in the
+\texttt{Metadata.Rmd} file located in the ``Data'' folder and ``Raw''
+subfolder of the project. This file contains detailed information on the
+data sources, data characteristics, variable definitions, as well as
+information on the geospatial reference system and units.
 
 \newpage
 
@@ -420,9 +470,13 @@ SSES\_SARIMA & 0.233739 & 12.50184 & 9.574127 & -13.556343 & 31.19364\\
 \end{tabular}
 \end{table}
 
-The final forecast results of Chinese megacities are shown in Figure
-4.\\
+The final forecast results of Chinese megacities are shown in Figure 4.
+
+\begin{figure}
+\centering
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/forecast figure-1.pdf}
+\caption{PM2.5 forecast in Chinese megacities}
+\end{figure}
 
 \newpage
 
