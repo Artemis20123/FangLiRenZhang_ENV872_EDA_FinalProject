@@ -73,13 +73,13 @@ Finally, all the CSV files containing separate daily \$PM\_{2.5}\$ information a
 
 To explore the data, we wanted to create a visualization of the monthly PM2.5 for the cities from 2000 to 2021. The data was first filtered to include only the seven cities of interest. Then we grouped the data by city, year, and month and summarized the mean PM2.5 value for each month. A monthly PM2.5 line plot was created for each city using ggplot2.
 
-```{r TSA Visualization, echo=FALSE, message=FALSE, warning=FALSE}
+```{r TSA Visualization, fig.cap="Time Series Visualization of the Seven Cities", echo=FALSE, message=FALSE, warning=FALSE}
 # Clean PM2.5 data
-pm2.5daily <- read.csv("./Data/Processed/PM2.5_daily_city_2000_2021.csv")
-cities <- pm2.5daily %>%
+pm2.5monthly <- read.csv("./Data/Processed/PM2.5_monthly_city_2000_2021.csv")
+cities <- pm2.5monthly %>%
   filter(city_id %in% c("1100","4401","4403","5101","3100","1200","5000")) %>%
   group_by(city_id, year, month) %>%
-  summarise(mean = mean(meanpm))
+  summarise(mean = mean(meanPM))
 cities$date <- as.Date(paste(cities$year, cities$month, "01", sep = "-"), format = "%Y-%m-%d")
 
 # Visualization of cities
@@ -89,7 +89,7 @@ beijing <- cities %>%
   geom_line() +
   scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Beijing")
+  labs(x = "Year", y = "Monthly PM2.5", title = "Beijing")
 
 guangzhou <- cities %>%
   filter(city_id == "4401") %>%
@@ -97,7 +97,7 @@ guangzhou <- cities %>%
   geom_line() +
   scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Guangzhou")
+  labs(x = "Year", y = "Monthly PM2.5", title = "Guangzhou")
 
 shenzhen <- cities %>%
   filter(city_id == "4403") %>%
@@ -105,7 +105,7 @@ shenzhen <- cities %>%
   geom_line() +
   scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Shenzhen")
+  labs(x = "Year", y = "Monthly PM2.5", title = "Shenzhen")
 
 chengdu <- cities %>%
   filter(city_id == "5101") %>%
@@ -113,7 +113,7 @@ chengdu <- cities %>%
   geom_line() +
   scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Chengdu")
+  labs(x = "Year", y = "Monthly PM2.5", title = "Chengdu")
 
 shanghai <- cities %>%
   filter(city_id == "3100") %>%
@@ -121,7 +121,7 @@ shanghai <- cities %>%
   geom_line() +
   scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Shanghai")
+  labs(x = "Year", y = "Monthly PM2.5", title = "Shanghai")
 
 tianjin <- cities %>%
   filter(city_id == "1200") %>%
@@ -129,7 +129,7 @@ tianjin <- cities %>%
   geom_line() +
   scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Tianjin")
+  labs(x = "Year", y = "Monthly PM2.5", title = "Tianjin")
 
 chongqing <- cities %>%
   filter(city_id == "5000") %>%
@@ -137,13 +137,13 @@ chongqing <- cities %>%
   geom_line() +
   scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Chongqing")
+  labs(x = "Year", y = "Monthly PM2.5", title = "Chongqing")
 
 ggarrange(beijing, chengdu, chongqing, guangzhou, shanghai, shenzhen, tianjin,
           ncol = 3, nrow = 3)
 ```
 
-The plot showed that Beijing and Tianjin had the highest PM2.5 values among the seven cities, and Shenzhen had the lowest values. Most of the cities seemed to have a slow increase in PM2.5 from 2000 to 2006, then stayed relatively constant from 2006 until 2014. In 2014, most cities had a spike in PM2.5. From 2014, PM2.5 in all cities showed a decreasing trend. To better understand the changes in PM2.5, we conducted time-series analysis and predicted the monthly PM2.5 for the seven cities from 2022 to 2026.
+Figure 1 showed that Beijing and Tianjin had the highest PM2.5 values among the seven cities, and Shenzhen had the lowest values. Most of the cities seemed to have a slow increase in PM2.5 from 2000 to 2006, then stayed relatively constant from 2006 until 2014. In 2014, most cities had a spike in PM2.5. From 2014, PM2.5 in all cities showed a decreasing trend. To better understand the changes in PM2.5, we conducted time-series analysis and predicted the monthly PM2.5 for the seven cities from 2022 to 2026.
 
 \newpage
 
@@ -230,9 +230,9 @@ kbl(Beijing_scores,
 
 ```
 
-## Question 2:
+## Dashboard:
 
-To better visualize the data, we created a dashboard using Shiny. The dashboard consisted of three side panels:"PM2.5 National Distribution", "Time Series Visualization by City", "PM2.5 Prediction by City" and three corresponding tab panels: "Map", "TSA", and "Prediction".
+To better visualize and allow users to interact with the data, we created a dashboard using Shiny. The dashboard consisted of three side panels:"PM2.5 National Distribution", "Time Series Visualization by City", "PM2.5 Prediction by City" and three corresponding tab panels: "Map", "TSA", and "Prediction".
 
 The "PM2.5 National Distribution" allows users to drag the map in the "Map" tab and explore the PM2.5 distribution pattern in the country. The "Time Series Visualization by City" panel has a dropdown box that allows users to select the monthly PM2.5 visualization of each city. The results are displayed in the "TSA" tab. Finally, the "PM2.5 Prediction by City" panel has a dropdown box and slider. Users can select the city and the time range to view the monthly PM2.5 prediction in the "Prediction" tab.
 
