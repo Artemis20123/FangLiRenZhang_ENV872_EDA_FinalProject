@@ -29,9 +29,7 @@ library(smooth)
 
 
 ```
-#Notice
-I don't know where the conflict occurred, the checkresiduals run of chunk4 can't come out.
-This problem come after i run the dashboard.But the whole document can be knit
+
 
 #data
 ```{r data}

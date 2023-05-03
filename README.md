@@ -5,8 +5,13 @@
 \<describe the purpose of this repository, the information it contains, and any relevant analysis goals. What, why, where, when, how?\>
 
 ## Investigators
+<<<<<<< HEAD
 
 Jiahuan Li, Jinglin Zhang, Yixin Fang, Yuxiang Ren
+=======
+Jiahuan Li, Jinglin Zhang, Yixin Fang, Yuxiang Ren
+
+>>>>>>> c227ce19f3d1fe334f50d03d8e5f00c997c27888
 
 ## Keywords
 
@@ -27,6 +32,48 @@ China, PM2.5, forecast.
 ## Metadata
 
 \<For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.\>
+
+2. Final forecast result: "./Data/Processed/all_forcast.csv"
+
+| Column Name | Description               | Class     | 
+| ----------- | ------------------------- | --------- | 
+| Date        | Date                      | character | 
+| R_Beijing   | Beijing forecast result.  | numeric   | 
+| R_Shanghai  | Shanghai forecast result  | numeric   | 
+| R_Guangzhou | Guangzhou forecast result | numeric   | 
+| R_Shenzhen  | Shenzhen forecast result  | numeric   | 
+| R_Tianjin   | Tianjin forecast result   | numeric   | 
+| R_Chongqing | Chongqing forecast result | numeric   | 
+| R_Chengdu   | Chengdu forecast result   | numeric   | 
+
+3. Accuracy table for 6 models: "./Data/Processed/Beijing_scores.csv"
+
+| Column Name | Description                     | Class     | 
+| ----------- | ------------------------------- | --------- |
+| ME          | Mean Error                      | numeric |
+| RMSE        | Root Mean Squared Error         | numeric |
+| MAE         | Mean Absolute Error             | numeric |
+| MPE         | Mean Percentage Error           | numeric |
+| MAPE        | Mean Absolute Percentage Error  | numeric |
+
+4. Accuracy table for 4 models: "./Data/Processed/Beijing_scores0.csv"
+
+5. Seasonal component of 7 cities by STL: "./Data/Processed/seasonal_data.csv"
+
+| Column Name | Description               | Class     | 
+| ----------- | ------------------------- | --------- | 
+| city        | City name                 | character | 
+| month       | month                     | character | 
+| seasonal    | PM2.5 seasonal component  | numeric   | 
+
+6. Trend component of 7 cities by STL: "./Data/Processed/trend_data.csv"
+
+| Column Name | Description               | Class     | 
+| ----------- | ------------------------- | --------- | 
+| city        | City name                 | character | 
+| month       | month                     | character | 
+| trend.      | PM2.5 trend.   component  | numeric   | 
+
 
 ## Scripts and code
 
