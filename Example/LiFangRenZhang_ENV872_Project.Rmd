@@ -12,6 +12,9 @@ fontsize: 12pt
 mainfont: Times New Roman
 editor_options: 
   chunk_output_type: console
+csl: "apa-6th-edition.csl"
+bibliography: reference.bib
+link-citations: yes
 ---
 
 \newpage
@@ -36,6 +39,8 @@ library(tidyverse)
 library(lubridate)
 library(ggpubr)
 library(ggplot2)
+library(kableExtra)
+library(utils) 
 # Set your ggplot theme
 
 # Load your datasets
@@ -138,10 +143,10 @@ The plot showed that Beijing and Tianjin had the highest PM2.5 values among the 
 
 ## Part1: Time Series Analysis
 ### Seven cities monthly PM2.5 (2000~2021)
-Using the STL function, we decomposed the PM2.5 time series data of the target cities into seasonal and trend components and performed a comparative analysis. The PM2.5 values in these cities are generally lower during the summer months (June, July, August, and September) and higher during the winter months (November, December, January, and February) (Figure 2). There are several possible factors contributing to this seasonality: First, In the summer, temperatures are higher, leading to more active air convection, which facilitates the dispersion and dissipation of pollutants in the air. Secondly, there tends to be more rainfall in the summer, which can wash PM2.5 particles from the atmosphere to the ground, reducing their measured values. Thirdly, in the winter, heating demand increases, and in some areas, coal combustion remains the primary method of providing heat. This leads to increased emissions of coal-related pollutants, causing a rise in PM2.5 levels.
+Using the STL function, we decomposed the PM2.5 time series data of the target cities into seasonal and trend components and performed a comparative analysis. The PM2.5 values in these cities are generally lower during the summer months (June, July, August, and September) and higher during the winter months (November, December, January, and February) (Figure 2). There are several possible factors contributing to this seasonality: First, In the summer, temperatures are higher, leading to more active air convection, which facilitates the dispersion and dissipation of pollutants in the air. Secondly, there tends to be more rainfall in the summer, which can wash PM2.5 particles from the atmosphere to the ground, reducing their measured values [@rain]. Thirdly, in the winter, heating demand increases, and in some areas, coal combustion remains the primary method of providing heat. This leads to increased emissions of coal-related pollutants, causing a rise in PM2.5 levels.
 
 ```{r seasonal figure, echo=FALSE, message=FALSE, warning=FALSE}
-#more information in "Code/TSA2" "seasonal+ trend" section
+#more information in "Code/TSA2" "seasonal+ trend" section,  chunk 22 and 23 
 seasonal_data <- read.csv("./Data/Processed/seasonal_data.csv")
 ggplot(seasonal_data, aes(x = month, y = seasonal, group = city, colour = city)) +
   geom_line() +
@@ -156,7 +161,8 @@ ggplot(seasonal_data, aes(x = month, y = seasonal, group = city, colour = city))
 The trend results for the target cities are consistent with those observed in the exploratory analysis (Figure 3). Notably, around 2014 marked a turning point when PM2.5 levels in major cities began to decrease gradually. This shift is likely attributed to the Chinese government's implementation of the Air Pollution Prevention and Control Action Plan, released in September 2013. This plan was the first time the Chinese government set explicit air quality improvement targets. It required that, by 2017, the annual average PM2.5 concentration in cities at or above the prefectural level should be reduced by more than 10%. In key regions such as Beijing-Tianjin-Hebei, the Yangtze River Delta, and the Pearl River Delta, the plan aimed for reductions of 25%, 20%, and 15%, respectively.
 
 ```{r trend figure, echo=FALSE, message=FALSE, warning=FALSE}
-#more information in "Code/TSA2" "seasonal+ trend" section
+#more information in "Code/TSA2" "seasonal+ trend" section, chunk 22 and 24
+
 trend_data <- read.csv("./Data/Processed/trend_data.csv")
 trend_data$date <- ymd(trend_data$date)
 ggplot(trend_data, aes(x = date, y = trend, group = city, colour = city)) +
@@ -168,10 +174,50 @@ ggplot(trend_data, aes(x = date, y = trend, group = city, colour = city)) +
         axis.text.x = element_text(angle = 45, hjust = 1),
         plot.title = element_text(hjust = 0.5)) +
   guides(colour = guide_legend(title = "City"))
-
 ```
 
+### Seven cities monthly PM2.5 forecast (2022~2026)
 
+In order to obtain better forecasting results, we conducted a predictive accuracy test on multiple time series models based on Beijing's data from 2000 to 2020 (using actual 2021 data as a benchmark for comparison). These models include:
+
+1.	Arithmetic Mean Model (Mean): This model assumes that future observations will equal current observations, i.e., the predicted future value equals the current value, making the model a constant average value model.
+2.	Seasonal Naive Model (SNAIVE): It assumes that future observations will equal the most recent observations from the same season. The model focuses solely on historical data within the same season.
+3.	Seasonal Autoregressive Integrated Moving Average Model (SARIMA): SARIMA is a widely-used seasonal time series model that builds upon the ARIMA model by incorporating seasonal variations in the time series data.
+4.	Seasonal Simple Exponential Smoothing (SSES) Model: This is a time series forecasting method based on weighted averages.
+
+In these four models tested, the SSES model had the smallest Root Mean Square Error (RMSE) and the best forecasting capability (Table 1). However, considering that the forecasting target is for the next five years, both SSES and SNAIVE models predict the same values for the first, second, third, fourth, and fifth years when forecasting multiple years. As a result, we combined the results of SSES and SNAIVE with the SARIMA model, creating two new models:
+
+```{r accuacy_table1, echo=FALSE, message=FALSE, warning=FALSE}
+#more information in "Code/TSA2" "Beijing1100-accuracy" section, chunk 10.
+
+Beijing_scores0 <- read.csv("./Data/Processed/Beijing_scores0.csv")
+row.names(Beijing_scores0) <- c("MEAN", "SNAIVE","SARIMA","SSES")
+kbl(Beijing_scores0, 
+      caption = "Forecast Accuracy for Seasonal Data",
+      digits = array(4,ncol(Beijing_scores0))) %>%
+  kable_styling(full_width = FALSE, position = "center") %>%
+  #highlight model with lowest RMSE
+  kable_styling(latex_options="striped", stripe_index = which.min(Beijing_scores0[,"RMSE"]))
+```
+
+5.  SNAIVE_SARIMA. The average of SNAIVE and SARIMA.
+6.  SSES_SARIMA. The average of SSES and SARIMA.
+
+Although the accuracy results show that the RMSE of SSES_SARIMA is the second smallest, its predictive accuracy is still slightly lower than that of SSES (Table 2). However, considering the forecasting objective and the comparison with other models, we ultimately chose to use the SSES_SARIMA model for predicting PM2.5 levels in the target cities.
+```{r accuacy_table2, echo=FALSE, message=FALSE, warning=FALSE}
+#more information in "Code/TSA2" "Beijing1100-accuracy" section, chunk 10.
+
+Beijing_scores <- read.csv("./Data/Processed/Beijing_scores.csv")
+row.names(Beijing_scores) <- c("MEAN", "SNAIVE","SARIMA","SSES","SNAIVE_SARIMA","SSES_SARIMA")
+
+kbl(Beijing_scores, 
+      caption = "Forecast Accuracy for Seasonal Data",
+      digits = array(6,ncol(Beijing_scores))) %>%
+  kable_styling(full_width = FALSE, position = "center") %>%
+  #highlight model with lowest RMSE
+  kable_styling(latex_options="striped", stripe_index = which.min(Beijing_scores[,"RMSE"]))
+
+```
 
 
 ## Question 2: 

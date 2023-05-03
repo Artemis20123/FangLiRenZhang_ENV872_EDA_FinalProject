@@ -53,6 +53,43 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -140,10 +177,12 @@ this seasonality: First, In the summer, temperatures are higher, leading
 to more active air convection, which facilitates the dispersion and
 dissipation of pollutants in the air. Secondly, there tends to be more
 rainfall in the summer, which can wash PM2.5 particles from the
-atmosphere to the ground, reducing their measured values. Thirdly, in
-the winter, heating demand increases, and in some areas, coal combustion
-remains the primary method of providing heat. This leads to increased
-emissions of coal-related pollutants, causing a rise in PM2.5 levels.
+atmosphere to the ground, reducing their measured values
+(\protect\hyperlink{ref-rain}{Pu, Zhao, Zhang, \& Ma, 2011}). Thirdly,
+in the winter, heating demand increases, and in some areas, coal
+combustion remains the primary method of providing heat. This leads to
+increased emissions of coal-related pollutants, causing a rise in PM2.5
+levels.
 
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/seasonal figure-1.pdf}
 
@@ -161,6 +200,103 @@ and the Pearl River Delta, the plan aimed for reductions of 25\%, 20\%,
 and 15\%, respectively.
 
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/trend figure-1.pdf}
+
+\hypertarget{seven-cities-monthly-pm2.5-forecast-20222026}{%
+\subsubsection{Seven cities monthly PM2.5 forecast
+(2022\textasciitilde2026)}\label{seven-cities-monthly-pm2.5-forecast-20222026}}
+
+In order to obtain better forecasting results, we conducted a predictive
+accuracy test on multiple time series models based on Beijing's data
+from 2000 to 2020 (using actual 2021 data as a benchmark for
+comparison). These models include:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Arithmetic Mean Model (Mean): This model assumes that future
+  observations will equal current observations, i.e., the predicted
+  future value equals the current value, making the model a constant
+  average value model.
+\item
+  Seasonal Naive Model (SNAIVE): It assumes that future observations
+  will equal the most recent observations from the same season. The
+  model focuses solely on historical data within the same season.
+\item
+  Seasonal Autoregressive Integrated Moving Average Model (SARIMA):
+  SARIMA is a widely-used seasonal time series model that builds upon
+  the ARIMA model by incorporating seasonal variations in the time
+  series data.
+\item
+  Seasonal Simple Exponential Smoothing (SSES) Model: This is a time
+  series forecasting method based on weighted averages.
+\end{enumerate}
+
+In these four models tested, the SSES model had the smallest Root Mean
+Square Error (RMSE) and the best forecasting capability (Table 1).
+However, considering that the forecasting target is for the next five
+years, both SSES and SNAIVE models predict the same values for the
+first, second, third, fourth, and fifth years when forecasting multiple
+years. As a result, we combined the results of SSES and SNAIVE with the
+SARIMA model, creating two new models:
+
+\begin{table}
+
+\caption{\label{tab:accuacy_table1}Forecast Accuracy for Seasonal Data}
+\centering
+\begin{tabular}[t]{l|r|r|r|r|r}
+\hline
+  & ME & RMSE & MAE & MPE & MAPE\\
+\hline
+MEAN & -28.1059 & 31.6898 & 29.2560 & -119.0707 & 120.7650\\
+\hline
+SNAIVE & -2.4987 & 13.4377 & 9.3796 & -17.3618 & 28.6924\\
+\hline
+SARIMA & -4.3333 & 14.5863 & 12.2154 & -32.3573 & 45.6127\\
+\hline
+\cellcolor{gray!6}{SSES} & \cellcolor{gray!6}{4.8008} & \cellcolor{gray!6}{12.3008} & \cellcolor{gray!6}{7.7936} & \cellcolor{gray!6}{5.2446} & \cellcolor{gray!6}{19.6416}\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  SNAIVE\_SARIMA. The average of SNAIVE and SARIMA.
+\item
+  SSES\_SARIMA. The average of SSES and SARIMA.
+\end{enumerate}
+
+Although the accuracy results show that the RMSE of SSES\_SARIMA is the
+second smallest, its predictive accuracy is still slightly lower than
+that of SSES (Table 2). However, considering the forecasting objective
+and the comparison with other models, we ultimately chose to use the
+SSES\_SARIMA model for predicting PM2.5 levels in the target cities.
+
+\begin{table}
+
+\caption{\label{tab:accuacy_table2}Forecast Accuracy for Seasonal Data}
+\centering
+\begin{tabular}[t]{l|r|r|r|r|r}
+\hline
+  & ME & RMSE & MAE & MPE & MAPE\\
+\hline
+MEAN & -28.105858 & 31.68980 & 29.256003 & -119.070730 & 120.76499\\
+\hline
+SNAIVE & -2.498701 & 13.43770 & 9.379570 & -17.361823 & 28.69245\\
+\hline
+SARIMA & -4.333324 & 14.58628 & 12.215420 & -32.357291 & 45.61268\\
+\hline
+\cellcolor{gray!6}{SSES} & \cellcolor{gray!6}{4.800801} & \cellcolor{gray!6}{12.30076} & \cellcolor{gray!6}{7.793640} & \cellcolor{gray!6}{5.244604} & \cellcolor{gray!6}{19.64161}\\
+\hline
+SNAIVE\_SARIMA & -3.416013 & 13.00090 & 9.967983 & -24.859557 & 35.26887\\
+\hline
+SSES\_SARIMA & 0.233739 & 12.50184 & 9.574127 & -13.556343 & 31.19364\\
+\hline
+\end{tabular}
+\end{table}
 
 \hypertarget{question-2}{%
 \subsection{Question 2:}\label{question-2}}
@@ -192,5 +328,14 @@ in the ``Prediction'' tab.
 
 \textless add references here if relevant, otherwise delete this
 section\textgreater{}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-rain}{}}%
+Pu, W., Zhao, X., Zhang, X., \& Ma, Z. (2011). Effect of meteorological
+factors on PM2. 5 during july to september of beijing. \emph{Procedia
+Earth and Planetary Science}, \emph{2}, 272--277.
+
+\end{CSLReferences}
 
 \end{document}
