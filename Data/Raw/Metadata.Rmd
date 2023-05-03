@@ -12,7 +12,7 @@ The project data are organized in the **`data`** folder, with the original data 
 
     -   daily average concentration of particulate matter (PM2.5) over China from 2000 to 2021
 
-    -   presented as raster images, with a spatial resolution of 0.01 degrees.
+    -   presented as raster images with a spatial resolution of 0.01 degrees
 
 -   **Data source:** <https://zenodo.org/record/6398971#.ZC8znXZBy3B>
 
