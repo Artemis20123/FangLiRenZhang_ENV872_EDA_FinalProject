@@ -255,9 +255,9 @@ R_Chongqing <- (SSES_Chongqing$forecast+SARIMA_Chongqing$mean)/2
 #data
 Chengdu <- raw_wider[,c('date', 'year', 'month', 'day', '5101')] %>% rename(pm2.5 = '5101') %>% group_by(year, month) %>% summarize(monthlyPM = mean(pm2.5)) %>% mutate(date = as.Date(paste(year, month, 01, sep = "-")))
 #ts.
-ts_Chengdu <- ts(Beijing$monthlyPM,start=c(2000,1), frequency = 12)
+ts_Chengdu <- ts(Chengdu$monthlyPM,start=c(5101,1), frequency = 12)
 #SSES
-SSES_Chengdu <- es(ts_Beijing,model="ZZZ",h=60,holdout=FALSE)
+SSES_Chengdu <- es(ts_Chengdu,model="ZZZ",h=60,holdout=FALSE)
 #SARIMA
 SARIMA <- auto.arima(ts_Chengdu, seasonal = TRUE)
 SARIMA_Chengdu <- forecast(SARIMA,h=60)
@@ -274,6 +274,86 @@ all_forcast$Date <- date_sequence
 all_forcast <- all_forcast[,c(7,1:6)]
 write.csv(all_forcast, row.names = FALSE, 
           file = "./Data/Processed/all_forcast.csv")
+
+```
+#seasonal+trend
+```{r seasonal +trend}
+stl_Beijing <- stl(ts_Beijing, s.window = "periodic")
+stl_Shanghai <- stl(ts_Shanghai, s.window = "periodic")
+stl_Guangzhou <- stl(ts_Guangzhou, s.window = "periodic")
+stl_Shenzhen <- stl(ts_Shenzhen, s.window = "periodic")
+stl_Tianjin <- stl(ts_Tianjin, s.window = "periodic")
+stl_Chongqing <- stl(ts_Chongqing, s.window = "periodic")
+stl_Chengdu <- stl(ts_Chengdu, s.window = "periodic")
+
+seasonal_Beijing <- stl_Beijing$time.series[c(1:12), "seasonal"]
+seasonal_Shanghai <- stl_Shanghai$time.series[c(1:12), "seasonal"]
+seasonal_Guangzhou <- stl_Guangzhou$time.series[c(1:12), "seasonal"]
+seasonal_Shenzhen <- stl_Shenzhen$time.series[c(1:12), "seasonal"]
+seasonal_Tianjin <- stl_Tianjin$time.series[c(1:12), "seasonal"]
+seasonal_Chongqing <- stl_Chongqing$time.series[c(1:12), "seasonal"]
+seasonal_Chengdu <- stl_Chengdu$time.series[c(1:12), "seasonal"]
+
+trend_Beijing <- stl_Beijing$time.series[, "trend"]
+trend_Shanghai <- stl_Shanghai$time.series[, "trend"]
+trend_Guangzhou <- stl_Guangzhou$time.series[, "trend"]
+trend_Shenzhen <- stl_Shenzhen$time.series[, "trend"]
+trend_Tianjin <- stl_Tianjin$time.series[, "trend"]
+trend_Chongqing <- stl_Chongqing$time.series[, "trend"]
+trend_Chengdu <- stl_Chengdu$time.series[, "trend"]
+
+```
+##seasonalALL
+```{r seasonalALL}
+seasonal_data <- data.frame(
+  city = rep(c("Beijing", "Shanghai", "Guangzhou", "Shenzhen", "Tianjin", "Chongqing", "Chengdu"), each = 12),
+  month = rep(month.abb, 7),
+  seasonal = c(seasonal_Beijing, seasonal_Shanghai, seasonal_Guangzhou, seasonal_Shenzhen, seasonal_Tianjin, seasonal_Chongqing, seasonal_Chengdu)
+)
+#plot1_seasonal,"not good
+plot1 <- ggplot(seasonal_data, aes(x = month, y = seasonal, group = city)) +
+  geom_line() +
+  scale_x_discrete(limits = month.abb) +
+  facet_wrap(~city, nrow = 3) +
+  labs(title = "Seasonal Patterns in 7 Chinese Cities", x = "Month", y = "Seasonal Component") +
+  theme_minimal()
+
+#plot2_seasonal,
+plot2 <- ggplot(seasonal_data, aes(x = month, y = seasonal, group = city, colour = city)) +
+  geom_line() +
+  scale_x_discrete(limits = month.abb) +
+  labs(title = "Figure 2. Seasonality in PM2.5 in 7 Chinese Cities", x = "Month", y = "PM2.5 Seasonal Component") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  guides(colour = guide_legend(title = "City"))
+
+
+write.csv(seasonal_data, row.names = FALSE, 
+          file = "./Data/Processed/seasonal_data.csv")
+
+```
+##trendALL
+
+```{r trend_all}
+date_seq <- seq(as.Date("2000-01-01"), as.Date("2021-12-01"), by = "month")
+trend_data <- data.frame(
+  city = rep(c("Beijing", "Shanghai", "Guangzhou", "Shenzhen", "Tianjin", "Chongqing", "Chengdu"), each = length(date_seq)),
+  date = rep(date_seq, 7),
+  trend = c(trend_Beijing, trend_Shanghai, trend_Guangzhou, trend_Shenzhen, trend_Tianjin, trend_Chongqing, trend_Chengdu)
+)
+
+ggplot(trend_data, aes(x = date, y = trend, group = city, colour = city)) +
+  geom_line() +
+  labs(title = "Figure 3. Trends in PM2.5 in 7 Chinese Cities", x = "Date", y = "PM2.5 Trend Component") +
+  scale_x_date(breaks = "1 year", date_labels = "%Y") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(colour = guide_legend(title = "City"))
+
+write.csv(trend_data, row.names = FALSE, 
+          file = "./Data/Processed/trend_data.csv")
+
 
 ```
 

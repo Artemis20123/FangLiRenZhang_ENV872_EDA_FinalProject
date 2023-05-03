@@ -1,0 +1,196 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \setmainfont[]{Times New Roman}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=2.54cm]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Insert title of project here},
+  pdfauthor={Name},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Insert title of project here}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Web address for GitHub repository}
+\author{Name}
+\date{}
+
+\begin{document}
+\maketitle
+
+\newpage
+\tableofcontents 
+\newpage
+\listoftables 
+\newpage
+\listoffigures 
+\newpage
+
+\hypertarget{rationale-and-research-questions}{%
+\section{Rationale and Research
+Questions}\label{rationale-and-research-questions}}
+
+\newpage
+
+\hypertarget{dataset-information}{%
+\section{Dataset Information}\label{dataset-information}}
+
+\newpage
+
+\hypertarget{exploratory-analysis}{%
+\section{Exploratory Analysis}\label{exploratory-analysis}}
+
+To explore the data, we wanted to create a visualization of the monthly
+PM2.5 for the cities from 2000 to 2021. The data was first filtered to
+include only the seven cities of interest. Then we grouped the data by
+city, year, and month and summarized the mean PM2.5 value for each
+month. A monthly PM2.5 line plot was created for each city using
+ggplot2.
+\includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/TSA Visualization-1.pdf}
+The plot showed that Beijing and Tianjin had the highest PM2.5 values
+among the seven cities, and Shenzhen had the lowest values. Most of the
+cities seemed to have a slow increase in PM2.5 from 2000 to 2006, then
+stayed relatively constant from 2006 until 2014. In 2014, most cities
+had a spike in PM2.5. From 2014, PM2.5 in all cities showed a decreasing
+trend. To better understand the changes in PM2.5, we conducted
+time-series analysis and predicted the monthly PM2.5 for the seven
+cities from 2022 to 2026.
+
+\newpage
+
+\hypertarget{analysis}{%
+\section{Analysis}\label{analysis}}
+
+\hypertarget{part1-time-series-analysis}{%
+\subsection{Part1: Time Series
+Analysis}\label{part1-time-series-analysis}}
+
+\hypertarget{seven-cities-monthly-pm2.5-20002021}{%
+\subsubsection{Seven cities monthly PM2.5
+(2000\textasciitilde2021)}\label{seven-cities-monthly-pm2.5-20002021}}
+
+Using the STL function, we decomposed the PM2.5 time series data of the
+target cities into seasonal and trend components and performed a
+comparative analysis. The PM2.5 values in these cities are generally
+lower during the summer months (June, July, August, and September) and
+higher during the winter months (November, December, January, and
+February) (Figure 2). There are several possible factors contributing to
+this seasonality: First, In the summer, temperatures are higher, leading
+to more active air convection, which facilitates the dispersion and
+dissipation of pollutants in the air. Secondly, there tends to be more
+rainfall in the summer, which can wash PM2.5 particles from the
+atmosphere to the ground, reducing their measured values. Thirdly, in
+the winter, heating demand increases, and in some areas, coal combustion
+remains the primary method of providing heat. This leads to increased
+emissions of coal-related pollutants, causing a rise in PM2.5 levels.
+
+\includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/seasonal figure-1.pdf}
+
+The trend results for the target cities are consistent with those
+observed in the exploratory analysis (Figure 3). Notably, around 2014
+marked a turning point when PM2.5 levels in major cities began to
+decrease gradually. This shift is likely attributed to the Chinese
+government's implementation of the Air Pollution Prevention and Control
+Action Plan, released in September 2013. This plan was the first time
+the Chinese government set explicit air quality improvement targets. It
+required that, by 2017, the annual average PM2.5 concentration in cities
+at or above the prefectural level should be reduced by more than 10\%.
+In key regions such as Beijing-Tianjin-Hebei, the Yangtze River Delta,
+and the Pearl River Delta, the plan aimed for reductions of 25\%, 20\%,
+and 15\%, respectively.
+
+\includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/trend figure-1.pdf}
+
+\hypertarget{question-2}{%
+\subsection{Question 2:}\label{question-2}}
+
+To better visualize the data, we created a dashboard using Shiny. The
+dashboard consisted of three side panels:``PM2.5 National
+Distribution'', ``Time Series Visualization by City'', ``PM2.5
+Prediction by City'' and three corresponding tab panels: ``Map'',
+``TSA'', and ``Prediction''.
+
+The ``PM2.5 National Distribution'' allows users to drag the map in the
+``Map'' tab and explore the PM2.5 distribution pattern in the country.
+The ``Time Series Visualization by City'' panel has a dropdown box that
+allows users to select the monthly PM2.5 visualization of each city. The
+results are displayed in the ``TSA'' tab. Finally, the ``PM2.5
+Prediction by City'' panel has a dropdown box and slider. Users can
+select the city and the time range to view the monthly PM2.5 prediction
+in the ``Prediction'' tab.
+
+\newpage
+
+\hypertarget{summary-and-conclusions}{%
+\section{Summary and Conclusions}\label{summary-and-conclusions}}
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\textless add references here if relevant, otherwise delete this
+section\textgreater{}
+
+\end{document}
