@@ -26,10 +26,15 @@ library(zoo)
 library(kableExtra)
 library(dplyr)
 library(smooth)
+#install.packages("grid")
+library(grid)
 
 ```
+#Notice
+I don't know where the conflict occurred, the checkresiduals run of chunk4 can't come out. But the whole document can be knit
+
 #data
-```{r}
+```{r data}
 raw <- read.csv("./Data/Processed/PM2.5_daily_city_2000_2021.csv")
 Table_raw <- raw[c(1:20),]
 kable(Table_raw,caption = "Raw data")
@@ -41,7 +46,7 @@ raw_wider <- raw %>% pivot_wider(names_from = city_id, values_from = meanpm) %>%
 ```
 #Beijing 1100
 ##data
-```{r}
+```{r Beijing_test}
 Beijing <- raw_wider[,c('date', 'year', 'month', 'day', '1100')] %>% rename(pm2.5 = '1100') %>% group_by(year, month) %>% summarize(monthlyPM = mean(pm2.5)) %>% mutate(date = as.Date(paste(year, month, 01, sep = "-")))
 
 #question, mean PM or accumulated PM
@@ -76,7 +81,7 @@ checkresiduals(SARIMA_Beijing_fit)
 SARIMA_Beijing <- forecast(SARIMA_Beijing_fit,h=12)
 plot(SARIMA_Beijing)
 ```
-## Model 4: seasonal exponential smoothing，Triple Exponential Smoothing
+## Model 4: seasonal exponential smoothing,Triple Exponential Smoothing
 ```{r}
 SSES_Beijing <- es(ts_Beijing_train,model="ZZZ",h=12,holdout=FALSE)
 plot(SSES_Beijing)
@@ -94,7 +99,7 @@ colnames(df23) <- c("SNAIVE","SARIMA")
 df23_mean <- df23 %>% mutate(SNAIVE_SARIMA = (SNAIVE + SARIMA)/2)
 ```
 
-##Model 3+4
+##Model 2+4
 ```{r}
 SSES_Beijing$forecast
 SARIMA_Beijing$mean
@@ -124,7 +129,7 @@ kbl(Beijing_scores0,
       digits = array(4,ncol(Beijing_scores0))) %>%
   kable_styling(full_width = FALSE, position = "center") %>%
   #highlight model with lowest RMSE
-  kable_styling(latex_options="striped", stripe_index = which.min(Beijing_scores[,"RMSE"]))
+  kable_styling(latex_options="striped", stripe_index = which.min(Beijing_scores0[,"RMSE"]))
 ##save
 write.csv(Beijing_scores0, row.names = FALSE, 
           file = "./Data/Processed/Beijing_scores0.csv")
