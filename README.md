@@ -69,7 +69,7 @@ All the raw and processed data are stored in the Data folder, including shapefil
 
 \<For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.\>
 
-2.  Final forecast result: "./Data/Processed/all_forcast.csv"
+1.  Final forecast result: "./Data/Processed/all_forcast.csv"
 
 | Column Name | Description               | Class     |
 |-------------|---------------------------|-----------|
@@ -82,7 +82,7 @@ All the raw and processed data are stored in the Data folder, including shapefil
 | R_Chongqing | Chongqing forecast result | numeric   |
 | R_Chengdu   | Chengdu forecast result   | numeric   |
 
-3.  Accuracy table for 6 models: "./Data/Processed/Beijing_scores.csv"
+2.  Accuracy table for 6 models: "./Data/Processed/Beijing_scores.csv"
 
 | Column Name | Description                    | Class   |
 |-------------|--------------------------------|---------|
@@ -92,9 +92,9 @@ All the raw and processed data are stored in the Data folder, including shapefil
 | MPE         | Mean Percentage Error          | numeric |
 | MAPE        | Mean Absolute Percentage Error | numeric |
 
-4.  Accuracy table for 4 models: "./Data/Processed/Beijing_scores0.csv"
+3.  Accuracy table for 4 models: "./Data/Processed/Beijing_scores0.csv"
 
-5.  Seasonal component of 7 cities by STL: "./Data/Processed/seasonal_data.csv"
+4.  Seasonal component of 7 cities by STL: "./Data/Processed/seasonal_data.csv"
 
 | Column Name | Description              | Class     |
 |-------------|--------------------------|-----------|
@@ -102,7 +102,7 @@ All the raw and processed data are stored in the Data folder, including shapefil
 | month       | month                    | character |
 | seasonal    | PM2.5 seasonal component | numeric   |
 
-6.  Trend component of 7 cities by STL: "./Data/Processed/trend_data.csv"
+5.  Trend component of 7 cities by STL: "./Data/Processed/trend_data.csv"
 
 | Column Name | Description            | Class     |
 |-------------|------------------------|-----------|
