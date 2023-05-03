@@ -118,13 +118,13 @@ ui <- dashboardPage(
    tabItem(
      tabName = "Notifications",
      h2("Dashboard Notifications", style = "font-size: 20px;"),
-     p("This dashboard displays the distribution and changes of PM2.5 in Chinese cities from 2000 to 2021 and predicted PM2.5 from 2022 to 2026."),
+     p("This dashboard displays the distribution and changes of PM2.5 in Chinese cities from 2000 to 2021 and predicts PM2.5 from 2022 to 2026."),
      p("To see the national distribution map, select a year and month using the dropdown menus in the PM2.5 National Distribution sidebar. The map will display the monthly PM2.5 concentration under the Map tab."),
-     p("To see the PM2.5 time series visualization of the selected cities, select a city using the dropdown menus in the Time Series Visualization by City sidebar. The plot will be displayed in the TSA tab."),
-     p("To see the PM2.5 prediction of the selected cities, select a city using the dropdown menus and select a time range using the slider in the PM2.5 Prediction by City sidebar. The plot will be displayed in the Prediction tab."),
+     p("To see the PM2.5 time series visualization of the selected cities, select a city using the dropdown menu in the Time Series Visualization by City sidebar. The plot will be displayed in the TSA tab."),
+     p("To see the PM2.5 prediction of the selected cities, select a city using the dropdown menu and select a time range using the slider in the PM2.5 Prediction by City sidebar. The plot will be displayed in the Prediction tab."),
      p("For more information, please see the following resources:"),
      p(a("GitHub repository", href = "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject")),
-     p(a("Wrangling code", href = "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Code/Data%20preprocess.Rmd"))
+     p(a("Wrangling code", href = "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Code/data%20wrangling.Rmd"))
    )
   )
 )
