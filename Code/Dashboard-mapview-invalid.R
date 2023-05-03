@@ -2,6 +2,7 @@ library(shinydashboard)
 library(mapview)
 library(sf)
 library(RColorBrewer)
+library(tidyverse)
 
 # load data
 pm25_data <- read.csv("Data/Processed/PM2.5_monthly_city_2000_2021.csv")
