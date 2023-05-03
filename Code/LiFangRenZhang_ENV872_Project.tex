@@ -97,12 +97,13 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Insert title of project here},
+  pdftitle={A Time Series Analysis and Visualization of PM2.5 Distribution in China},
   pdfauthor={Yixin Fang, Jiahuan Li, Yuxiang Ren, Jinglin Zhang},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Insert title of project here}
+\title{A Time Series Analysis and Visualization of PM2.5 Distribution in
+China}
 \usepackage{etoolbox}
 \makeatletter
 \providecommand{\subtitle}[1]{% add subtitle to \maketitle
@@ -251,9 +252,13 @@ city, year, and month and summarized the mean PM2.5 value for each
 month. A monthly PM2.5 line plot was created for each city using
 ggplot2.
 
+\begin{figure}
+\centering
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/TSA Visualization-1.pdf}
+\caption{Time Series Visualization of the Seven Cities}
+\end{figure}
 
-The plot showed that Beijing and Tianjin had the highest PM2.5 values
+Figure 1 showed that Beijing and Tianjin had the highest PM2.5 values
 among the seven cities, and Shenzhen had the lowest values. Most of the
 cities seemed to have a slow increase in PM2.5 from 2000 to 2006, then
 stayed relatively constant from 2006 until 2014. In 2014, most cities
@@ -296,7 +301,7 @@ levels.
 \begin{figure}
 \centering
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/seasonal figure-1.pdf}
-\caption{Figure 2. Seasonality in PM2.5 in 7 Chinese Cities}
+\caption{Seasonality in PM2.5 in 7 Chinese Cities}
 \end{figure}
 
 The trend results for the target cities are consistent with those
@@ -314,7 +319,7 @@ and 15\%, respectively.
 \begin{figure}
 \centering
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/trend figure-1.pdf}
-\caption{Figure 3. Trends in PM2.5 in 7 Chinese Cities}
+\caption{Trends in PM2.5 in 7 Chinese Cities}
 \end{figure}
 
 \hypertarget{what-might-be-the-monthly-average-pm2.5-concentrations-in-these-seven-cities-for-the-next-three-years}{%
@@ -415,14 +420,14 @@ SSES\_SARIMA & 0.233739 & 12.50184 & 9.574127 & -13.556343 & 31.19364\\
 \end{tabular}
 \end{table}
 
-\hypertarget{question-2}{%
-\subsection{Question 2:}\label{question-2}}
+\hypertarget{dashboard}{%
+\subsection{Dashboard:}\label{dashboard}}
 
-To better visualize the data, we created a dashboard using Shiny. The
-dashboard consisted of three side panels:``PM2.5 National
-Distribution'', ``Time Series Visualization by City'', ``PM2.5
-Prediction by City'' and three corresponding tab panels: ``Map'',
-``TSA'', and ``Prediction''.
+To better visualize and allow users to interact with the data, we
+created a dashboard using Shiny. The dashboard consisted of three side
+panels:``PM2.5 National Distribution'', ``Time Series Visualization by
+City'', ``PM2.5 Prediction by City'' and three corresponding tab panels:
+``Map'', ``TSA'', and ``Prediction''.
 
 The ``PM2.5 National Distribution'' allows users to drag the map in the
 ``Map'' tab and explore the PM2.5 distribution pattern in the country.
