@@ -81,76 +81,47 @@ The naming convention for the files in the repository follows a descriptive and 
 
 1.  City boundaries: "./Data/Raw/2000china_city_map/map/city_dingel_2000.shp"
 
-+---------------+------------------+----------------+--------------------------+
-| Variables     | Class            | Units          | Ranges                   |
-+:=============:+:================:+:==============:+:========================:+
-| OBJECTID      | numeric          | N/A            | [1,365]                  |
-+---------------+------------------+----------------+--------------------------+
-| city_id       | numeric          | N/A            | 1100 \~ 659001           |
-+---------------+------------------+----------------+--------------------------+
-| shape_Length  | numeric          | degrees        | [0.3270022,46.942166]    |
-+---------------+------------------+----------------+--------------------------+
-| shape_Area    | numeric          | square degrees | [0.001671796, 49.457278] |
-+---------------+------------------+----------------+--------------------------+
-| geometry      | sfc_MULTIPOLYGON | degrees        | N/A                      |
-+---------------+------------------+----------------+--------------------------+
+|  Variables   |      Class       |     Units      |          Ranges          |
+|:------------:|:----------------:|:--------------:|:------------------------:|
+|   OBJECTID   |     numeric      |      N/A       |         [1,365]          |
+|   city_id    |     numeric      |      N/A       |      1100 \~ 659001      |
+| shape_Length |     numeric      |    degrees     |  [0.3270022,46.942166]   |
+|  shape_Area  |     numeric      | square degrees | [0.001671796, 49.457278] |
+|   geometry   | sfc_MULTIPOLYGON |    degrees     |           N/A            |
 
 2.  Daily level PM2.5 concentration data: "./Data/Processed/PM2.5_daily_city_2000_2021.csv"
 
-| Variables |  Class  |    Units     |        Ranges        |
-|:---------:|:-------:|:------------:|:--------------------:|
-|   year    | numeric |      T       |     [2000,2021]      |
-|   month   | numeric |      T       |        [1,12]        |
-|    day    | numeric |      T       |        [1,31]        |
-|  city_id  | numeric |     N/A      |    1100 \~ 659001    |
-|  meanpm   | numeric | $\mu$g/m$^3$ | [3.364316, 585.4695] |
+| Variables |  Class  | Units |        Ranges        |
+|:---------:|:-------:|:-----:|:--------------------:|
+|   year    | numeric |   T   |     [2000,2021]      |
+|   month   | numeric |   T   |        [1,12]        |
+|    day    | numeric |   T   |        [1,31]        |
+|  city_id  | numeric |  N/A  |    1100 \~ 659001    |
+|  meanpm   | numeric | ug/m3 | [3.364316, 585.4695] |
 
 3.  Monthly level PM2.5 concentration data: "./Data/Processed/PM2.5_monthly_city_2000_2021.csv"
 
-|  Variables   |   Class   |    Units     |        Ranges        |
-|:------------:|:---------:|:------------:|:--------------------:|
-|     year     |  numeric  |      T       |     [2000,2021]      |
-|    month     |  numeric  |      T       |        [1,12]        |
-|   city_id    |  numeric  |     N/A      |    1100 \~ 659001    |
-| 地级单位名称 | character |     N/A      |         N/A          |
-|   cityname   | character |     N/A      |         N/A          |
-|    meanPM    |  numeric  | $\mu$g/m$^3$ | [6.437489, 200.2201] |
+|  Variables   |   Class   | Units |        Ranges        |
+|:------------:|:---------:|:-----:|:--------------------:|
+|     year     |  numeric  |   T   |     [2000,2021]      |
+|    month     |  numeric  |   T   |        [1,12]        |
+|   city_id    |  numeric  |  N/A  |    1100 \~ 659001    |
+| 地级单位名称 | character |  N/A  |         N/A          |
+|   cityname   | character |  N/A  |         N/A          |
+|    meanPM    |  numeric  | ug/m3 | [6.437489, 200.2201] |
 
 4.  Final forecast result: "./Data/Processed/all_forcast.csv"
 
-+-------------+---------------------------+-----------+----------+
-| Column Name | Description               | Class     | Unit     |
-+=============+===========================+===========+==========+
-| Date        | Date                      | character |          |
-+-------------+---------------------------+-----------+----------+
-| R_Beijing   | Beijing forecast result   | numeric   | $\mu$g/m |
-|             |                           |           |          |
-|             |                           |           | $^3$     |
-+-------------+---------------------------+-----------+----------+
-| R_Shanghai  | Shanghai forecast result  | numeric   | $\mu$g/m |
-|             |                           |           |          |
-|             |                           |           | $^3$     |
-+-------------+---------------------------+-----------+----------+
-| R_Guangzhou | Guangzhou forecast result | numeric   | $\mu$g/m |
-|             |                           |           |          |
-|             |                           |           | $^3$     |
-+-------------+---------------------------+-----------+----------+
-| R_Shenzhen  | Shenzhen forecast result  | numeric   | $\mu$g/m |
-|             |                           |           |          |
-|             |                           |           | $^3$     |
-+-------------+---------------------------+-----------+----------+
-| R_Tianjin   | Tianjin forecast result   | numeric   | $\mu$g/m |
-|             |                           |           |          |
-|             |                           |           | $^3$     |
-+-------------+---------------------------+-----------+----------+
-| R_Chongqing | Chongqing forecast result | numeric   | $\mu$g/m |
-|             |                           |           |          |
-|             |                           |           | $^3$     |
-+-------------+---------------------------+-----------+----------+
-| R_Chengdu   | Chengdu forecast result   | numeric   | $\mu$g/m |
-|             |                           |           |          |
-|             |                           |           | $^3$     |
-+-------------+---------------------------+-----------+----------+
+| Column Name | Description               | Class     | Unit  |
+|-------------|---------------------------|-----------|-------|
+| Date        | Date                      | character |       |
+| R_Beijing   | Beijing forecast result   | numeric   | ug/m3 |
+| R_Shanghai  | Shanghai forecast result  | numeric   | ug/m3 |
+| R_Guangzhou | Guangzhou forecast result | numeric   | ug/m3 |
+| R_Shenzhen  | Shenzhen forecast result  | numeric   | ug/m3 |
+| R_Tianjin   | Tianjin forecast result   | numeric   | ug/m3 |
+| R_Chongqing | Chongqing forecast result | numeric   | ug/m3 |
+| R_Chengdu   | Chengdu forecast result   | numeric   | ug/m3 |
 
 5.  Accuracy table for 6 models: "./Data/Processed/Beijing_scores.csv"
 
