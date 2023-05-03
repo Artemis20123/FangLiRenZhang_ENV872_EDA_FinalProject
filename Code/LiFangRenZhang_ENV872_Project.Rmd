@@ -6,8 +6,8 @@ output:
     number_sections: yes
 geometry: margin=2.54cm
 title: "Insert title of project here"
-subtitle: "Web address for GitHub repository"
-author: "Name"
+subtitle: "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject.git"
+author: "Jiahuan Li, Jinglin Zhang, Yixin Fang, Yuxiang Ren"
 fontsize: 12pt
 mainfont: Times New Roman
 editor_options: 
@@ -33,7 +33,6 @@ library(DT)
 library(shiny)
 library(shinydashboard)
 library(leaflet)
-library(shiny)
 library(leaflet)
 library(tidyverse)
 library(lubridate)
