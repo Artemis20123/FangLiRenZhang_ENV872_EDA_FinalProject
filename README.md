@@ -47,21 +47,68 @@ The data used in this repository is derived from 2 sources:
     -   Source: the statistical bureau of the Chinese national government
     -   A shapefile of Chinese cities boundaries
 
-All the raw and processed data are stored in the Data folder, including shapefiles, NetCDF files, and CSV files. The metadata folder contains detailed information about the data used in this project.
+All the raw and processed data are stored in the Data folder. More detailed metadata information for each dataset can be found in the `Metadata.Rmd` file located in the `Data` folder and `Raw` subfolder.
 
 ## Folder structure, file formats, and naming conventions
 
-\<describe the folders contained in the repository, including what type of files they contain\>
+The repository contains the following main folders:
 
-<describe the formats of files for the various purposes contained in the repository>
+-   **Data**: contains all the data used and generated in the project, including raw data, processed data, and metadata files
 
-<describe your file naming conventions>
+-   **Code**: include codes for data wrangling, dashboard creation, time series analysis, and report generation
+
+-   **Example**: include the reference documents of the project such as the course materials, project rubric, and previous student work examples
+
+-   **Output**: include snaps (PNG files) of the dashboard
+
+The file formats used in the project are:
+
+-   **CSV**: zonal statistics results and the intermediate aggregated data are saved in the CSV format
+
+-   **Shapefile**: the city boundaries are stored as the shapefile format
+
+-   **R script & Rmarkdown:** projectcodes are written in R script and .rmd files
+
+-   **PDF**: project documents are stored in PDF format
+
+-   **Others**: the repository contains various other files in addition to the ones mentioned above. These include markdown (.md) files, image (.png) files, and citation style language (.csl) files
+
+The naming convention for the files in the repository follows a descriptive and consistent approach. For example, the raw data files are named using a combination of the variable name and the year, while the processed data files are named using a combination of the variable name, city name, and date range. All file names include underscores between words to improve readability.
 
 ## Metadata
 
-\<For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.\>
+1.  City boundaries: "./Data/Raw/2000china_city_map/map/city_dingel_2000.shp"
 
-2.  Final forecast result: "./Data/Processed/all_forcast.csv"
+|  Variables   |      Class       |     Units      |          Ranges          |
+|:------------:|:----------------:|:--------------:|:------------------------:|
+|   OBJECTID   |     numeric      |      N/A       |         [1,365]          |
+|   city_id    |     numeric      |      N/A       |      1100 \~ 659001      |
+| shape_Length |     numeric      |    degrees     |  [0.3270022,46.942166]   |
+|  shape_Area  |     numeric      | square degrees | [0.001671796, 49.457278] |
+|   geometry   | sfc_MULTIPOLYGON |    degrees     |           N/A            |
+
+2.  Daily level PM2.5 concentration data: "./Data/Processed/PM2.5_daily_city_2000_2021.csv"
+
+| Variables |  Class  |   Units    |        Ranges        |
+|:---------:|:-------:|:----------:|:--------------------:|
+|   year    | numeric |     T      |     [2000,2021]      |
+|   month   | numeric |     T      |        [1,12]        |
+|    day    | numeric |     T      |        [1,31]        |
+|  city_id  | numeric |    N/A     |    1100 \~ 659001    |
+|  meanpm   | numeric | $µ$g/m$^3$ | [3.364316, 585.4695] |
+
+3.  Monthly level PM2.5 concentration data: "./Data/Processed/PM2.5_monthly_city_2000_2021.csv"
+
+|  Variables   |   Class   |   Units    |        Ranges        |
+|:------------:|:---------:|:----------:|:--------------------:|
+|     year     |  numeric  |     T      |     [2000,2021]      |
+|    month     |  numeric  |     T      |        [1,12]        |
+|   city_id    |  numeric  |    N/A     |    1100 \~ 659001    |
+| 地级单位名称 | character |    N/A     |         N/A          |
+|   cityname   | character |    N/A     |         N/A          |
+|    meanPM    |  numeric  | $µ$g/m$^3$ | [6.437489, 200.2201] |
+
+4.  Final forecast result: "./Data/Processed/all_forcast.csv"
 
 | Column Name | Description               | Class     |
 |-------------|---------------------------|-----------|
@@ -74,7 +121,9 @@ All the raw and processed data are stored in the Data folder, including shapefil
 | R_Chongqing | Chongqing forecast result | numeric   |
 | R_Chengdu   | Chengdu forecast result   | numeric   |
 
-3.  Accuracy table for 6 models: "./Data/Processed/Beijing_scores.csv"
+5.  Accuracy table for 6 models: "./Data/Processed/Beijing_scores.csv"
+
+    Accuracy table for 4 models: "./Data/Processed/Beijing_scores0.csv"
 
 | Column Name | Description                    | Class   |
 |-------------|--------------------------------|---------|
@@ -84,9 +133,7 @@ All the raw and processed data are stored in the Data folder, including shapefil
 | MPE         | Mean Percentage Error          | numeric |
 | MAPE        | Mean Absolute Percentage Error | numeric |
 
-4.  Accuracy table for 4 models: "./Data/Processed/Beijing_scores0.csv"
-
-5.  Seasonal component of 7 cities by STL: "./Data/Processed/seasonal_data.csv"
+6.  Seasonal component of 7 cities by STL: "./Data/Processed/seasonal_data.csv"
 
 | Column Name | Description              | Class     |
 |-------------|--------------------------|-----------|
@@ -94,7 +141,7 @@ All the raw and processed data are stored in the Data folder, including shapefil
 | month       | month                    | character |
 | seasonal    | PM2.5 seasonal component | numeric   |
 
-6.  Trend component of 7 cities by STL: "./Data/Processed/trend_data.csv"
+7.  Trend component of 7 cities by STL: "./Data/Processed/trend_data.csv"
 
 | Column Name | Description            | Class     |
 |-------------|------------------------|-----------|
@@ -104,7 +151,9 @@ All the raw and processed data are stored in the Data folder, including shapefil
 
 ## Scripts and code
 
-\<list any software scripts/code contained in the repository and a description of their purpose.\>
+-   **dashbord-the choropleth map.R**: implements the functionality of the first panel of the dashboard (with extra dropdown menu examples)
+
+-   **dashbord-TSA & Prediction.R:**
 
 ## Quality assurance/quality control
 
