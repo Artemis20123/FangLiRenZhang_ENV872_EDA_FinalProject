@@ -26,12 +26,12 @@ library(zoo)
 library(kableExtra)
 library(dplyr)
 library(smooth)
-#install.packages("grid")
-library(grid)
+
 
 ```
 #Notice
-I don't know where the conflict occurred, the checkresiduals run of chunk4 can't come out. But the whole document can be knit
+I don't know where the conflict occurred, the checkresiduals run of chunk4 can't come out.
+This problem come after i run the dashboard.But the whole document can be knit
 
 #data
 ```{r data}
