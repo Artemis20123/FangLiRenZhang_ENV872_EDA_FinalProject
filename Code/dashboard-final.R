@@ -4,7 +4,6 @@ pacman::p_load(DT,shiny,shinydashboard,leaflet,tidyverse,lubridate,ggpubr,sf,RCo
 
 getwd()
 
-
 # Data preparation: Panel 1: Map ##############
 ## load data
 pm25_data <- read.csv("Data/Processed/PM2.5_monthly_city_2000_2021.csv")
