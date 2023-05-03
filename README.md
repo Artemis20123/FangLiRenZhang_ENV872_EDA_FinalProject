@@ -84,12 +84,19 @@ The naming convention for the files in the repository follows a descriptive and 
 
 -   **Code**:
 LiFangRenZhang_ENV872_Project: final report. 
+
 Reference: apa-6th-edition.csl(format) reference.bib(reference) 
+
 Dashboard: dashboard-final.R(combined final dashboard) 
-           dashboard-map-search control.R(code for display time series) 
+
+           dashboard-map-search control.R(code for display time series)
+           
            dashboard-the choropleth map.R(code for display distribution) 
+           
            dashboard-TSA & Prediction.R(code to display prediction) 
+           
 data wrangling: transform raw data. 
+
 TSA2: time series analysis part.
 
 -   **Data**:
