@@ -1,3 +1,8 @@
+## Todos
+# 1. update the code. you can use the newest monthly level data in the preparation section. It will faster the speed of generating the dashboard
+# 2. modify notifications at the end of the dashboard (add information for the 2 & 3 panel)
+# 3. change the color of the slidebar. I am not very satisfied with the current red color
+
 pacman::p_load(DT,shiny,shinydashboard,leaflet,tidyverse,lubridate,ggpubr,sf,RColorBrewer)
 
 Sys.setenv(LANG = "en")
@@ -99,46 +104,92 @@ ggarrange(beijing, chengdu, chongqing, guangzhou, shanghai, shenzhen, tianjin,
 
 # Dashboard ############## 
 ## UI ######################################################################
-ui <- fluidPage(
-  titlePanel("PM2.5 Distribution in China"),
-  fluidRow(
-    column(width = 3,
-           wellPanel(
-             h4("PM2.5 National Distribution"),
-             selectInput(inputId = "year", 
-                         label = "Year",
-                         choices = unique(pm25_sf$year), 
-                         selected = "2000"),
-             selectInput(inputId = "month", 
-                         label = "Month",
-                         choices = unique(pm25_sf$month), 
-                         selected = "1")),
-           wellPanel(
-             h4("Time Series Visualization by City"),
-             selectInput("dropdown1", "Choose City", 
-                         choices = c("Beijing", "Chongqing",
-                                     "Chengdu", "Guangzhou", 
-                                     "Shanghai", "Shenzhen", 
-                                     "Tianjin"))
-           ),
-           wellPanel(
-             h4("PM2.5 Prediction by City"),
-             selectInput("dropdown2", "Choose City", 
-                         choices = c("Beijing", "Chongqing", 
-                                     "Chengdu","Guangzhou",
-                                     "Shanghai","Shenzhen",
-                                     "Tianjin")),
-             sliderInput("slider2", "Choose Year", 
-                         min = 2022, max = 2026, value = c(2022,2024), step = 1)
-           )
-    ),
-    column(width = 9,
-           tabsetPanel(
-             tabPanel("Map", leafletOutput("map", height = "650px")),
-             tabPanel("TSA", plotOutput("city_plot")),
-             tabPanel("Prediction", plotOutput("prediction_plot"))
-           )
+ui <- dashboardPage(
+  dashboardHeader(
+    title = "PM2.5 Distribution in China",
+    titleWidth = 300,
+    dropdownMenu(type = "messages", badgeStatus = NULL,
+                 headerText = "Authors",
+                 messageItem("Yixin Fang",
+                             "yixin.fang@duke.edu",
+                             time = "iMEP Duke"
+                 ),
+                 messageItem("Jiahuan Li",
+                             "jiahuan.li@duke.edu",
+                             time = "iMEP Duke"
+                 ),
+                 messageItem("Yuxiang Ren",
+                             "yuxiang.ren@duke.edu",
+                             time = "iMEP Duke"
+                 ),
+                 messageItem("Jinglin Zhang",
+                             "jinglin.zhang@duke.edu",
+                             time = "iMEP Duke"
+                 )
     )
+  ),
+  dashboardSidebar(
+     width = 300,
+     wellPanel(
+       h4("PM2.5 National Distribution"),
+       selectInput(inputId = "year", 
+                   label = "Year",
+                   choices = unique(pm25_sf$year), 
+                   selected = "2000"),
+       selectInput(inputId = "month", 
+                   label = "Month",
+                   choices = unique(pm25_sf$month), 
+                   selected = "1"),
+       style = "background-color: #800000;"
+     ),
+     wellPanel(
+       h4("Time Series Visualization by City"),
+       selectInput("dropdown1", "Choose City", 
+                   choices = c("Beijing", "Chongqing",
+                               "Chengdu", "Guangzhou", 
+                               "Shanghai", "Shenzhen", 
+                               "Tianjin")),
+       style = "background-color: #800000;"
+     ),
+     wellPanel(
+       h4("PM2.5 Prediction by City"),
+       selectInput("dropdown2", "Choose City", 
+                   choices = c("Beijing", "Chongqing", 
+                               "Chengdu","Guangzhou",
+                               "Shanghai","Shenzhen",
+                               "Tianjin")),
+       sliderInput("slider2", "Choose Year", 
+                   min = 2022, max = 2026, value = c(2022,2024), step = 1),
+       style = "background-color: #800000;"
+     )
+  ),
+  dashboardBody(
+    fluidRow(
+      box(
+        title = "PM2.5 Dashboard",
+        footer = HTML(paste0("Primary dataset: ", 
+                             "<a href='https://zenodo.org/record/6398971#.Y_w6H3ZBy3A'>",
+                             "https://zenodo.org/record/6398971#.Y_w6H3ZBy3A",
+                             "</a>")),
+        width = 10,
+        status = "primary",
+        solidHeader = TRUE,
+        tabsetPanel(
+         tabPanel("Map", leafletOutput("map", height = "650px")),
+         tabPanel("TSA", plotOutput("city_plot")),
+         tabPanel("Prediction", plotOutput("prediction_plot"))
+        )
+      )
+    ),
+   tabItem(
+     tabName = "Notifications",
+     h2("Dashboard Notifications", style = "font-size: 20px;"),
+     p("This dashboard displays the distribution of PM2.5 in Chinese cities from 2000 to 2021."),
+     p("To use the dashboard, select a year and month using the dropdown menus in the sidebar. The map will display the mean PM2.5 concentration for each city in the selected year and month."),
+     p("For more information, please see the following resources:"),
+     p(a("GitHub repository", href = "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject")),
+     p(a("Wrangling code", href = "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Code/Data%20preprocess.Rmd"))
+   )
   )
 )
 
@@ -253,11 +304,3 @@ server <- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)
-
-
-
-
-
-
-
-
