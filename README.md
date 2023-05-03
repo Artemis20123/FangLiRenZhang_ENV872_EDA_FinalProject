@@ -10,7 +10,7 @@ editor_options:
 
 \<describe the purpose of this repository, the information it contains,
 and any relevant analysis goals. What, why, where, when, how?\>
-
+this project visualized the monthly average concentration of PM2.5 in Chinese cities from 2000 to 2021 and analyzed the historical trends and predicted the concentration changes for the next 5 years in megacities. we created a dashboard to provide the monthly average pm2.5 concentration for each city in China from 2000 to 2021, and applied time series analysis on seven megacities in China to reveal their historical trends of pm2.5 and predicted the possible future monthly concentration in next 5 years.
 ## Investigators
 
 <<<<<<< HEAD
