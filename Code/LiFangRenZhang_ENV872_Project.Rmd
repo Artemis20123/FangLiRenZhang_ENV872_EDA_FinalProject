@@ -272,7 +272,7 @@ The "PM2.5 National Distribution" allows users to drag the map in the "Map" tab 
 
 # Summary and Conclusions
 
-We visualized the annual average concentration of PM2.5 in Chinese cities from 2000 to 2021 and analyzed the historical trends and predicted the concentration changes for the next 5 years in megacities. Our results show that the PM2.5 concentration increased from 2000 to 2013, with higher concentrations in the eastern regions compared to the western and southern regions. Since 2014, PM2.5 concentration in China has been decreasing. The concentration during autumn and winter was higher than that during spring and summer. Combining the SRIMA and SSES models resulted in the most accurate prediction. Our findings suggest that the PM2.5 concentration will continue to decrease in the next five years.
+We visualized the monthly average concentration of PM2.5 in Chinese cities from 2000 to 2021 and analyzed the historical trends and predicted the concentration changes for the next 5 years in megacities. Our results show that the PM2.5 concentration increased from 2000 to 2013, with higher concentrations in the eastern and northen regions compared to the western and southern regions. Since 2014, PM2.5 concentration in China has been decreasing. The concentration during autumn and winter was higher than that during spring and summer. Combining the SRIMA and SSES models resulted in the most accurate prediction. Our prediction suggest that at the end of 2027, the highest and lowest pm2.5 in Beijing, .
 
 \newpage
 
