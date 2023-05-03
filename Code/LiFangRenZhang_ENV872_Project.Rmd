@@ -159,7 +159,7 @@ The plot showed that Beijing and Tianjin had the highest PM2.5 values among the 
 
 ## Part1: Time Series Analysis
 
-### Seven cities monthly PM2.5 (2000\~2021)
+### How has the PM2.5 concentration in the seven cities changed?
 
 Using the STL function, we decomposed the PM2.5 time series data of the target cities into seasonal and trend components and performed a comparative analysis. The PM2.5 values in these cities are generally lower during the summer months (June, July, August, and September) and higher during the winter months (November, December, January, and February) (Figure 2). There are several possible factors contributing to this seasonality: First, In the summer, temperatures are higher, leading to more active air convection, which facilitates the dispersion and dissipation of pollutants in the air. Secondly, there tends to be more rainfall in the summer, which can wash PM2.5 particles from the atmosphere to the ground, reducing their measured values [@rain]. Thirdly, in the winter, heating demand increases, and in some areas, coal combustion remains the primary method of providing heat [@heating]. This leads to increased emissions of coal-related pollutants, causing a rise in PM2.5 levels.
 
@@ -194,7 +194,8 @@ ggplot(trend_data, aes(x = date, y = trend, group = city, colour = city)) +
   guides(colour = guide_legend(title = "City"))
 ```
 
-### Seven cities monthly PM2.5 forecast (2022\~2026)
+### What might be the monthly average PM2.5 concentrations in these seven cities for the next three years?
+
 
 In order to obtain better forecasting results, we conducted a predictive accuracy test on multiple time series models based on Beijing's data from 2000 to 2020 (using actual 2021 data as a benchmark for comparison). These models include:
 
