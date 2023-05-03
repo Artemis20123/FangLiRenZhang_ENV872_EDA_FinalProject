@@ -36,6 +36,16 @@
 \makeatother
 \usepackage{xcolor}
 \usepackage[margin=2.54cm]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -135,10 +145,11 @@ on human health (\protect\hyperlink{ref-intro1}{Doe, Smith, \& Williams,
 variety of diseases, including cardiovascular disease, mental illness,
 skin cancer, chronic respiratory diseases, and decreased lung function
 Dockery \& Verrier (\protect\hyperlink{ref-intro3}{2005}). Among the
-various pollutants in the environment, PM2.5 is considered a major
-contributor to health problems (\protect\hyperlink{ref-intro4}{Pope III
-\& Dockery, 2006}). Therefore, monitoring and controlling PM2.5 is
-crucial for the sustainable development of society.
+various pollutants in the environment, \(PM_{2.5}\) is considered a
+major contributor to health problems
+(\protect\hyperlink{ref-intro4}{Pope III \& Dockery, 2006}). Therefore,
+monitoring and controlling \(PM_{2.5}\) is crucial for the sustainable
+development of society.
 
 With a booming economy and rapid urbanization, China has been suffering
 from severe air pollution problems. since China's economic reform in the
@@ -152,33 +163,33 @@ implemented the Air Pollution Prevention and Control Action Plan to deal
 with serious air pollution problems, since that, China has continuously
 updated the ``Ambient Air Quality Standards'' and established a
 nationwide monitoring network covering nearly 400 cities, which for the
-first time included PM2.5 as a monitoring target
+first time included \(PM_{2.5}\) as a monitoring target
 (\protect\hyperlink{ref-intro5}{Jin \& Zhang, 2016}). Due to the late
-start of China's PM2.5 monitoring, the pollution status of PM2.5 in
-China before 2013 was unclear. Wei et al.~(2021) filled this information
-gap by interpreting MODIS Collection 6 MAIAC AOD to obtain the daily
-average concentration of PM2.5 nationwide in China since 2000 for the
-first time.
+start of China's \(PM_{2.5}\) monitoring, the pollution status of
+\(PM_{2.5}\) in China before 2013 was unclear. Wei et al.~(2021) filled
+this information gap by interpreting MODIS Collection 6 MAIAC AOD to
+obtain the daily average concentration of \(PM_{2.5}\) nationwide in
+China since 2000 for the first time.
 
 China currently has seven megacities with a population of over 10
 million. These cities have frequent economic activities and high
-population densities, understanding the changes in PM2.5 concentrations
-in these areas and predicting their trends can provide important
-references for China's air pollution prevention and control. This
-project utilizes the data from Wei et al.~to visualize the monthly
-average PM2.5 concentrations in these areas from 2000 to 2021, allowing
-people to have a more intuitive understanding of the changes in local
-air pollution, and predicting the changes in these areas for the next
-three years. Our research question is:
+population densities, understanding the changes in \(PM_{2.5}\)
+concentrations in these areas and predicting their trends can provide
+important references for China's air pollution prevention and control.
+This project utilizes the data from Wei et al.~to visualize the monthly
+average \(PM_{2.5}\) concentrations in these areas from 2000 to 2021,
+allowing people to have a more intuitive understanding of the changes in
+local air pollution, and predicting the changes in these areas for the
+next three years. Our research question is:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  How has the PM2.5 concentration in the seven cities changed?
+  How has the \(PM_{2.5}\) concentration in the seven cities changed?
 \item
-  What might be the monthly average PM2.5 concentrations in these seven
-  cities for the next 5 years?
+  What might be the monthly average \(PM_{2.5}\) concentrations in these
+  seven cities for the next 5 years?
 \end{enumerate}
 
 \newpage
@@ -215,30 +226,70 @@ temporal distribution of \(PM_{2.5}\) pollution in China.
 \subsection{\texorpdfstring{\href{https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Code/data\%20wrangling.Rmd}{Wrangling
 process}}{Wrangling process}}\label{wrangling-process}}
 
-The project involves two main data wrangling processes. The first
-process involves converting raw NetCDF files to GeoTIFF files using
-Python code provided by the dataset creators. The conversion code
-utilizes the GDAL package, a translator library for raster and vector
-geospatial data formats, to read the SDS data from the NetCDF files,
-define missing values, read longitude and latitude information, define
-the output file, and write a GeoTIFF file. The NetCDF files are not
-included in the repository and can be downloaded from the Zenodo
-repository.
+The project involves two main wrangling processes. The first is to
+convert raw NetCDF files to GeoTIFF files using Python code provided by
+the original dataset creators. The original NetCDF files are not
+included in our repository and can be downloaded from the open-access
+Zenodo repository. The conversion code uses the \texttt{GDAL} package, a
+powerful translator library for working with raster and vector
+geospatial data formats. It reads the SDS data from the NetCDF files and
+handles missing values, extracts longitude and latitude information, and
+finally writes the output as GeoTIFF files. The use of \texttt{GDAL} in
+this project ensures that the NetCDF files are accurately transformed
+into GeoTIFF format, and that the resulting raster data can be easily
+integrated with other geospatial datasets for further analysis and
+visualization.
 
-In the second data wrangling process, zonal statistics are calculated in
-R to aggregate the information of raster pixels within the city boundary
-and generate the output as a CSV table. The shapefile with polygon IDs
-is loaded, and a list of all raster files in the folder is obtained. A
-loop function is used to extract zonal statistics for each raster file,
-and two data frames are created to store the sum and mean values of
-\$PM\_\{2.5\}\$ concentrations. The zonal function from the terra
-package is used to extract the statistics, and the resulting CSV file
-contains the daily \$PM\_\{2.5\}\$ information for all the cities.
+In the second data wrangling process, zonal statistics are computed to
+aggregate the information of raster pixels within the city boundary
+defined in the shapefile. The \texttt{terra} package's zonal function is
+utilized to extract the statistics. The mean and sum \(PM_{2.5}\) values
+of cities are generated as the outputs written in a CSV table. To
+extract zonal statistics for each raster file, a loop function is used
+to process each file in sequence. Two data frames are created to store
+the sum and mean values separately. These data frames are then merged
+together into a single data frame with two value columns. But only the
+mean \(PM_{2.5}\) value is used in the following analysis.
 
-Finally, all the CSV files containing separate daily \$PM\_\{2.5\}\$
-information are aggregated into one large CSV file. Then, the daily
-records are summarized to the monthly level to facilitate dashboard
+Finally, all the CSV files containing separate daily \(PM_{2.5}\)
+information are merged into one large CSV file. The daily records are
+then summarized at the monthly level to facilitate dashboard
 visualization and time series analysis.
+
+\hypertarget{data-structure}{%
+\subsection{\texorpdfstring{\href{https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Data/Raw/Metadata.Rmd}{Data
+structure}}{Data structure}}\label{data-structure}}
+
+The \(PM_{2.5}\) pollution data used in the project is derived from the
+ChinaHigh\(PM_{2.5}\) dataset, which provides a seamless 1 km
+ground-level resolution of \(PM_{2.5}\) distribution in the context of
+China. Since the original data (NetCDF files) are stored as images,
+tables of the derived zonal statistics are shown below:
+
+\begin{longtable}[]{@{}cccc@{}}
+\caption{Monthly average \(PM_{2.5}\) concentrations of Chinese
+cities}\tabularnewline
+\toprule()
+Variables & Class & Units & Ranges \\
+\midrule()
+\endfirsthead
+\toprule()
+Variables & Class & Units & Ranges \\
+\midrule()
+\endhead
+year & numeric & T & {[}2000,2021{]} \\
+month & numeric & T & {[}1,12{]} \\
+city\_id & numeric & N/A & 1100 \textasciitilde{} 659001 \\
+cityname & character & N/A & N/A \\
+meanPM & numeric & \(µ\)g/m\(^3\) & {[}6.437489, 200.2201{]} \\
+\bottomrule()
+\end{longtable}
+
+Additional metadata information can be found in the
+\texttt{Metadata.Rmd} file located in the ``Data'' folder and ``Raw''
+subfolder of the project. This file contains detailed information on the
+data sources, data characteristics, variable definitions, as well as
+information on the geospatial reference system and units.
 
 \newpage
 
@@ -246,11 +297,11 @@ visualization and time series analysis.
 \section{Exploratory Analysis}\label{exploratory-analysis}}
 
 To explore the data, we wanted to create a visualization of the monthly
-PM2.5 for the cities from 2000 to 2021. The data was first filtered to
-include only the seven cities of interest. Then we grouped the data by
-city, year, and month and summarized the mean PM2.5 value for each
-month. A monthly PM2.5 line plot was created for each city using
-ggplot2.
+\(PM_{2.5}\) for the cities from 2000 to 2021. The data was first
+filtered to include only the seven cities of interest. Then we grouped
+the data by city, year, and month and summarized the mean \(PM_{2.5}\)
+value for each month. A monthly \(PM_{2.5}\) line plot was created for
+each city using ggplot2.
 
 \begin{figure}
 \centering
@@ -258,14 +309,14 @@ ggplot2.
 \caption{Time Series Visualization of the Seven Cities}
 \end{figure}
 
-Figure 1 showed that Beijing and Tianjin had the highest PM2.5 values
-among the seven cities, and Shenzhen had the lowest values. Most of the
-cities seemed to have a slow increase in PM2.5 from 2000 to 2006, then
-stayed relatively constant from 2006 until 2014. In 2014, most cities
-had a spike in PM2.5. From 2014, PM2.5 in all cities showed a decreasing
-trend. To better understand the changes in PM2.5, we conducted
-time-series analysis and predicted the monthly PM2.5 for the seven
-cities from 2022 to 2026.
+Figure 1 showed that Beijing and Tianjin had the highest \(PM_{2.5}\)
+values among the seven cities, and Shenzhen had the lowest values. Most
+of the cities seemed to have a slow increase in \(PM_{2.5}\) from 2000
+to 2006, then stayed relatively constant from 2006 until 2014. In 2014,
+most cities had a spike in \(PM_{2.5}\). From 2014, \(PM_{2.5}\) in all
+cities showed a decreasing trend. To better understand the changes in
+\(PM_{2.5}\), we conducted time-series analysis and predicted the
+monthly \(PM_{2.5}\) for the seven cities from 2022 to 2026.
 
 \newpage
 
@@ -276,27 +327,28 @@ cities from 2022 to 2026.
 \subsection{Part1: Time Series
 Analysis}\label{part1-time-series-analysis}}
 
-\hypertarget{how-has-the-pm2.5-concentration-in-the-seven-cities-changed}{%
-\subsubsection{How has the PM2.5 concentration in the seven cities
-changed?}\label{how-has-the-pm2.5-concentration-in-the-seven-cities-changed}}
+\hypertarget{how-has-the-pm_2.5-concentration-in-the-seven-cities-changed}{%
+\subsubsection{\texorpdfstring{How has the \(PM_{2.5}\) concentration in
+the seven cities
+changed?}{How has the PM\_\{2.5\} concentration in the seven cities changed?}}\label{how-has-the-pm_2.5-concentration-in-the-seven-cities-changed}}
 
-Using the STL function, we decomposed the PM2.5 time series data of the
-target cities into seasonal and trend components and performed a
-comparative analysis. The PM2.5 values in these cities are generally
-lower during the summer months (June, July, August, and September) and
-higher during the winter months (November, December, January, and
-February) (Figure 2). There are several possible factors contributing to
-this seasonality: First, In the summer, temperatures are higher, leading
-to more active air convection, which facilitates the dispersion and
-dissipation of pollutants in the air. Secondly, there tends to be more
-rainfall in the summer, which can wash PM2.5 particles from the
-atmosphere to the ground, reducing their measured values
-(\protect\hyperlink{ref-rain}{Pu, Zhao, Zhang, \& Ma, 2011}). Thirdly,
-in the winter, heating demand increases, and in some areas, coal
-combustion remains the primary method of providing heat
+Using the STL function, we decomposed the \(PM_{2.5}\) time series data
+of the target cities into seasonal and trend components and performed a
+comparative analysis. The \(PM_{2.5}\) values in these cities are
+generally lower during the summer months (June, July, August, and
+September) and higher during the winter months (November, December,
+January, and February) (Figure 2). There are several possible factors
+contributing to this seasonality: First, In the summer, temperatures are
+higher, leading to more active air convection, which facilitates the
+dispersion and dissipation of pollutants in the air. Secondly, there
+tends to be more rainfall in the summer, which can wash \(PM_{2.5}\)
+particles from the atmosphere to the ground, reducing their measured
+values (\protect\hyperlink{ref-rain}{Pu, Zhao, Zhang, \& Ma, 2011}).
+Thirdly, in the winter, heating demand increases, and in some areas,
+coal combustion remains the primary method of providing heat
 (\protect\hyperlink{ref-heating}{Liang et al., 2015}). This leads to
-increased emissions of coal-related pollutants, causing a rise in PM2.5
-levels.
+increased emissions of coal-related pollutants, causing a rise in
+\(PM_{2.5}\) levels.
 
 \begin{figure}
 \centering
@@ -306,15 +358,15 @@ levels.
 
 The trend results for the target cities are consistent with those
 observed in the exploratory analysis (Figure 3). Notably, around 2014
-marked a turning point when PM2.5 levels in major cities began to
+marked a turning point when \(PM_{2.5}\) levels in major cities began to
 decrease gradually. This shift is likely attributed to the Chinese
 government's implementation of the Air Pollution Prevention and Control
 Action Plan (\protect\hyperlink{ref-plan}{Cai et al., 2017}). It
-required that, by 2017, the annual average PM2.5 concentration in cities
-at or above the prefectural level should be reduced by more than 10\%.
-In key regions such as Beijing-Tianjin-Hebei, the Yangtze River Delta,
-and the Pearl River Delta, the plan aimed for reductions of 25\%, 20\%,
-and 15\%, respectively.
+required that, by 2017, the annual average \(PM_{2.5}\) concentration in
+cities at or above the prefectural level should be reduced by more than
+10\%. In key regions such as Beijing-Tianjin-Hebei, the Yangtze River
+Delta, and the Pearl River Delta, the plan aimed for reductions of 25\%,
+20\%, and 15\%, respectively.
 
 \begin{figure}
 \centering
@@ -322,10 +374,10 @@ and 15\%, respectively.
 \caption{Trends in PM2.5 in Chinese megacities}
 \end{figure}
 
-\hypertarget{what-might-be-the-monthly-average-pm2.5-concentrations-in-these-seven-cities-for-the-next-three-years}{%
-\subsubsection{What might be the monthly average PM2.5 concentrations in
-these seven cities for the next three
-years?}\label{what-might-be-the-monthly-average-pm2.5-concentrations-in-these-seven-cities-for-the-next-three-years}}
+\hypertarget{what-might-be-the-monthly-average-pm_2.5-concentrations-in-these-seven-cities-for-the-next-three-years}{%
+\subsubsection{\texorpdfstring{What might be the monthly average
+\(PM_{2.5}\) concentrations in these seven cities for the next three
+years?}{What might be the monthly average PM\_\{2.5\} concentrations in these seven cities for the next three years?}}\label{what-might-be-the-monthly-average-pm_2.5-concentrations-in-these-seven-cities-for-the-next-three-years}}
 
 In order to obtain better forecasting results, we conducted a predictive
 accuracy test on multiple time series models based on Beijing's data
@@ -395,7 +447,8 @@ Although the accuracy results show that the RMSE of SSES\_SARIMA is the
 second smallest, its predictive accuracy is still slightly lower than
 that of SSES (Table 2). However, considering the forecasting objective
 and the comparison with other models, we ultimately chose to use the
-SSES\_SARIMA model for predicting PM2.5 levels in the target cities.
+SSES\_SARIMA model for predicting \(PM_{2.5}\) levels in the target
+cities.
 
 \begin{table}
 
@@ -420,14 +473,18 @@ SSES\_SARIMA & 0.233739 & 12.50184 & 9.574127 & -13.556343 & 31.19364\\
 \end{tabular}
 \end{table}
 
-The final forecast results of Chinese megacities are shown in Figure
-4.\\
+The final forecast results of Chinese megacities are shown in Figure 4.
+
+\begin{figure}
+\centering
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/forecast figure-1.pdf}
+\caption{PM2.5 forecast in Chinese megacities}
+\end{figure}
 
 \newpage
 
-\hypertarget{dashboard}{%
-\subsection{Dashboard:}\label{dashboard}}
+\hypertarget{part2-dashboard}{%
+\subsection{Part2: Dashboard:}\label{part2-dashboard}}
 
 To better visualize and allow users to interact with the data, we
 created a dashboard using Shiny. The dashboard consisted of three side
@@ -436,30 +493,30 @@ City'', ``PM2.5 Prediction by City'' and three corresponding tab panels:
 ``Map'', ``TSA'', and ``Prediction''.
 
 The ``PM2.5 National Distribution'' allows users to drag the map in the
-``Map'' tab and explore the PM2.5 distribution pattern in the country.
-The ``Time Series Visualization by City'' panel has a dropdown box that
-allows users to select the monthly PM2.5 visualization of each city. The
-results are displayed in the ``TSA'' tab. Finally, the ``PM2.5
-Prediction by City'' panel has a dropdown box and slider. Users can
-select the city and the time range to view the monthly PM2.5 prediction
-in the ``Prediction'' tab.
+``Map'' tab and explore the \(PM_{2.5}\) distribution pattern in the
+country. The ``Time Series Visualization by City'' panel has a dropdown
+box that allows users to select the monthly \(PM_{2.5}\) visualization
+of each city. The results are displayed in the ``TSA'' tab. Finally, the
+``PM2.5 Prediction by City'' panel has a dropdown box and slider. Users
+can select the city and the time range to view the monthly \(PM_{2.5}\)
+prediction in the ``Prediction'' tab.
 
 \newpage
 
 \hypertarget{summary-and-conclusions}{%
 \section{Summary and Conclusions}\label{summary-and-conclusions}}
 
-We visualized the annual average concentration of PM2.5 in Chinese
-cities from 2000 to 2021 and analyzed the historical trends and
+We visualized the monthly average concentration of \(PM_{2.5}\) in
+Chinese cities from 2000 to 2021 and analyzed the historical trends and
 predicted the concentration changes for the next 5 years in megacities.
-Our results show that the PM2.5 concentration increased from 2000 to
-2013, with higher concentrations in the eastern regions compared to the
-western and southern regions. Since 2014, PM2.5 concentration in China
-has been decreasing. The concentration during autumn and winter was
-higher than that during spring and summer. Combining the SRIMA and SSES
-models resulted in the most accurate prediction. Our findings suggest
-that the PM2.5 concentration will continue to decrease in the next five
-years.
+Our results show that the \(PM_{2.5}\) concentration increased from 2000
+to 2013, with higher concentrations in the eastern and northen regions
+compared to the western and southern regions. Since 2014, \(PM_{2.5}\)
+concentration in China has been decreasing. The concentration during
+autumn and winter was higher than that during spring and summer.
+Combining the SRIMA and SSES models resulted in the most accurate
+prediction. Our prediction suggest that at the end of 2027, the highest
+and lowest \(PM_{2.5}\) in Beijing, .
 
 \newpage
 
