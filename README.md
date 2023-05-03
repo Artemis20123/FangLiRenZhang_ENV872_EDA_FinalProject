@@ -82,7 +82,7 @@ The file formats used in the project are:
 
 The naming convention for the files in the repository follows a descriptive and consistent approach. For example, the raw data files are named using a combination of the variable name and the year, while the processed data files are named using a combination of the variable name, city name, and date range. All file names include underscores between words to improve readability.
 
-----Code folder----- 
+-   **Code**:
 LiFangRenZhang_ENV872_Project: final report. 
 Reference: apa-6th-edition.csl(format) reference.bib(reference) 
 Dashboard: dashboard-final.R(combined final dashboard) 
@@ -92,10 +92,14 @@ Dashboard: dashboard-final.R(combined final dashboard)
 data wrangling: transform raw data. 
 TSA2: time series analysis part.
 
-----Data folder----- 
+-   **Data**:
+
 --Raw---- 
+
 2000china_city_map: china cities boundary shape file. 
+
 --Processed---- 
+
 2000china_city_modified.xlsx: processed cities data. 
 all_forecast.csv: forecast results. 
 PM2.5_daily_city_2000_2021.csv: daily cities pm2.5 concentration data. 
@@ -103,7 +107,7 @@ PM2.5_monthly_city_2000_2021.csv: calculated monthly pm2.5 concentration data.
 seasonal_data.csv: calculated seasonal data for analysis. trend_data.csv: calculated trends in megacities. 
 Beijing_scores.csv: example TSA model score in Beijing.
 
-----Output folder----- 
+-   **Output**:
 Dashboard Panel 1.png: screenshot of map part in dashboard. 
 Dashboard Panel 2.png: screenshot of historicla trend part in dashboard. 
 Dashboard Panel 3.png: screenshot of predicted trend part in dashboard.
