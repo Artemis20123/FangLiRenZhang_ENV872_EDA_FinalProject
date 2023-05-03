@@ -181,9 +181,9 @@ The naming convention for the files in the repository follows a descriptive and 
 
 ## Future development
 
--   **Animations** ([https://leafletjs.com/examples/choropleth/](https://leafletjs.com/examples/choropleth/){style="font-size: 11pt;"})
+-   **Animations**
 
-    For future development of our map, we have explored the possibility of incorporating animations to enhance the user experience. Specifically, we were interested in adding the functionality to zoom in to cities when clicking on them or visually highlighting them when hovered over with a mouse. However, we encountered difficulties in implementing these features and were unable to validate them.
+    For future development of our map, we have explored the possibility of incorporating animations to enhance the user experience. Specifically, we were interested in adding the functionality to zoom in to cities when clicking on them or visually highlighting them when hovered over with a mouse (example: [https://leafletjs.com/examples/choropleth/](https://leafletjs.com/examples/choropleth/){style="font-size: 11pt;"}). However, we encountered difficulties in implementing these features and were unable to validate them.
 
 -   **Search control**
 
