@@ -1,0 +1,96 @@
+# Metadata
+
+The project data are organized in the **`data`** folder, with the original data files stored in the **`raw`** subfolder, and the processed data files stored in the **`processed`** subfolder.
+
+## 1. PM2.5 pollution
+
+### Primary dataset
+
+-   **Description:** ChinaHighPM2.5: Big Data Seamless 1 km Ground-level PM2.5 Dataset for China
+
+    -   measured by satellite sensors
+
+    -   daily average concentration of particulate matter (PM2.5) over China from 2000 to 2021
+
+    -   presented as raster images, with a spatial resolution of 0.01 degrees.
+
+-   **Data source:** <https://zenodo.org/record/6398971#.ZC8znXZBy3B>
+
+    -   Since the original datasets (NetCDF files) are too large, they are not stored in the online github repository.
+
+-   **Date of creation:** 2019
+
+-   **Date of last update:** 2021
+
+-   **Geographic coverage:** China
+
+-   **Coordinate reference system:** Geodetic CRS: WGS 84
+
+-   **Format:** Raster
+
+-   **CV-R**$^2$: 0.92
+
+-   **RMSE**: 10.76 µg/m^3^
+
+-   **MAE**: 6.32 µg/m^3^
+
+### Processed datasets
+
+#### Daily level
+
+-   PM2.5_daily_city_2000_2021.csv
+
+    -   Variable explanations are omitted because the meanings of variable names are straightforward.
+
+| Variables |  Class  |   Units    |        Ranges        |
+|:---------:|:-------:|:----------:|:--------------------:|
+|   year    | numeric |     T      |     [2000,2021]      |
+|   month   | numeric |     T      |        [1,12]        |
+|    day    | numeric |     T      |        [1,31]        |
+|  city_id  | numeric |    N/A     |    1100 \~ 659001    |
+|  meanpm   | numeric | $µ$g/m$^3$ | [3.364316, 585.4695] |
+
+#### Monthly level
+
+-   PM2.5_monthly_city_2000_2021.csv
+
+|  Variables   |   Class   |   Units    |        Ranges        |
+|:------------:|:---------:|:----------:|:--------------------:|
+|     year     |  numeric  |     T      |     [2000,2021]      |
+|    month     |  numeric  |     T      |        [1,12]        |
+|   city_id    |  numeric  |    N/A     |    1100 \~ 659001    |
+| 地级单位名称 | character |    N/A     |         N/A          |
+|   cityname   | character |    N/A     |         N/A          |
+|    meanPM    |  numeric  | $µ$g/m$^3$ | [6.437489, 200.2201] |
+
+## 2. City boundary
+
+### Primary dataset
+
+-   **Description:** geometry information for Chinese cities with the city names and unique identifiers
+
+    -   a shapefile of Chinese cities boundaries
+
+-   **Data source:** the statistical bureau of the Chinese national government
+
+-   **Date of creation:** 2019
+
+-   **Date of last update:** 2022
+
+-   **Geographic coverage:** China
+
+-   **Spatial resolution:** 1:100,000
+
+-   **Coordinate reference system:** Geodetic CRS: WGS 84
+
+-   **Format:** Shapefile
+
+-   **Data fields:**
+
+|  Variables   |      Class       |     Units      |          Ranges          |
+|:------------:|:----------------:|:--------------:|:------------------------:|
+|   OBJECTID   |     numeric      |      N/A       |         [1,365]          |
+|   city_id    |     numeric      |      N/A       |      1100 \~ 659001      |
+| shape_Length |     numeric      |    degrees     |  [0.3270022,46.942166]   |
+|  shape_Area  |     numeric      | square degrees | [0.001671796, 49.457278] |
+|   geometry   | sfc_MULTIPOLYGON |    degrees     |           N/A            |
