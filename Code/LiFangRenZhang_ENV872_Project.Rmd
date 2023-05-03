@@ -27,35 +27,20 @@ link-citations: yes
 \newpage
 ```
 ```{r setup, include=FALSE}
-# Set your working directory
-
-# Load your packages
-library(DT)
-library(shiny)
-library(shinydashboard)
-library(leaflet)
-library(leaflet)
-library(tidyverse)
-library(lubridate)
-library(ggpubr)
-library(ggplot2)
-library(kableExtra)
-library(utils) 
-# Set your ggplot theme
-
-# Load your datasets
-
+# Load packages
+pacman::p_load(DT,shiny,shinydashboard,leaflet,tidyverse,lubridate,ggpubr,ggplot2, kableExtra,utils)
 ```
 
 # Rationale and Research Questions
+
 Numerous studies have shown that air pollution has significant impacts on human health [@intro1], exposure to environments with air pollution can lead to a variety of diseases, including cardiovascular disease, mental illness, skin cancer, chronic respiratory diseases, and decreased lung function [@intro2,@intro3]. Among the various pollutants in the environment, PM2.5 is considered a major contributor to health problems [@intro4]. Therefore, monitoring and controlling PM2.5 is crucial for the sustainable development of society.
 
-With a booming economy and rapid urbanization, China has been suffering from severe air pollution problems. since China's economic reform in the 1980s, a large number of factories have been established rapidly in China Compared with the growth of industry, China did not invest a lot in environmental protection in the early stage. since 2006, China updated its air pollution control measures and tried to control the serious air pollution, In 2013, the central and eastern regions of China experienced severe haze weather, leading the central government implemented the Air Pollution Prevention and Control Action Plan to deal with serious air pollution problems, since that, China has continuously updated the "Ambient Air Quality Standards" and established a nationwide monitoring network covering nearly 400 cities, which for the first time included PM2.5 as a monitoring target [@intro5]. Due to the late start of China's PM2.5 monitoring, the pollution status of PM2.5 in China before 2013 was unclear. Wei et al. (2021) filled this information gap by interpreting MODIS Collection 6 MAIAC AOD to obtain the daily average concentration of PM2.5 nationwide in China since 2000 for the first time. 
+With a booming economy and rapid urbanization, China has been suffering from severe air pollution problems. since China's economic reform in the 1980s, a large number of factories have been established rapidly in China Compared with the growth of industry, China did not invest a lot in environmental protection in the early stage. since 2006, China updated its air pollution control measures and tried to control the serious air pollution, In 2013, the central and eastern regions of China experienced severe haze weather, leading the central government implemented the Air Pollution Prevention and Control Action Plan to deal with serious air pollution problems, since that, China has continuously updated the "Ambient Air Quality Standards" and established a nationwide monitoring network covering nearly 400 cities, which for the first time included PM2.5 as a monitoring target [@intro5]. Due to the late start of China's PM2.5 monitoring, the pollution status of PM2.5 in China before 2013 was unclear. Wei et al. (2021) filled this information gap by interpreting MODIS Collection 6 MAIAC AOD to obtain the daily average concentration of PM2.5 nationwide in China since 2000 for the first time.
 
 China currently has seven megacities with a population of over 10 million. These cities have frequent economic activities and high population densities, understanding the changes in PM2.5 concentrations in these areas and predicting their trends can provide important references for China's air pollution prevention and control. This project utilizes the data from Wei et al. to visualize the monthly average PM2.5 concentrations in these areas from 2000 to 2021, allowing people to have a more intuitive understanding of the changes in local air pollution, and predicting the changes in these areas for the next three years. Our research question is:
 
-1. How has the PM2.5 concentration in the seven cities changed?
-2. What might be the monthly average PM2.5 concentrations in these seven cities for the next 5 years?
+1.  How has the PM2.5 concentration in the seven cities changed?
+2.  What might be the monthly average PM2.5 concentrations in these seven cities for the next 5 years?
 
 \newpage
 
@@ -69,11 +54,28 @@ The second dataset utilized in this project is a shapefile of Chinese cities bou
 
 ## [Wrangling process](https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Code/data%20wrangling.Rmd)
 
-The project involves two main data wrangling processes. The first process involves converting raw NetCDF files to GeoTIFF files using Python code provided by the dataset creators. The conversion code utilizes the GDAL package, a translator library for raster and vector geospatial data formats, to read the SDS data from the NetCDF files, define missing values, read longitude and latitude information, define the output file, and write a GeoTIFF file. The NetCDF files are not included in the repository and can be downloaded from the Zenodo repository.
+The project involves two main wrangling processes. The first is to convert raw NetCDF files to GeoTIFF files using Python code provided by the original dataset creators. The original NetCDF files are not included in our repository and can be downloaded from the open-access Zenodo repository. The conversion code uses the `GDAL` package, a powerful translator library for working with raster and vector geospatial data formats. It reads the SDS data from the NetCDF files and handles missing values, extracts longitude and latitude information, and finally writes the output as GeoTIFF files. The use of `GDAL` in this project ensures that the NetCDF files are accurately transformed into GeoTIFF format, and that the resulting raster data can be easily integrated with other geospatial datasets for further analysis and visualization.
 
-In the second data wrangling process, zonal statistics are calculated in R to aggregate the information of raster pixels within the city boundary and generate the output as a CSV table. The shapefile with polygon IDs is loaded, and a list of all raster files in the folder is obtained. A loop function is used to extract zonal statistics for each raster file, and two data frames are created to store the sum and mean values of \$PM\_{2.5}\$ concentrations. The zonal function from the terra package is used to extract the statistics, and the resulting CSV file contains the daily \$PM\_{2.5}\$ information for all the cities.
+In the second data wrangling process, zonal statistics are computed to aggregate the information of raster pixels within the city boundary defined in the shapefile. The `terra` package's zonal function is utilized to extract the statistics. The mean and sum $PM_{2.5}$ values of cities are generated as the outputs written in a CSV table. To extract zonal statistics for each raster file, a loop function is used to process each file in sequence. Two data frames are created to store the sum and mean values separately. These data frames are then merged together into a single data frame with two value columns. But only the mean $PM_{2.5}$ value is used in the following analysis.
 
-Finally, all the CSV files containing separate daily \$PM\_{2.5}\$ information are aggregated into one large CSV file. Then, the daily records are summarized to the monthly level to facilitate dashboard visualization and time series analysis.
+Finally, all the CSV files containing separate daily $PM_{2.5}$ information are merged into one large CSV file. The daily records are then summarized at the monthly level to facilitate dashboard visualization and time series analysis.
+
+## [Data structure](https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Data/Raw/Metadata.Rmd)
+
+The $PM_{2.5}$ pollution data used in the project is derived from the ChinaHigh$PM_{2.5}$ dataset, which provides a seamless 1 km ground-level resolution of $PM_{2.5}$ distribution in the context of China. Since the original data (NetCDF files) are stored as images, tables of the derived zonal statistics are shown below:
+
+|  Variables   |   Class   |   Units    |        Ranges        |
+|:------------:|:---------:|:----------:|:--------------------:|
+|     year     |  numeric  |     T      |     [2000,2021]      |
+|    month     |  numeric  |     T      |        [1,12]        |
+|   city_id    |  numeric  |    N/A     |    1100 \~ 659001    |
+| 地级单位名称 | character |    N/A     |         N/A          |
+|   cityname   | character |    N/A     |         N/A          |
+|    meanPM    |  numeric  | $µ$g/m$^3$ | [6.437489, 200.2201] |
+
+: Monthly average $PM_{2.5}$ concentrations of Chinese cities
+
+Additional metadata information can be found in the `Metadata.Rmd` file located in the "Data" folder and "Raw" subfolder of the project. This file contains detailed information on the data sources, data characteristics, variable definitions, as well as information on the geospatial reference system and units.
 
 \newpage
 
@@ -196,7 +198,6 @@ ggplot(trend_data, aes(x = date, y = trend, group = city, colour = city)) +
 
 ### What might be the monthly average PM2.5 concentrations in these seven cities for the next three years?
 
-
 In order to obtain better forecasting results, we conducted a predictive accuracy test on multiple time series models based on Beijing's data from 2000 to 2020 (using actual 2021 data as a benchmark for comparison). These models include:
 
 1.  Arithmetic Mean Model (Mean): This model assumes that future observations will equal current observations, i.e., the predicted future value equals the current value, making the model a constant average value model.
@@ -254,4 +255,3 @@ We visualized the annual average concentration of PM2.5 in Chinese cities from 2
 \newpage
 
 # References
-
