@@ -97,12 +97,13 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Insert title of project here},
+  pdftitle={A Time Series Analysis and Visualization of PM2.5 Distribution in China},
   pdfauthor={Yixin Fang, Jiahuan Li, Yuxiang Ren, Jinglin Zhang},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Insert title of project here}
+\title{A Time Series Analysis and Visualization of PM2.5 Distribution in
+China}
 \usepackage{etoolbox}
 \makeatletter
 \providecommand{\subtitle}[1]{% add subtitle to \maketitle
@@ -127,6 +128,58 @@
 \hypertarget{rationale-and-research-questions}{%
 \section{Rationale and Research
 Questions}\label{rationale-and-research-questions}}
+
+Numerous studies have shown that air pollution has significant impacts
+on human health (\protect\hyperlink{ref-intro1}{Doe, Smith, \& Williams,
+2020}), exposure to environments with air pollution can lead to a
+variety of diseases, including cardiovascular disease, mental illness,
+skin cancer, chronic respiratory diseases, and decreased lung function
+Dockery \& Verrier (\protect\hyperlink{ref-intro3}{2005}). Among the
+various pollutants in the environment, PM2.5 is considered a major
+contributor to health problems (\protect\hyperlink{ref-intro4}{Pope III
+\& Dockery, 2006}). Therefore, monitoring and controlling PM2.5 is
+crucial for the sustainable development of society.
+
+With a booming economy and rapid urbanization, China has been suffering
+from severe air pollution problems. since China's economic reform in the
+1980s, a large number of factories have been established rapidly in
+China Compared with the growth of industry, China did not invest a lot
+in environmental protection in the early stage. since 2006, China
+updated its air pollution control measures and tried to control the
+serious air pollution, In 2013, the central and eastern regions of China
+experienced severe haze weather, leading the central government
+implemented the Air Pollution Prevention and Control Action Plan to deal
+with serious air pollution problems, since that, China has continuously
+updated the ``Ambient Air Quality Standards'' and established a
+nationwide monitoring network covering nearly 400 cities, which for the
+first time included PM2.5 as a monitoring target
+(\protect\hyperlink{ref-intro5}{Jin \& Zhang, 2016}). Due to the late
+start of China's PM2.5 monitoring, the pollution status of PM2.5 in
+China before 2013 was unclear. Wei et al.~(2021) filled this information
+gap by interpreting MODIS Collection 6 MAIAC AOD to obtain the daily
+average concentration of PM2.5 nationwide in China since 2000 for the
+first time.
+
+China currently has seven megacities with a population of over 10
+million. These cities have frequent economic activities and high
+population densities, understanding the changes in PM2.5 concentrations
+in these areas and predicting their trends can provide important
+references for China's air pollution prevention and control. This
+project utilizes the data from Wei et al.~to visualize the monthly
+average PM2.5 concentrations in these areas from 2000 to 2021, allowing
+people to have a more intuitive understanding of the changes in local
+air pollution, and predicting the changes in these areas for the next
+three years. Our research question is:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  How has the PM2.5 concentration in the seven cities changed?
+\item
+  What might be the monthly average PM2.5 concentrations in these seven
+  cities for the next three years?
+\end{enumerate}
 
 \newpage
 
@@ -199,9 +252,13 @@ city, year, and month and summarized the mean PM2.5 value for each
 month. A monthly PM2.5 line plot was created for each city using
 ggplot2.
 
+\begin{figure}
+\centering
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/TSA Visualization-1.pdf}
+\caption{Time Series Visualization of the Seven Cities}
+\end{figure}
 
-The plot showed that Beijing and Tianjin had the highest PM2.5 values
+Figure 1 showed that Beijing and Tianjin had the highest PM2.5 values
 among the seven cities, and Shenzhen had the lowest values. Most of the
 cities seemed to have a slow increase in PM2.5 from 2000 to 2006, then
 stayed relatively constant from 2006 until 2014. In 2014, most cities
@@ -219,9 +276,9 @@ cities from 2022 to 2026.
 \subsection{Part1: Time Series
 Analysis}\label{part1-time-series-analysis}}
 
-\hypertarget{seven-cities-monthly-pm2.5-20002021}{%
-\subsubsection{Seven cities monthly PM2.5
-(2000\textasciitilde2021)}\label{seven-cities-monthly-pm2.5-20002021}}
+\hypertarget{how-has-the-pm2.5-concentration-in-the-seven-cities-changed}{%
+\subsubsection{How has the PM2.5 concentration in the seven cities
+changed?}\label{how-has-the-pm2.5-concentration-in-the-seven-cities-changed}}
 
 Using the STL function, we decomposed the PM2.5 time series data of the
 target cities into seasonal and trend components and performed a
@@ -244,7 +301,7 @@ levels.
 \begin{figure}
 \centering
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/seasonal figure-1.pdf}
-\caption{Figure 2. Seasonality in PM2.5 in 7 Chinese Cities}
+\caption{Seasonality in PM2.5 in 7 Chinese Cities}
 \end{figure}
 
 The trend results for the target cities are consistent with those
@@ -252,24 +309,23 @@ observed in the exploratory analysis (Figure 3). Notably, around 2014
 marked a turning point when PM2.5 levels in major cities began to
 decrease gradually. This shift is likely attributed to the Chinese
 government's implementation of the Air Pollution Prevention and Control
-Action Plan, released in September 2013
-(\protect\hyperlink{ref-plan}{Cai et al., 2017}). This plan was the
-first time the Chinese government set explicit air quality improvement
-targets. It required that, by 2017, the annual average PM2.5
-concentration in cities at or above the prefectural level should be
-reduced by more than 10\%. In key regions such as Beijing-Tianjin-Hebei,
-the Yangtze River Delta, and the Pearl River Delta, the plan aimed for
-reductions of 25\%, 20\%, and 15\%, respectively.
+Action Plan (\protect\hyperlink{ref-plan}{Cai et al., 2017}). It
+required that, by 2017, the annual average PM2.5 concentration in cities
+at or above the prefectural level should be reduced by more than 10\%.
+In key regions such as Beijing-Tianjin-Hebei, the Yangtze River Delta,
+and the Pearl River Delta, the plan aimed for reductions of 25\%, 20\%,
+and 15\%, respectively.
 
 \begin{figure}
 \centering
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/trend figure-1.pdf}
-\caption{Figure 3. Trends in PM2.5 in 7 Chinese Cities}
+\caption{Trends in PM2.5 in 7 Chinese Cities}
 \end{figure}
 
-\hypertarget{seven-cities-monthly-pm2.5-forecast-20222026}{%
-\subsubsection{Seven cities monthly PM2.5 forecast
-(2022\textasciitilde2026)}\label{seven-cities-monthly-pm2.5-forecast-20222026}}
+\hypertarget{what-might-be-the-monthly-average-pm2.5-concentrations-in-these-seven-cities-for-the-next-three-years}{%
+\subsubsection{What might be the monthly average PM2.5 concentrations in
+these seven cities for the next three
+years?}\label{what-might-be-the-monthly-average-pm2.5-concentrations-in-these-seven-cities-for-the-next-three-years}}
 
 In order to obtain better forecasting results, we conducted a predictive
 accuracy test on multiple time series models based on Beijing's data
@@ -364,14 +420,14 @@ SSES\_SARIMA & 0.233739 & 12.50184 & 9.574127 & -13.556343 & 31.19364\\
 \end{tabular}
 \end{table}
 
-\hypertarget{question-2}{%
-\subsection{Question 2:}\label{question-2}}
+\hypertarget{dashboard}{%
+\subsection{Dashboard:}\label{dashboard}}
 
-To better visualize the data, we created a dashboard using Shiny. The
-dashboard consisted of three side panels:``PM2.5 National
-Distribution'', ``Time Series Visualization by City'', ``PM2.5
-Prediction by City'' and three corresponding tab panels: ``Map'',
-``TSA'', and ``Prediction''.
+To better visualize and allow users to interact with the data, we
+created a dashboard using Shiny. The dashboard consisted of three side
+panels:``PM2.5 National Distribution'', ``Time Series Visualization by
+City'', ``PM2.5 Prediction by City'' and three corresponding tab panels:
+``Map'', ``TSA'', and ``Prediction''.
 
 The ``PM2.5 National Distribution'' allows users to drag the map in the
 ``Map'' tab and explore the PM2.5 distribution pattern in the country.
@@ -390,28 +446,47 @@ in the ``Prediction'' tab.
 \newpage
 
 \hypertarget{references}{%
-\section{References}\label{references}}
-
-{[}1{]} Wei, J., Li, Z., Lyapustin, A., Sun, L., Peng, Y., Xue, W., Su,
-T., and Cribb, M. Reconstructing 1-km-resolution high-quality
-PM\textsubscript{2.5}~data records from 2000 to 2018 in China:
-spatiotemporal variations and policy implications.~\emph{Remote Sensing
-of Environment}, 2021, 252, 112136.
-\url{https://doi.org/10.1016/j.rse.2020.112136}
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-intro2}{}}%
+Brunekreef, B., \& Holgate, S. T. (2002). Air pollution and health.
+\emph{The Lancet}, \emph{360}(9341), 1233--1242.
+
 \leavevmode\vadjust pre{\hypertarget{ref-plan}{}}%
 Cai, S., Wang, Y., Zhao, B., Wang, S., Chang, X., \& Hao, J. (2017). The
 impact of the {``air pollution prevention and control action plan''} on
 PM2. 5 concentrations in jing-jin-ji region during 2012--2020.
 \emph{Science of the Total Environment}, \emph{580}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-intro3}{}}%
+Dockery, L.-G., D. W., \& Verrier, R. L. (2005). Association of air
+pollution with increased incidence of ventricular tachyarrhythmias
+recorded by implanted cardioverter defibrillators. \emph{Environmental
+Health Perspectives}, \emph{113}(6), 670--674.
+
+\leavevmode\vadjust pre{\hypertarget{ref-intro1}{}}%
+Doe, J., Smith, D., JaneFowler, \& Williams, M. L. (2020). Global air
+quality, past present and future: An introduction. \emph{Philosophical
+Transactions of the Royal Society A}, \emph{378}(2183), 20190323.
+
+\leavevmode\vadjust pre{\hypertarget{ref-intro5}{}}%
+Jin, A., Y., \& Zhang, S. (2016). Air pollution control policies in
+china: A retrospective and prospects. \emph{International Journal of
+Environmental Research and Public Health}, \emph{13}(12), 1219.
+
 \leavevmode\vadjust pre{\hypertarget{ref-heating}{}}%
 Liang, X., Zou, T., Guo, B., Li, S., Zhang, H., Zhang, S., \ldots{}
 Chen, S. X. (2015). Assessing beijing's PM2. 5 pollution: Severity,
 weather impact, APEC and winter heating. \emph{Proceedings of the Royal
 Society A: Mathematical, Physical and Engineering Sciences}, \emph{471}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-intro4}{}}%
+Pope III, C. A., \& Dockery, D. W. (2006). Health effects of fine
+particulate air pollution: Lines that connect. \emph{Journal of the Air
+and Waste Management Association}, \emph{56}(6), 709--742.
 
 \leavevmode\vadjust pre{\hypertarget{ref-rain}{}}%
 Pu, W., Zhao, X., Zhang, X., \& Ma, Z. (2011). Effect of meteorological

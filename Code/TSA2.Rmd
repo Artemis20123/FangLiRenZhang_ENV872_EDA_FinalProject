@@ -292,7 +292,7 @@ R_Chengdu <- (SSES_Chengdu$forecast+SARIMA_Chengdu$mean)/2
 all_forcast <- data.frame(R_Beijing, R_Shanghai, R_Guangzhou, R_Shenzhen, R_Tianjin, R_Chongqing, R_Chengdu)
 date_sequence <- seq(from = as.Date("2022-01-01"), by = "month", length.out = 60)
 all_forcast$Date <- date_sequence
-all_forcast <- all_forcast[,c(7,1:6)]
+all_forcast <- all_forcast[,c(8,1:7)]
 write.csv(all_forcast, row.names = FALSE, 
           file = "./Data/Processed/all_forcast.csv")
 
