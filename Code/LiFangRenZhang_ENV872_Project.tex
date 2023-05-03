@@ -202,13 +202,14 @@ next three years. Our research question is:
 
 This project relies on two primary datasets. The first dataset, China
 \(PM_{2.5}\) pollution data, is available via the Zenodo data
-repository\(^{[1]}\). This dataset provides information on the daily
-concentration of particulate matter (\(PM_{2.5}\)) in the atmosphere
-over China, as measured by satellite sensors. The dataset contains daily
-average \(PM_{2.5}\) concentration values for a period from 2000 to
-2021, covering the entirety of China's land area. The data is presented
-in the form of raster images, with a spatial resolution of 0.01 degrees.
-This high-resolution dataset allows for accurate identification of high
+repository(\protect\hyperlink{ref-wei2021reconstructing}{Wei et al.,
+2021}). This dataset provides information on the daily concentration of
+particulate matter (\(PM_{2.5}\)) in the atmosphere over China, as
+measured by satellite sensors. The dataset contains daily average
+\(PM_{2.5}\) concentration values for a period from 2000 to 2021,
+covering the entirety of China's land area. The data is presented in the
+form of raster images, with a spatial resolution of 0.01 degrees. This
+high-resolution dataset allows for accurate identification of high
 pollution cities and regions, and is an important resource for
 understanding the severity and extent of air pollution in China.
 
@@ -281,7 +282,7 @@ year & numeric & T & {[}2000,2021{]} \\
 month & numeric & T & {[}1,12{]} \\
 city\_id & numeric & N/A & 1100 \textasciitilde{} 659001 \\
 cityname & character & N/A & N/A \\
-meanPM & numeric & \(µ\)g/m\(^3\) & {[}6.437489, 200.2201{]} \\
+meanPM & numeric & \(\mu\)g/m\(^3\) & {[}6.437489, 200.2201{]} \\
 \bottomrule()
 \end{longtable}
 
@@ -506,17 +507,34 @@ prediction in the ``Prediction'' tab.
 \hypertarget{summary-and-conclusions}{%
 \section{Summary and Conclusions}\label{summary-and-conclusions}}
 
-We visualized the monthly average concentration of \(PM_{2.5}\) in
-Chinese cities from 2000 to 2021 and analyzed the historical trends and
+\textless\textless\textless\textless\textless\textless\textless{} HEAD
+We visualized the monthly average concentration of PM2.5 in Chinese
+cities from 2000 to 2021 and analyzed the historical trends and
 predicted the concentration changes for the next 5 years in megacities.
-Our results show that the \(PM_{2.5}\) concentration increased from 2000
-to 2013, with higher concentrations in the eastern and northen regions
-compared to the western and southern regions. Since 2014, \(PM_{2.5}\)
+Our results show that the PM2.5 concentration increased from 2000 to
+2013, with higher concentrations in the eastern and northen regions
+compared to the western and southern regions. Since 2014, PM2.5
 concentration in China has been decreasing. The concentration during
 autumn and winter was higher than that during spring and summer.
 Combining the SRIMA and SSES models resulted in the most accurate
-prediction. Our prediction suggest that at the end of 2027, the highest
-and lowest \(PM_{2.5}\) in Beijing, .
+prediction. Our prediction suggest that at the end of 2026, the highest
+and lowest pm2.5 concentration ('' * mu * ``g/m''\^{}3 * ``) in Beijing,
+Shanghai, Guangzhou, Shenzhen, Tianjin, Chongqin, Chengdu will be 35.97,
+29.04, 24.63, 24.94, 36.47, 38.88, 35.97 and 28.47, 5.57, 5.97, 3.46,
+12.54, 8.95, 28.12. ======= We visualized the monthly average
+concentration of \(PM_{2.5}\) in Chinese cities from 2000 to 2021 and
+analyzed the historical trends and predicted the concentration changes
+for the next 5 years in megacities. Our results show that the
+\(PM_{2.5}\) concentration increased from 2000 to 2013, with higher
+concentrations in the eastern and northen regions compared to the
+western and southern regions. Since 2014, \(PM_{2.5}\) concentration in
+China has been decreasing. The concentration during autumn and winter
+was higher than that during spring and summer. Combining the SRIMA and
+SSES models resulted in the most accurate prediction. Our prediction
+suggest that at the end of 2027, the highest and lowest \(PM_{2.5}\) in
+Beijing, .
+\textgreater\textgreater\textgreater\textgreater\textgreater\textgreater\textgreater{}
+9495f5cbc0e9280d5b10949ea3d1cb4d3daeea4b
 
 \newpage
 
@@ -567,6 +585,13 @@ and Waste Management Association}, \emph{56}(6), 709--742.
 Pu, W., Zhao, X., Zhang, X., \& Ma, Z. (2011). Effect of meteorological
 factors on PM2. 5 during july to september of beijing. \emph{Procedia
 Earth and Planetary Science}, \emph{2}, 272--277.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wei2021reconstructing}{}}%
+Wei, J., Li, Z., Lyapustin, A., Sun, L., Peng, Y., Xue, W., \ldots{}
+Cribb, M. (2021). Reconstructing 1-km-resolution high-quality PM2. 5
+data records from 2000 to 2018 in china: Spatiotemporal variations and
+policy implications. \emph{Remote Sensing of Environment}, \emph{252},
+112136.
 
 \end{CSLReferences}
 
