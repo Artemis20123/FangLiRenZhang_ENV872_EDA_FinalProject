@@ -69,7 +69,6 @@ The $PM_{2.5}$ pollution data used in the project is derived from the ChinaHigh$
 |     year     |  numeric  |     T      |     [2000,2021]      |
 |    month     |  numeric  |     T      |        [1,12]        |
 |   city_id    |  numeric  |    N/A     |    1100 \~ 659001    |
-| 地级单位名称 | character |    N/A     |         N/A          |
 |   cityname   | character |    N/A     |         N/A          |
 |    meanPM    |  numeric  | $µ$g/m$^3$ | [6.437489, 200.2201] |
 
@@ -161,9 +160,9 @@ Figure 1 showed that Beijing and Tianjin had the highest PM2.5 values among the 
 
 ## Part1: Time Series Analysis
 
-### How has the PM2.5 concentration in the seven cities changed?
+### How has the $PM_{2.5}$ concentration in the seven cities changed?
 
-Using the STL function, we decomposed the PM2.5 time series data of the target cities into seasonal and trend components and performed a comparative analysis. The PM2.5 values in these cities are generally lower during the summer months (June, July, August, and September) and higher during the winter months (November, December, January, and February) (Figure 2). There are several possible factors contributing to this seasonality: First, In the summer, temperatures are higher, leading to more active air convection, which facilitates the dispersion and dissipation of pollutants in the air. Secondly, there tends to be more rainfall in the summer, which can wash PM2.5 particles from the atmosphere to the ground, reducing their measured values [@rain]. Thirdly, in the winter, heating demand increases, and in some areas, coal combustion remains the primary method of providing heat [@heating]. This leads to increased emissions of coal-related pollutants, causing a rise in PM2.5 levels.
+Using the STL function, we decomposed the $PM_{2.5}$ time series data of the target cities into seasonal and trend components and performed a comparative analysis. The $PM_{2.5}$ values in these cities are generally lower during the summer months (June, July, August, and September) and higher during the winter months (November, December, January, and February) (Figure 2). There are several possible factors contributing to this seasonality: First, In the summer, temperatures are higher, leading to more active air convection, which facilitates the dispersion and dissipation of pollutants in the air. Secondly, there tends to be more rainfall in the summer, which can wash $PM_{2.5}$ particles from the atmosphere to the ground, reducing their measured values [@rain]. Thirdly, in the winter, heating demand increases, and in some areas, coal combustion remains the primary method of providing heat [@heating]. This leads to increased emissions of coal-related pollutants, causing a rise in $PM_{2.5}$ levels.
 
 ```{r seasonal figure, fig.cap="Seasonality in PM2.5 in 7 Chinese megacities", echo=FALSE, message=FALSE, warning=FALSE}
 #more information in "Code/TSA2" "seasonal+ trend" section,  chunk 22 and 23 
@@ -178,7 +177,7 @@ ggplot(seasonal_data, aes(x = month, y = seasonal, group = city, colour = city))
   guides(colour = guide_legend(title = "City"))
 ```
 
-The trend results for the target cities are consistent with those observed in the exploratory analysis (Figure 3). Notably, around 2014 marked a turning point when PM2.5 levels in major cities began to decrease gradually. This shift is likely attributed to the Chinese government's implementation of the Air Pollution Prevention and Control Action Plan [@plan]. It required that, by 2017, the annual average PM2.5 concentration in cities at or above the prefectural level should be reduced by more than 10%. In key regions such as Beijing-Tianjin-Hebei, the Yangtze River Delta, and the Pearl River Delta, the plan aimed for reductions of 25%, 20%, and 15%, respectively.
+The trend results for the target cities are consistent with those observed in the exploratory analysis (Figure 3). Notably, around 2014 marked a turning point when $PM_{2.5}$ levels in major cities began to decrease gradually. This shift is likely attributed to the Chinese government's implementation of the Air Pollution Prevention and Control Action Plan [@plan]. It required that, by 2017, the annual average $PM_{2.5}$ concentration in cities at or above the prefectural level should be reduced by more than 10%. In key regions such as Beijing-Tianjin-Hebei, the Yangtze River Delta, and the Pearl River Delta, the plan aimed for reductions of 25%, 20%, and 15%, respectively.
 
 ```{r trend figure, fig.cap="Trends in PM2.5 in Chinese megacities",echo=FALSE, message=FALSE, warning=FALSE}
 #more information in "Code/TSA2" "final" section, chunk 14 and 21
@@ -196,7 +195,7 @@ ggplot(trend_data, aes(x = date, y = trend, group = city, colour = city)) +
   guides(colour = guide_legend(title = "City"))
 ```
 
-### What might be the monthly average PM2.5 concentrations in these seven cities for the next three years?
+### What might be the monthly average $PM_{2.5}$ concentrations in these seven cities for the next three years?
 
 In order to obtain better forecasting results, we conducted a predictive accuracy test on multiple time series models based on Beijing's data from 2000 to 2020 (using actual 2021 data as a benchmark for comparison). These models include:
 
@@ -223,7 +222,7 @@ kbl(Beijing_scores0,
 5.  SNAIVE_SARIMA. The average of SNAIVE and SARIMA.
 6.  SSES_SARIMA. The average of SSES and SARIMA.
 
-Although the accuracy results show that the RMSE of SSES_SARIMA is the second smallest, its predictive accuracy is still slightly lower than that of SSES (Table 2). However, considering the forecasting objective and the comparison with other models, we ultimately chose to use the SSES_SARIMA model for predicting PM2.5 levels in the target cities.
+Although the accuracy results show that the RMSE of SSES_SARIMA is the second smallest, its predictive accuracy is still slightly lower than that of SSES (Table 2). However, considering the forecasting objective and the comparison with other models, we ultimately chose to use the SSES_SARIMA model for predicting $PM_{2.5}$ levels in the target cities.
 
 ```{r accuacy_table2, echo=FALSE, message=FALSE, warning=FALSE}
 #more information in "Code/TSA2" "Beijing1100-accuracy" section, chunk 10.
@@ -240,7 +239,8 @@ kbl(Beijing_scores,
 
 ```
 
-The final forecast results of Chinese megacities are shown in Figure 4.  
+The final forecast results of Chinese megacities are shown in Figure 4.
+
 ```{r forecast figure,  fig.cap=" PM2.5 forecast in Chinese megacities",echo=FALSE, message=FALSE, warning=FALSE}
 #more information in "Code/TSA2" "final"section, chunk 14~21.
 
@@ -263,6 +263,7 @@ ggplot(all_forcast_long, aes(x = Date, y = PM2.5, group = city, colour = city)) 
 ```
 
 \newpage
+
 ## Part2: Dashboard:
 
 To better visualize and allow users to interact with the data, we created a dashboard using Shiny. The dashboard consisted of three side panels:"PM2.5 National Distribution", "Time Series Visualization by City", "PM2.5 Prediction by City" and three corresponding tab panels: "Map", "TSA", and "Prediction".
