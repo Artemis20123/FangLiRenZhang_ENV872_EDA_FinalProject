@@ -13,7 +13,7 @@ and any relevant analysis goals. What, why, where, when, how?\>
 =======
 Welcome to the repository for the China PM2.5 pollution data analysis project. This repository contains code, data, and metadata related to the project.
 
-this project visualized the monthly average concentration of PM2.5 in Chinese cities from 2000 to 2021 and analyzed the historical trends and predicted the concentration changes for the next 5 years in megacities. we created a dashboard to provide the monthly average pm2.5 concentration for each city in China from 2000 to 2021, and applied time series analysis on seven megacities in China to reveal their historical trends of pm2.5 and predicted the possible future monthly concentration in next 5 years.
+This project visualized the monthly average concentration of PM2.5 in Chinese cities from 2000 to 2021 and analyzed the historical trends and predicted the concentration changes for the next 5 years in megacities. we created a dashboard to provide the monthly average pm2.5 concentration for each city in China from 2000 to 2021, and applied time series analysis on seven megacities in China to reveal their historical trends of pm2.5 and predicted the possible future monthly concentration in next 5 years.
 
 The analysis goals include identifying the temporal and spatial patterns of PM2.5 pollution in China and developing a dashboard for better visualization. Specifically, the purposes of this project include:
 
