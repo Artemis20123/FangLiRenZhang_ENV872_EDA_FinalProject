@@ -26,12 +26,12 @@ library(zoo)
 library(kableExtra)
 library(dplyr)
 library(smooth)
-#install.packages("grid")
-library(grid)
+
 
 ```
 #Notice
-I don't know where the conflict occurred, the checkresiduals run of chunk4 can't come out. But the whole document can be knit
+I don't know where the conflict occurred, the checkresiduals run of chunk4 can't come out.
+This problem come after i run the dashboard.But the whole document can be knit
 
 #data
 ```{r data}
@@ -289,7 +289,7 @@ R_Chengdu <- (SSES_Chengdu$forecast+SARIMA_Chengdu$mean)/2
 
 ###all
 ```{r all_save}
-all_forcast <- data.frame(R_Beijing, R_Shanghai, R_Guangzhou, R_Shenzhen, R_Tianjin, R_Chongqing)
+all_forcast <- data.frame(R_Beijing, R_Shanghai, R_Guangzhou, R_Shenzhen, R_Tianjin, R_Chongqing, R_Chengdu)
 date_sequence <- seq(from = as.Date("2022-01-01"), by = "month", length.out = 60)
 all_forcast$Date <- date_sequence
 all_forcast <- all_forcast[,c(7,1:6)]

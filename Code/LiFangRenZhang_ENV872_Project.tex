@@ -98,7 +98,7 @@
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
   pdftitle={Insert title of project here},
-  pdfauthor={Name},
+  pdfauthor={Yixin Fang, Jiahuan Li, Yuxiang Ren, Jinglin Zhang},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
@@ -109,8 +109,8 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{Web address for GitHub repository}
-\author{Name}
+\subtitle{\url{https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject}}
+\author{Yixin Fang, Jiahuan Li, Yuxiang Ren, Jinglin Zhang}
 \date{}
 
 \begin{document}
@@ -133,6 +133,60 @@ Questions}\label{rationale-and-research-questions}}
 \hypertarget{dataset-information}{%
 \section{Dataset Information}\label{dataset-information}}
 
+\hypertarget{data-sources}{%
+\subsection{Data sources}\label{data-sources}}
+
+This project relies on two primary datasets. The first dataset, China
+\(PM_{2.5}\) pollution data, is available via the Zenodo data
+repository\(^{[1]}\). This dataset provides information on the daily
+concentration of particulate matter (\(PM_{2.5}\)) in the atmosphere
+over China, as measured by satellite sensors. The dataset contains daily
+average \(PM_{2.5}\) concentration values for a period from 2000 to
+2021, covering the entirety of China's land area. The data is presented
+in the form of raster images, with a spatial resolution of 0.01 degrees.
+This high-resolution dataset allows for accurate identification of high
+pollution cities and regions, and is an important resource for
+understanding the severity and extent of air pollution in China.
+
+The second dataset utilized in this project is a shapefile of Chinese
+cities boundaries, provided by the statistical bureau of the Chinese
+government. The shapefile includes Chinese city names, unique
+identifiers, and geometry information for the city polygons. This
+dataset enables the mapping of \(PM_{2.5}\) concentrations across
+different Chinese cities and supports the time series analysis.
+Together, these datasets form the foundation of our dashboard and other
+relevant analysis, providing important insights into the spatial and
+temporal distribution of \(PM_{2.5}\) pollution in China.
+
+\hypertarget{wrangling-process}{%
+\subsection{\texorpdfstring{\href{https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Code/data\%20wrangling.Rmd}{Wrangling
+process}}{Wrangling process}}\label{wrangling-process}}
+
+The project involves two main data wrangling processes. The first
+process involves converting raw NetCDF files to GeoTIFF files using
+Python code provided by the dataset creators. The conversion code
+utilizes the GDAL package, a translator library for raster and vector
+geospatial data formats, to read the SDS data from the NetCDF files,
+define missing values, read longitude and latitude information, define
+the output file, and write a GeoTIFF file. The NetCDF files are not
+included in the repository and can be downloaded from the Zenodo
+repository.
+
+In the second data wrangling process, zonal statistics are calculated in
+R to aggregate the information of raster pixels within the city boundary
+and generate the output as a CSV table. The shapefile with polygon IDs
+is loaded, and a list of all raster files in the folder is obtained. A
+loop function is used to extract zonal statistics for each raster file,
+and two data frames are created to store the sum and mean values of
+\$PM\_\{2.5\}\$ concentrations. The zonal function from the terra
+package is used to extract the statistics, and the resulting CSV file
+contains the daily \$PM\_\{2.5\}\$ information for all the cities.
+
+Finally, all the CSV files containing separate daily \$PM\_\{2.5\}\$
+information are aggregated into one large CSV file. Then, the daily
+records are summarized to the monthly level to facilitate dashboard
+visualization and time series analysis.
+
 \newpage
 
 \hypertarget{exploratory-analysis}{%
@@ -144,7 +198,9 @@ include only the seven cities of interest. Then we grouped the data by
 city, year, and month and summarized the mean PM2.5 value for each
 month. A monthly PM2.5 line plot was created for each city using
 ggplot2.
+
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/TSA Visualization-1.pdf}
+
 The plot showed that Beijing and Tianjin had the highest PM2.5 values
 among the seven cities, and Shenzhen had the lowest values. Most of the
 cities seemed to have a slow increase in PM2.5 from 2000 to 2006, then
@@ -185,7 +241,11 @@ combustion remains the primary method of providing heat
 increased emissions of coal-related pollutants, causing a rise in PM2.5
 levels.
 
+\begin{figure}
+\centering
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/seasonal figure-1.pdf}
+\caption{Figure 2. Seasonality in PM2.5 in 7 Chinese Cities}
+\end{figure}
 
 The trend results for the target cities are consistent with those
 observed in the exploratory analysis (Figure 3). Notably, around 2014
@@ -201,7 +261,11 @@ reduced by more than 10\%. In key regions such as Beijing-Tianjin-Hebei,
 the Yangtze River Delta, and the Pearl River Delta, the plan aimed for
 reductions of 25\%, 20\%, and 15\%, respectively.
 
+\begin{figure}
+\centering
 \includegraphics{LiFangRenZhang_ENV872_Project_files/figure-latex/trend figure-1.pdf}
+\caption{Figure 3. Trends in PM2.5 in 7 Chinese Cities}
+\end{figure}
 
 \hypertarget{seven-cities-monthly-pm2.5-forecast-20222026}{%
 \subsubsection{Seven cities monthly PM2.5 forecast
@@ -328,8 +392,12 @@ in the ``Prediction'' tab.
 \hypertarget{references}{%
 \section{References}\label{references}}
 
-\textless add references here if relevant, otherwise delete this
-section\textgreater{}
+{[}1{]} Wei, J., Li, Z., Lyapustin, A., Sun, L., Peng, Y., Xue, W., Su,
+T., and Cribb, M. Reconstructing 1-km-resolution high-quality
+PM\textsubscript{2.5}~data records from 2000 to 2018 in China:
+spatiotemporal variations and policy implications.~\emph{Remote Sensing
+of Environment}, 2021, 252, 112136.
+\url{https://doi.org/10.1016/j.rse.2020.112136}
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}

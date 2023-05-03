@@ -163,7 +163,7 @@ The plot showed that Beijing and Tianjin had the highest PM2.5 values among the 
 
 Using the STL function, we decomposed the PM2.5 time series data of the target cities into seasonal and trend components and performed a comparative analysis. The PM2.5 values in these cities are generally lower during the summer months (June, July, August, and September) and higher during the winter months (November, December, January, and February) (Figure 2). There are several possible factors contributing to this seasonality: First, In the summer, temperatures are higher, leading to more active air convection, which facilitates the dispersion and dissipation of pollutants in the air. Secondly, there tends to be more rainfall in the summer, which can wash PM2.5 particles from the atmosphere to the ground, reducing their measured values [@rain]. Thirdly, in the winter, heating demand increases, and in some areas, coal combustion remains the primary method of providing heat [@heating]. This leads to increased emissions of coal-related pollutants, causing a rise in PM2.5 levels.
 
-```{r seasonal figure, echo=FALSE, message=FALSE, warning=FALSE}
+```{r seasonal figure, fig.cap="Figure 2. Seasonality in PM2.5 in 7 Chinese Cities", echo=FALSE, message=FALSE, warning=FALSE}
 #more information in "Code/TSA2" "seasonal+ trend" section,  chunk 22 and 23 
 seasonal_data <- read.csv("./Data/Processed/seasonal_data.csv")
 ggplot(seasonal_data, aes(x = month, y = seasonal, group = city, colour = city)) +
@@ -178,7 +178,7 @@ ggplot(seasonal_data, aes(x = month, y = seasonal, group = city, colour = city))
 
 The trend results for the target cities are consistent with those observed in the exploratory analysis (Figure 3). Notably, around 2014 marked a turning point when PM2.5 levels in major cities began to decrease gradually. This shift is likely attributed to the Chinese government's implementation of the Air Pollution Prevention and Control Action Plan [@plan]. It required that, by 2017, the annual average PM2.5 concentration in cities at or above the prefectural level should be reduced by more than 10%. In key regions such as Beijing-Tianjin-Hebei, the Yangtze River Delta, and the Pearl River Delta, the plan aimed for reductions of 25%, 20%, and 15%, respectively.
 
-```{r trend figure, echo=FALSE, message=FALSE, warning=FALSE}
+```{r trend figure, fig.cap="Figure 3. Trends in PM2.5 in 7 Chinese Cities",echo=FALSE, message=FALSE, warning=FALSE}
 #more information in "Code/TSA2" "seasonal+ trend" section, chunk 22 and 24
 
 trend_data <- read.csv("./Data/Processed/trend_data.csv")
