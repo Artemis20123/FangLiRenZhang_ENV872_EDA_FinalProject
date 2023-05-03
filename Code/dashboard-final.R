@@ -1,11 +1,7 @@
-## Todos
-# 1. update the code. you can use the newest monthly level data in the preparation section. It will faster the speed of generating the dashboard
-# 2. modify notifications at the end of the dashboard (add information for the 2 & 3 panel)
-# 3. change the color of the slidebar. I am not very satisfied with the current red color
 
+# Install and load packages ######################
 pacman::p_load(DT,shiny,shinydashboard,leaflet,tidyverse,lubridate,ggpubr,sf,RColorBrewer)
 
-Sys.setenv(LANG = "en")
 getwd()
 
 
@@ -21,17 +17,11 @@ pm25_sf <- merge(city_boundaries,pm25_data, by = "city_id")
 
 # Data preparation: Panel 2-3: TSA & Prediction ##############
 ## Wrangling ##############
-##data <- read.table("./Project/PM2.5_daily_city_2000_2021.txt", sep = ",", header = TRUE)
-##forcast.txt <- read.table("./Project/all_forcast.txt", sep = ",", header = TRUE)
-##write.csv(data, "./Project/PM2.5_2000_2021.csv", row.names = F)
-##write.csv(forcast.txt, "./Project/forcast.csv", row.names = F)
-
 ## Clean PM2.5 data
-pm2.5daily <- read.csv("./Data/Processed/PM2.5_daily_city_2000_2021.csv")
-cities <- pm2.5daily %>%
+cities <- pm25_data %>%
   filter(city_id %in% c("1100","4401","4403","5101","3100","1200","5000")) %>%
   group_by(city_id, year, month) %>%
-  summarise(mean = mean(meanpm))
+  summarise(mean = mean(meanPM))
 cities$date <- as.Date(paste(cities$year, cities$month, "01", sep = "-"), format = "%Y-%m-%d")
 
 ## Clean forcast data 
@@ -42,65 +32,6 @@ forcast <- forcast %>%
   pivot_longer(cols = starts_with("R_"), names_to = "city", values_to = "pm2.5")
 forcast$city <- gsub("R_","",forcast$city)
 
-## TSA Visualization of Each City ################################################
-beijing <- cities %>%
-  filter(city_id == "1100") %>%
-  ggplot(aes(x = date, y = mean)) +
-  geom_line() +
-  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Beijing")
-
-guangzhou <- cities %>%
-  filter(city_id == "4401") %>%
-  ggplot(aes(x = date, y = mean)) +
-  geom_line() +
-  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Guangzhou")
-
-shenzhen <- cities %>%
-  filter(city_id == "4403") %>%
-  ggplot(aes(x = date, y = mean)) +
-  geom_line() +
-  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Shenzhen")
-
-chengdu <- cities %>%
-  filter(city_id == "5101") %>%
-  ggplot(aes(x = date, y = mean)) +
-  geom_line() +
-  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Chengdu")
-
-shanghai <- cities %>%
-  filter(city_id == "3100") %>%
-  ggplot(aes(x = date, y = mean)) +
-  geom_line() +
-  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Shanghai")
-
-tianjin <- cities %>%
-  filter(city_id == "1200") %>%
-  ggplot(aes(x = date, y = mean)) +
-  geom_line() +
-  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Tianjin")
-
-chongqing <- cities %>%
-  filter(city_id == "5000") %>%
-  ggplot(aes(x = date, y = mean)) +
-  geom_line() +
-  scale_x_date(date_labels = "%Y", date_breaks = "4 year") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Monthly PM2.5", title = "Monthly PM2.5 of Chongqing")
-
-ggarrange(beijing, chengdu, chongqing, guangzhou, shanghai, shenzhen, tianjin,
-          ncol = 3, nrow = 3)
 
 # Dashboard ############## 
 ## UI ######################################################################
@@ -142,7 +73,7 @@ ui <- dashboardPage(
                    label = "Month",
                    choices = unique(pm25_sf$month), 
                    selected = "1"),
-       style = "background-color: #800000;"
+       style = "background-color: #2C3E50;"
      ),
      wellPanel(
        h4("Time Series Visualization by City"),
@@ -151,7 +82,7 @@ ui <- dashboardPage(
                                "Chengdu", "Guangzhou", 
                                "Shanghai", "Shenzhen", 
                                "Tianjin")),
-       style = "background-color: #800000;"
+       style = "background-color: #2C3E50;"
      ),
      wellPanel(
        h4("PM2.5 Prediction by City"),
@@ -162,7 +93,7 @@ ui <- dashboardPage(
                                "Tianjin")),
        sliderInput("slider2", "Choose Year", 
                    min = 2022, max = 2026, value = c(2022,2024), step = 1),
-       style = "background-color: #800000;"
+       style = "background-color: #2C3E50;"
      )
   ),
   # display 3 panels and the dashboard explanation
@@ -187,8 +118,10 @@ ui <- dashboardPage(
    tabItem(
      tabName = "Notifications",
      h2("Dashboard Notifications", style = "font-size: 20px;"),
-     p("This dashboard displays the distribution of PM2.5 in Chinese cities from 2000 to 2021."),
-     p("To use the dashboard, select a year and month using the dropdown menus in the sidebar. The map will display the mean PM2.5 concentration for each city in the selected year and month."),
+     p("This dashboard displays the distribution and changes of PM2.5 in Chinese cities from 2000 to 2021 and predicted PM2.5 from 2022 to 2026."),
+     p("To see the national distribution map, select a year and month using the dropdown menus in the PM2.5 National Distribution sidebar. The map will display the monthly PM2.5 concentration under the Map tab."),
+     p("To see the PM2.5 time series visualization of the selected cities, select a city using the dropdown menus in the Time Series Visualization by City sidebar. The plot will be displayed in the TSA tab."),
+     p("To see the PM2.5 prediction of the selected cities, select a city using the dropdown menus and select a time range using the slider in the PM2.5 Prediction by City sidebar. The plot will be displayed in the Prediction tab."),
      p("For more information, please see the following resources:"),
      p(a("GitHub repository", href = "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject")),
      p(a("Wrangling code", href = "https://github.com/Artemis20123/FangLiRenZhang_ENV872_EDA_FinalProject/blob/main/Code/Data%20preprocess.Rmd"))
